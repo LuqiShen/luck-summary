@@ -1,0 +1,19 @@
+/* *{
+    margin: 0;
+    padding: 0;
+} */
+
+section{
+    width: 80%;
+    margin: auto;
+}
+
+section #examples{
+    display: flex;
+    flex-direction: row;
+}
+
+section .debounce-example{
+    /* width: 35rem; */
+    width: 50%;
+}

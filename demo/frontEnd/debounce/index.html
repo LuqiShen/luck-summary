@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Examples of Debounce & Throttle</title>
+</head>
+
+<body>
+    <!-- <input id="debounce-tailing" type="text">
+    <button id="debounce-leading" >send</button> -->
+    <div id="debounce-and-throttle">
+        <section id="using-lodash-debounce">
+            <h1>Debounce</h1>
+            <h2>使用lodash的debounce函数：</h2>
+            <h4>以某一种应用场景举例：</h4>
+            <div id="examples">
+                <div class="debounce-example">
+                    1. 未防抖的情况：
+                    <br><br>
+                    输入：<input v-model="inputMessage" id="input-message" type="text">
+                    <br><br>
+                    显示输入：{{inputMessage}}
+                </div>
+                <br>
+                <div class="debounce-example">
+                    2. 防抖的情况：
+                    <br><br>
+                    输入：<input v-on:input="getMessageDebounced" id="input-message-debounced" type="text">
+                    <br><br>
+                    显示输入：{{inputMessageDebounced}}
+                </div>
+            </div>
+            
+        </section>
+    </div>
+    <script src="myDebounce.js"></script>
+    <script src="lib/lodash.custom.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#debounce-and-throttle',
+            data:{
+                inputMessage: '',
+                inputMessageDebounced: ''    
+            },
+            methods: {
+                getMessageDebounced: _.debounce(function (e) {
+                    this.inputMessageDebounced = e.target.value;
+                }, 300)
+            }
+        })
+    </script>
+</body>
+
+</html>
