@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Image Gallery</title>
 </head>
 <body>
     <h1>Snapshots</h1>
     <ul>
         <li>
-            <a href="images/city-lights-through-rain-window.jpg" target="_blank" rel="noopener noreferrer">city-lights-through-rain-window</a>
+            <a href="images/city-lights-through-rain-window.jpg" onclick="showPic(this); return false;" rel="noopener noreferrer" title="city lights through rain window">city-lights-through-rain-window</a>
         </li>
         <li>
-            <a href="images/long-forest-path.jpg" target="_blank" rel="noopener noreferrer">long-forest-path</a>
+            <a href="images/long-forest-path.jpg" onclick="showPic(this); return false;" rel="noopener noreferrer" title="long forest path">long-forest-path</a>
         </li>
         <li>
-            <a href="images/morning-love-greeting.jpg" target="_blank" rel="noopener noreferrer">morning-love-greeting</a>
+            <a href="images/morning-love-greeting.jpg" onclick="showPic(this); return false;"
+                rel="noopener noreferrer" title="morning love greeting">morning-love-greeting</a>
         </li>
         <li>
-            <a href="images/woman-wades-in-ocean-at-sunset.jpg" target="_blank" rel="noopener noreferrer">woman-wades-in-ocean-at-sunset</a>
+            <a href="images/woman-wades-in-ocean-at-sunset.jpg" onclick="showPic(this); return false;"
+                rel="noopener noreferrer" title="woman wades in ocean at sunset">woman-wades-in-ocean-at-sunset</a>
         </li>
     </ul>
     <img src="images/city-lights-through-rain-window.jpg" alt="my image gallery" id="placeholder" width="250">
+    <p id="description">Choose an image.</p>
+    <script src="script.js"></script>
 </body>
 </html>
