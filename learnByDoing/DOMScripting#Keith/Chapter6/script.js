@@ -15,11 +15,7 @@ function prepareGallery() {
 
     for (let index = 0; index < links.length; index++) {
         links[index].onclick = function () {
-            showPic(this);
-            // let href = links[index].getAttribute('href');
-            // let placeholder = document.getElementById("placeholder");
-            // placeholder.setAttribute("src", href);   
-            return false;       
+            return showPic(this) ? false : true;
         }
     }
 }
@@ -28,15 +24,22 @@ function showPic(whitchPic) {
     if (!document.getElementById("placeholder")) {
         return false;
     }
+
     let href = whitchPic.getAttribute("href");
     let placeholder = document.getElementById("placeholder");
+    if (placeholder.nodeName != "IMG") {
+        return false;
+    }
     placeholder.setAttribute("src", href);
 
     if(document.getElementById("description")){
-        let text = whitchPic.getAttribute("title");
+        let text = whitchPic.getAttribute("title") ? whitchPic.getAttribute("title") : "";
         let description = document.getElementById("description");
-        description.firstChild.nodeValue = text;
+        if (description.firstChild.nodeValue == 3) {
+            description.firstChild.nodeValue = text;
+        }
     }
+    return true;
 }
 
 function addLoadEvent(func) {
