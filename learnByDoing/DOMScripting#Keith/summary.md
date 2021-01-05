@@ -37,3 +37,24 @@
         · 向后兼容
         · 确保可访问
 
+##第七章 动态创建标记
+#####概要：
+        · 传统技术：
+                document.write
+                innerHTML
+        · DOM方法：
+                createElement
+                createTextNode
+                appendChild
+                insertBefore
+####学习记录：
+        通过学习“创建新元素”和“修改现有元素”的方法来改变网页结构
+
+#####7.1 传统方法：document.write方法和innerHTML属性
+######document.write(str)
+        功能：可以方便快捷的把字符串插入到文档里
+        缺点：违背了“行为与表现分离”的原则，使用这个方法容易让JavaScript代码和HTML代码混杂，不易阅读和编辑
+######innerHTML属性
+        功能：读、写某给定元素的HTML内容
+#####7.2 DOM方法
+#####
