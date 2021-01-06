@@ -67,6 +67,11 @@
 ######createTextNode方法
         document.createTextNode(text)
 #####7.3 图片库改进
-        · 在已有元素前插入一个新元素：DOM提供了insertBefore()方法
+        在已有元素前插入一个新元素：DOM提供了insertBefore()方法
                 parentElement.insert(newElement, targetElement)
                 其中parentElement = targetElement.parentNode
+        DOM本身并没提供与insertBefore相对的insertAfter方法，但是可以自行完成这个函数
+#####7.4 Ajax
+        Ajax: 异步加载页面内容的技术
+        表现：使用Ajax技术，用户在点击链接时浏览器将不会再刷新整个界面，而是只更新页面的一小部分
+######XMLHttpRequest对象
