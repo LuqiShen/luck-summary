@@ -67,3 +67,6 @@
 ######createTextNode方法
         document.createTextNode(text)
 #####7.3 图片库改进
+        · 在已有元素前插入一个新元素：DOM提供了insertBefore()方法
+                parentElement.insert(newElement, targetElement)
+                其中parentElement = targetElement.parentNode
