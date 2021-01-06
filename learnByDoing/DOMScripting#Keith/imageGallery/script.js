@@ -1,5 +1,22 @@
 addLoadEvent(prepareGallery);
 
+function preparePlaceholder(){
+    let placeholder = document.createElement("img");
+    placeholder.setAttribute("id","placeholder");
+    placeholder.setAttribute("src","images/city-lights-through-rain-window.jpg");
+    placeholder.setAttribute("alt","my image gallery");
+
+    let description = document.createElement("p");
+    description.setAttribute("id", "description");
+    
+    let descriptionText = document.createTextNode("Choose an image.");
+    description.appendChild(descriptionText);
+
+    let imgGallery = document.getElementById("image-gallery");
+    imgGallery.parentNode.insertBefore(placeholder, imgGallery);
+    imgGallery.parentNode.insertBefore(description, imgGallery);
+}
+
 function prepareGallery() {
     if (!document.getElementById){
         return false;
@@ -10,6 +27,7 @@ function prepareGallery() {
     if (!document.getElementById('image-gallery')){
         return false;
     }
+    preparePlaceholder();
     let gallery = document.getElementById('image-gallery');
     let links = gallery.getElementsByTagName('a');
 

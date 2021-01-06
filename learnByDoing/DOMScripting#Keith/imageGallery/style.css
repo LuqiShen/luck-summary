@@ -23,8 +23,9 @@ ul{
 
 li{
     float: left;
-    padding: 1rem;
+    text-align: center;
     list-style: none;
+    width: 25%;
 }
 
 img{
