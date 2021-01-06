@@ -1,6 +1,16 @@
-addLoadEvent(prepareGallery);
-
 function preparePlaceholder(){
+    if(!document.createElement){
+        return false;
+    }
+    if(!document.createTextNode){
+        return false;
+    }
+    if(!document.getElementById){
+        return false;
+    }
+    if(!document.getElementById("image-gallery")){
+        return false;
+    }
     let placeholder = document.createElement("img");
     placeholder.setAttribute("id","placeholder");
     placeholder.setAttribute("src","images/city-lights-through-rain-window.jpg");
@@ -13,8 +23,8 @@ function preparePlaceholder(){
     description.appendChild(descriptionText);
 
     let imgGallery = document.getElementById("image-gallery");
-    imgGallery.parentNode.insertBefore(placeholder, imgGallery);
-    imgGallery.parentNode.insertBefore(description, imgGallery);
+    insertAfter(placeholder, imgGallery);
+    insertAfter(description, imgGallery);
 }
 
 function prepareGallery() {
@@ -27,7 +37,6 @@ function prepareGallery() {
     if (!document.getElementById('image-gallery')){
         return false;
     }
-    preparePlaceholder();
     let gallery = document.getElementById('image-gallery');
     let links = gallery.getElementsByTagName('a');
 
@@ -71,3 +80,15 @@ function addLoadEvent(func) {
         }
     }
 }
+
+function insertAfter(newNode, targetNode){
+    let targetNodeParent = targetNode.parentNode;
+    if(targetNodeParent.lastChild == targetNode){
+        targetNodeParent.appendChild(newNode);
+    } else{
+        targetNodeParent.insertBefore(newNode, targetNode.sibling);
+    }
+}
+
+addLoadEvent(preparePlaceholder);
+addLoadEvent(prepareGallery);

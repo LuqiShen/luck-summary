@@ -28,11 +28,24 @@ li{
     width: 25%;
 }
 
+a img{
+    display: block;
+    clear: both;
+    margin: auto;
+    width: 8rem;
+    height: 12rem;
+}
+
 img{
     display: block;
     clear: both;
     margin: auto;
-    width: 15rem;
+    width: 20rem;
+    height: 30rem;
+}
+
+#placeholder{
+    padding: 3rem;
 }
 
 p{
