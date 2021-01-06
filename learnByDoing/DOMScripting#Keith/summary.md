@@ -57,4 +57,13 @@
 ######innerHTML属性
         功能：读、写某给定元素的HTML内容
 #####7.2 DOM方法
-#####
+        以动态方式创建标记所改变的就是DOM节点树
+######createELement方法
+       document.createELement(nodeName)
+       以这种方式动态创建的节点是游离在DOM树外的文档碎片（document fragment），它确实存在，也拥有了自己的DOM属性，但无法显示在浏览器窗口里
+######appendChild方法
+        parent.appendChild(child)
+        一般与createElement方法联合使用，将文档碎片添加到DOM树上
+######createTextNode方法
+        document.createTextNode(text)
+#####7.3 图片库改进
