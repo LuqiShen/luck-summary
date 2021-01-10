@@ -75,6 +75,35 @@
         Ajax: 异步加载页面内容的技术
         表现：使用Ajax技术，用户在点击链接时浏览器将不会再刷新整个界面，而是只更新页面的一小部分
 ######XMLHttpRequest对象
+        1. 对象检测技术：为了兼容所有的浏览器，而对不支持XMLHttpRequest进行平稳退化处理
+        2. XMLHTTPRequest:
+             ·onreadystatechange：事件处理函数，它会在服务器给XMLHttpRequest对象送回响应的时候被触发执行   
+                onreadystatechange = function(){
+                        //处理响应
+                }
+                onreadystatechange = doSomething;
+                注：在为onreadystatechange指定函数引用时，不要再函数名后面加括号。因为加括号表示立即调用函数，而我们在此只想把函数自身的引用（而不是函数结果）赋值给onreadystatechange属性
+
+
+             ·send():此方法用于发送请求
+
+             ·readyState:由浏览器更新、记录不同响应阶段
+                值分为5个：
+                        0 未初始化
+                        1 正在加载
+                        2 加载完毕
+                        3 正在交互
+                        4 完成（在此时可以访问服务器发送回来的数据）
+             ·responseText/responseXML：
+                这两个属性用于访问服务器发送回来的数据
+                responseText: 用于保存文本字符串形式的数据
+                responseXML: 用于保存Context-Type头部中指定为"text/xml"的数据, 即一个Document Fragment
+        3. 同源策略：
+                使用XMLHttpRequest对象发送的请求只能访问其所在的HTML处于同一个源中的数据
+                此外有些浏览器也会限制Ajax请求使用的协议
+        4. 渐进增强：
+                在既有框架基础上，用Ajax拦住发送到服务器的请求，并将请求转交给XMLHttpRequest对象处理，从而使Ajax扮演了一个位于常规站点之上的层
+                · Hijax：渐进增强的使用Ajax
 
 ##第八章 充实文档的内容
 #####概要：
@@ -93,3 +122,4 @@
         属性值在浏览器中不显示，但是不同浏览器对不同属性值有着不同的处理方式，为了消除这种差异，可以使用DOM编程解决
 #####8.3 内容
         
+       
