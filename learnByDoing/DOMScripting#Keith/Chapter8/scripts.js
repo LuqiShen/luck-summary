@@ -19,6 +19,9 @@ function displayAbbrevitations(){
     //遍历这些缩略词
     for (let i = 0; i < abbrevitions.length; i++) {
         let current_abbr = abbrevitions[i];
+        if(current_abbr.length < 1){
+            continue;
+        }
         let definitions = current_abbr.getAttribute("title");
         let key = current_abbr.lastChild.nodeValue;
         defs[key] = definitions;
@@ -43,6 +46,10 @@ function displayAbbrevitations(){
         //把缩略词标题和缩略词具体描述添加到dlist
         dlist.appendChild(dtitle);
         dlist.appendChild(ddesc);
+    }
+
+    if(dlist.childNodes.length < 1){
+        return false;
     }
 
     //创建dlist标题
