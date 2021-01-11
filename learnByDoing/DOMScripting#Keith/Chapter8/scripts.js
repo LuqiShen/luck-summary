@@ -1,6 +1,6 @@
 
 function displayAbbrevitations(){
-    var abbrevitions = document.getElementsByTagName("abbr");
+    let abbrevitions = document.getElementsByTagName("abbr");
     if(abbrevitions.length < 1){
         return false;
     }
@@ -13,9 +13,19 @@ function displayAbbrevitations(){
     }
 
     let dlist = document.createElement("dl");
-    for (let index = 0; index < defs.length; index++) {
-    }
+    for(key in defs){
+        let definition = defs[key];
+        let dtitle = document.createElement("dt");
+        let dtitle_text = document.createTextNode(key);
+        dtitle.appendChild(dtitle_text);
 
+        let ddesc = document.createElement("dd");
+        let ddesc_text = document.createTextNode(definition);
+        ddesc.appendChild(ddesc_text);
+
+        dlist.appendChild(dtitle);
+        dlist.appendChild(ddesc);
+    }
 }
 
 window.onload = displayAbbrevitations;
