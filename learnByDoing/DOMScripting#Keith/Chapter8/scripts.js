@@ -107,6 +107,66 @@ function displayCitations() {
     }
 }
 
+function displayAccessKeys() {
+    if(!document.getElementsByTagName){
+        return false;
+    }
+    if(!document.createElement){
+        return false;
+    }
+    if(!document.createTextNode){
+        return false;
+    }
+
+    //取得nav中所有链接
+    let nav = document.getElementById("navigation");
+    let links = nav.getElementsByTagName("a");
+    //创建数组保存所有键
+    let aList = new Array()
+    //遍历所有链接
+    for (let i = 0; i < links.length; i++) {
+        let current_link = links[i];
+        //如果链接没有accesskey属性，继续循环
+        if(!links[i].getAttribute("accesskey")){
+            continue;
+        }
+
+        //取得accesskey值和文本
+        let aKey = current_link.getAttribute("accesskey");
+        let aText = current_link.lastChild.nodeValue;
+
+        //将键值和文本一一对应，存入数组中
+        aList[aKey] = aText;
+    }
+
+    //创建列表元素
+    let accessKeyList = document.createElement("ul");
+    //遍历数组
+    for (aKey in aList) {
+        //取出键值所对应的文本，并改变其显示，赋值给str
+        let text = aList[aKey];
+        let str = aKey + " : " + text;
+
+        //创建列表项
+        let item = document.createElement("li");
+        let itemText = document.createTextNode(str);
+        item.appendChild(itemText);
+
+        //将列表项添加到列表
+        accessKeyList.appendChild(item);
+    }
+
+    //创建标题元素
+    let header = document.createElement("h3");
+    let headerText = document.createTextNode("Accesskey");
+    header.appendChild(headerText);
+    
+    //将标题添加到body
+    document.body.appendChild(header);
+    //将列表添加到body
+    document.body.appendChild(accessKeyList);
+}
+
 function addLoadEvent(func) {
     let oldOnload = window.onload;
     if(typeof window.onload != "function"){
@@ -121,3 +181,5 @@ function addLoadEvent(func) {
 
 addLoadEvent(displayAbbrevitations);
 addLoadEvent(displayCitations);
+addLoadEvent(displayAccessKeys);
+

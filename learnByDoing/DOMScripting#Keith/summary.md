@@ -128,3 +128,17 @@
 #####8.4 显示“缩略语列表”
 #####8.5 显示“文件来源链接表”
         注：在编写DOM脚本时，不要想当然的认为某个节点一定是一个元素节点。如果没有百分百的把握，就一定要去检查nodeType的属性值。很多DOM方法只能用于元素节点，如果用在文本节点上就会出错。
+#####8.6 显示“快捷键清单”
+#####8.7 检索和添加信息
+        完成三个函数的基本思路：
+                用JavaScript函数先把文档结构里的一些现有信息提取出来，再把那些信息以一种清晰和有意义的方式重新插入到文档里去
+        需要对文档信息进行检索时，以下DOM方法最有用：
+                · getElementById
+                · getElementsByTagName
+                · getAttribute
+        需要把信息插入文档时，以下DOM方法最有用：
+                · createElement
+                · createTextNode
+                · appendChild
+                · insertBefore
+                · setAttribute
