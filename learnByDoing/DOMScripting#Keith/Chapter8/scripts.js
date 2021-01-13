@@ -63,6 +63,50 @@ function displayAbbrevitations(){
     document.body.appendChild(dlist);
 }
 
+function displayCitations() {
+    if(!document.getElementsByTagName){
+        return false;
+    }
+    if(!document.createElement){
+        return false;
+    }
+    if(!document.createTextNode){
+        return false;
+    }
+
+    //取得blockquote的所有引用
+    let quotes = document.getElementsByTagName("blockquote");
+    //遍历引用
+    for (let index = 0; index < quotes.length; index++) {
+        //如果没有cite属性，继续循环
+        if(!quotes[index].getAttribute("cite")){
+            continue;
+        }
+        //保存cite属性
+        let url = quotes[index].getAttribute("cite");
+        
+        //取得引用中所有的子元素节点
+        let quoteElements = quotes[index].getElementsByTagName("*");
+        //如果没有子元素节点，继续循环
+        if(quoteElements.length < 1){
+            continue
+        }
+        //取得引用中最后一个子元素节点
+        let lastElem = quoteElements[quoteElements.length-1];
+
+        //创建标记
+        let link = document.createElement("a");
+        let link_text = document.createTextNode("source");
+        link.appendChild(link_text);
+        link.setAttribute("href",url);
+        let superscript = document.createElement("sup");
+        superscript.appendChild(link);
+
+        //把标记添加到引用中的最后一个元素节点
+        lastElem.appendChild(superscript);
+    }
+}
+
 function addLoadEvent(func) {
     let oldOnload = window.onload;
     if(typeof window.onload != "function"){
@@ -76,3 +120,4 @@ function addLoadEvent(func) {
 }
 
 addLoadEvent(displayAbbrevitations);
+addLoadEvent(displayCitations);
