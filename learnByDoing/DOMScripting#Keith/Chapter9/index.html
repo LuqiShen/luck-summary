@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+        window.onload = function () {
+            let para = document.getElementById("example");
+            alert(typeof para.nodeName);
+            alert(typeof para.style);
+            alert("This color is " + para.style.color);
+            alert("This font family is " + para.style.fontFamily);
+        }
+    </script>
 </head>
 <body>
     <p id="example" style="color: gray;font-family: 'Arial',sans-serif;">
