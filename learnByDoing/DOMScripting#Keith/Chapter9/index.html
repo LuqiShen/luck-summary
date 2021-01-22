@@ -4,19 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>
-        window.onload = function () {
-            let para = document.getElementById("example");
-            alert(typeof para.nodeName);
-            alert(typeof para.style);
-            alert("This color is " + para.style.color);
-            alert("This font family is " + para.style.fontFamily);
-        }
-    </script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p id="example" style="color: gray;font-family: 'Arial',sans-serif;">
+    <p id="example-91" style="color: gray;font-family: 'Arial',sans-serif;">
         An example of a paragraph
     </p>
-</body>
+
+    <div id="example-931">
+        <h1>Hold the front page</h1>
+        <p>This first paragraph leads you in.</p>
+        <p>This first paragraph leads you in.</p>
+        <p>This first paragraph leads you in.</p>
+        <h1>Extra！</h1>
+        <p>Further developments are unfolding.</p>
+        <p>You can read all about it.</p>
+    </div>
+
+    <div id="example-932">
+        <table>
+            <caption>Itinerary</caption>
+            <thead>
+                <tr>
+                    <th>When</th>
+                    <th>Where</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>June 9th</td>
+                    <td>Porland, <abbr title="Oregon">OR</abbr></td>
+                </tr>
+                <tr>
+                    <td>June 10th</td>
+                    <td>Seattle, <abbr title="Washington">WA</abbr></td>
+                </tr>
+                <tr>
+                    <td>June 12th</td>
+                    <td>Sacramento, <abbr title="California">CA</abbr></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="scripts.js"></script>
+    </body>
 </html>
