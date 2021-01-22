@@ -9,12 +9,12 @@ function test() {
 
 
 // 9.3.1 将h1元素后面的第一个元素的文字加粗
-function styleHeaderSiblings() {
+function styleHeaderSiblings(tag, className) {
     if(!document.getElementsByTagName){
         return false;
     }
     let example931 = document.getElementById("example-931")
-    let headers = example931.getElementsByTagName("h1");
+    let headers = example931.getElementsByTagName(tag);
     for (let i = 0; i < headers.length; i++) {
         let target = getNextElement(headers[i].nextSibling);
         // console.log(headers[i].nextSibling);
@@ -22,8 +22,9 @@ function styleHeaderSiblings() {
         if(typeof target == "null"){
             continue;
         }
-        target.style.fontWeight = "bold";
-        target.style.fontSize = "1.2em";
+        // target.style.fontWeight = "bold";
+        // target.style.fontSize = "1.2em";
+        addClass(target, className);
     }
 }
 
@@ -49,7 +50,8 @@ function stripeTables() {
         let rows = table[i].getElementsByTagName("tr");
         for (let j = 0; j < rows.length; j++) {
             if (odd == true) {
-                rows[j].style.backgroundColor = "#ffc";
+                // rows[j].style.backgroundColor = "#ffc";
+                addClass(rows[j], "odd");
                 odd = false;
             } else{
                 odd = true;
@@ -109,6 +111,14 @@ function highlightRows() {
     }
 }
 
+function addClass(element, className) {
+    if(!element.className){
+        element.className = className;
+    } else {
+        element.className += " " + className;
+    }
+}
+
 function addLoadEvent(func) {
     let oldOnload = window.onload;
     if(typeof window.onload != 'function'){
@@ -122,7 +132,11 @@ function addLoadEvent(func) {
 }
 
 // addLoadEvent(test);
-addLoadEvent(styleHeaderSiblings);
+addLoadEvent(
+    function () {
+        styleHeaderSiblings("h1", "intro")
+    }
+);
 addLoadEvent(stripeTables);
 addLoadEvent(displayAbbreviations);
 addLoadEvent(highlightRows);
