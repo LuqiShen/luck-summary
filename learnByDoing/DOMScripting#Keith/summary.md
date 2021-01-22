@@ -142,3 +142,38 @@
                 · appendChild
                 · insertBefore
                 · setAttribute
+##第九章 CSS-DOM
+#####概要
+        · style属性
+        · 如何检索样式
+        · 如何改变样式
+#####学习记录
+#####9.1 三位一体的网页
+        结构层（structural layer）：由HTML或XHTML之类的标记语言负责创建;由标签（tag）对网页内容的语义含义做出描述。
+        表示层（presentation layer）：由CSS描述页面如何呈现。
+        行为层（behavior layer）：由JavaScript语言和DOM来描述内容应该如何响应事件。
+
+        其中行为层和表示层总是存在。在未知名具体指令的情况下，web浏览器拥有它的默认样式和默认事件处理函数。
+
+        分离：
+                (X)HTML搭建文档的结构
+                CSS设置文档的呈现效果
+                DOM脚本实现文档的行为
+        重合：
+                CSS可以使用伪类（:hover等）控制脚本行为
+                DOM脚本可以通过一些方法（createElement等）改变文档结构；也可以通过style属性改变CSS从而改变呈现效果
+#####9.2 style属性
+        文档的每个元素都包含一个属性style。style属性包含着元素样式，查询这个属性将返回一个对象而不是一个简单的字符串。
+
+        element.style.property
+######9.2.1 获取样式：element.style.property
+        注：类似于font-family等中间带有减号的属性，在DOM中被要求使用驼峰命名法，即：
+                element.style.fontFamily
+        
+        绝大部分属性的返回值都与它们的设置值采用同样的计量单位。如color，font-size等。
+
+        注：style属性只能返回HTML标记中的内嵌样式，这降低了style属性的实用性。但是如果用DOM设置样式，就可以由DOM检索出来。
+######9.2.2 设置样式：element.style.property = value
+        注：style对象的属性值必须放在引号里，不然JavaScript会将等号右边的值解释为一个变量。
+#####9.3 何时该使用DOM脚本设置样式
+        
