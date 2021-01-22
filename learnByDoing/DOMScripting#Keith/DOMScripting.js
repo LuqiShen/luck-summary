@@ -23,3 +23,14 @@ function insertAfter(newNode, targetNode){
         targetNodeParent.insertBefore(newNode, targetNode.sibling);
     }
 }
+
+function addClass(element, className) {
+    if(!element.className){
+        element.className = className;
+    } else {
+        let newClassName = element.className;
+        newClassName += " ";
+        newClassName += className;
+        element.className = newClassName;
+    }
+}
