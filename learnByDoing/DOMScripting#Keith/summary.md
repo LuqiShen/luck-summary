@@ -219,3 +219,39 @@
                 结构层
                 表示层
                 行为层
+
+## 第十章 用JavaScript实现动画效果
+
+### 10.1 动画基础知识
+
+#### 10.1.1 位置
+
+##### CSS中，position合法值：static（默认）、fixed、relative、absolute
+
+###### static：有关元素按照它们在标记里出现的先后顺序出现在浏览器窗口里
+
+###### relative：与static类似，但可以利用float属性将元素从文档的正常显示顺序中脱离出来
+
+###### absolute：显示的位置由top、bottom、left、right决定，但是它的容器要么是文档本身，要么是用fixed或absolute属性的父元素
+
+#### 10.1.2 时间
+
+##### setTimeout("function",interval)
+
+###### 参数："function" —— String：要执行的函数名
+
+###### 参数：interval —— Number：等待时间的毫秒数
+
+##### clearTimeout(variable)
+
+        此函数的作用是用来取消“等待执行”队列里的某个函数
+
+###### 参数variable —— 保存着某个setTimeout函数的调用返回值
+
+#### 10.1.3 时间递增量
+
+#### 10.1.4 抽象
+
+        
+
+        setTimeout的机制值得深究
