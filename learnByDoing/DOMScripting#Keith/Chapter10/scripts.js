@@ -10,6 +10,8 @@ function positionMessage() {
     //movement为全局变量 意味着这个setTimeout可以在positionMessage函数以外的地方被取消
     // movement = setTimeout("moveMessage()", 10);
     // console.log(movement);
+
+    moveElement("message",200,300,10);
 }
 
 
@@ -52,7 +54,42 @@ function moveMessage() {
 }
 
 function moveElement(elementID, finalX, finalY, interval) {
+    if(!document.getElementById || !document.getElementById(elementID)){
+        return false;
+    }
+    let elem = document.getElementById(elementID);
+    //获得元素的当前位置
+    let xpos = parseInt(elem.style.left);
+    let ypos = parseInt(elem.style.top);
+    //如果元素已经到达它的目的地，则退出这个函数
+    if(xpos == finalX && ypos == finalY){
+        return true;
+    }
     
+    //如果元素尚未到达他的目的地，则把它像目的地移动一像素
+    if(xpos < finalX){
+        xpos++;
+    }
+
+    if(xpos > finalX){
+        xpos--;
+    }
+
+    if(ypos < finalY){
+        ypos++;
+    }
+
+    if(ypos > finalY){
+        ypos--;
+    }
+
+    elem.style.left = xpos + "px";
+    elem.style.top = ypos + "px";        
+    //经过一段时间间隔后从重复以上操作
+    let repeat = "moveElement('" + elementID +"'," + finalX +"," + finalY +"," + interval+ ")" ;
+    movement = setTimeout(repeat, interval);
+    console.log(repeat, typeof elementID);
+    console.log("moveElement(" + elementID + "," + finalX + "," + finalY + "," + interval + ")");
 }
 
 function addLoadEvent(func) {
@@ -67,5 +104,5 @@ function addLoadEvent(func) {
     }
 }
 
-addLoadEvent(moveMessage);
+// addLoadEvent(moveMessage);
 addLoadEvent(positionMessage);
