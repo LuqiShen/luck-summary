@@ -3,6 +3,9 @@ function moveElement(elementID, finalX, finalY, interval) {
         return false;
     }
     let elem = document.getElementById(elementID);
+    if(elem.movement){
+        clearTimeout(elem.movement);
+    }
     //获得元素的当前位置
     let xpos = parseInt(elem.style.left);
     let ypos = parseInt(elem.style.top);
@@ -32,9 +35,10 @@ function moveElement(elementID, finalX, finalY, interval) {
     elem.style.top = ypos + "px";        
     //经过一段时间间隔后从重复以上操作
     let repeat = "moveElement('" + elementID +"'," + finalX +"," + finalY +"," + interval+ ")" ;
-    movement = setTimeout(repeat, interval);
-    console.log(repeat, typeof elementID);
-    console.log("moveElement(" + elementID + "," + finalX + "," + finalY + "," + interval + ")");
+    elem.movement = setTimeout(repeat, interval);
+    // movement = setTimeout(repeat,interval);
+    // console.log(repeat, typeof elementID);
+    // console.log("moveElement(" + elementID + "," + finalX + "," + finalY + "," + interval + ")");
 }
 
 function addLoadEvent(func) {
@@ -67,19 +71,15 @@ function prepareSlideshow() {
     let links = list.getElementsByTagName("a");
 
     links[0].onmouseover = function () {
-        moveElement("preview", -300, 0, 1);
+        moveElement("preview", -300, 0, 0.1);
     }
 
     links[1].onmouseover = function () {
-        moveElement("preview", -600, 0, 1);
+        moveElement("preview", -600, 0, 0.1);
     }
 
     links[2].onmouseover = function () {
-        moveElement("preview", -900, 0, 1);
-    }
-
-    links[3].onmouseover = function () {
-        moveElement("preview", -1200, 0, 1);
+        moveElement("preview", -900, 0, 0.1);
     }
 }
 
