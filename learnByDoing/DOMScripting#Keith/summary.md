@@ -274,10 +274,29 @@
 
 ### 10.3 小结
 
-#### 动画：随时间变化而改变某个元素在浏览器窗口里的显示
+        动画：随时间变化而改变某个元素在浏览器窗口里的显示
 
-#### 与时间相关的函数setTImeout("function", interval)
+        与时间相关的函数setTImeout("function", interval)
 
-#### 函数抽象（扩展其通用性）
+        函数抽象（扩展其通用性）
 
-#### 整理代码（HTML只对应页面核心内容，CSS只对应显示，JavaScript处理剩下的问题）
+        整理代码（HTML只对应页面核心内容，CSS只对应显示，JavaScript处理剩下的问题）
+
+## 第十一章 HTML5
+
+### 11
+
+        · 什么是HTML5
+        · 怎么使用HTML5
+        · HTML5的特性：Canvas、视频、音频和表单
+
+### 11.1 HTML5简介
+
+### 11.2 来自朋友的忠告
+
+        Modernizr(http://www.modernizr.com)
+        开源JavaScript库，拥有富特性检测功能
+
+### 11.3 几个示例
+
+### 11.3.1 Canvas
