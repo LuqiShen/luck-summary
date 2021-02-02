@@ -66,19 +66,39 @@ function addLoadEvent(func) {
     }
 }
 
+function insertAfter(newNode, targetNode){
+    //本函数的作用为：将DOM的新节点插入到指定DOM节点的后边
+    //功能与DOM本身提供的函数parent.insertBefore相对应
+    let targetNodeParent = targetNode.parentNode;
+    if(targetNodeParent.lastChild == targetNode){
+        targetNodeParent.appendChild(newNode);
+    } else{
+        targetNodeParent.insertBefore(newNode, targetNode.sibling);
+    }
+}
+
 function prepareSlideshow() {
     if(!document.getElementById || !document.getElementsByTagName){
         return false;
     }
 
-    if(!document.getElementById("preview") || !document.getElementById("linklist")){
+    if(!document.getElementById("linklist")){
         return false;
     }
 
-    let preview  = document.getElementById("preview");
-    preview.style.position = "absolute";
+    let sildeShow = document.createElement("div");
+    sildeShow.setAttribute("id", "slideshow");
+
+    let preview  = document.createElement("img");
+    preview.setAttribute("src","images/topics.jpg");
+    preview.setAttribute("alt","building blocks of web design");
+    preview.setAttribute("id","preview");
+
+    sildeShow.appendChild(preview);
 
     let list = document.getElementById("linklist");
+    insertAfter(sildeShow,list);
+
     let links = list.getElementsByTagName("a");
 
     links[0].onmouseover = function () {

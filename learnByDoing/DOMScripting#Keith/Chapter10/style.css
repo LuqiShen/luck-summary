@@ -5,3 +5,7 @@
     overflow: hidden;
 }
 
+#preview{
+    position: absolute;
+}
+
