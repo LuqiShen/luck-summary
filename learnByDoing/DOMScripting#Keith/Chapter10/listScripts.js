@@ -6,6 +6,14 @@ function moveElement(elementID, finalX, finalY, interval) {
     if(elem.movement){
         clearTimeout(elem.movement);
     }
+
+    if(!elem.style.left){
+        elem.style.left = "0px";
+    }
+
+    if(!elem.style.top){
+        elem.style.top = "0px";
+    }
     //获得元素的当前位置
     let xpos = parseInt(elem.style.left);
     let ypos = parseInt(elem.style.top);
@@ -69,8 +77,6 @@ function prepareSlideshow() {
 
     let preview  = document.getElementById("preview");
     preview.style.position = "absolute";
-    preview.style.left = "0px";
-    preview.style.top = "0px";
 
     let list = document.getElementById("linklist");
     let links = list.getElementsByTagName("a");
