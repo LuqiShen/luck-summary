@@ -9,26 +9,31 @@ function moveElement(elementID, finalX, finalY, interval) {
     //获得元素的当前位置
     let xpos = parseInt(elem.style.left);
     let ypos = parseInt(elem.style.top);
+    let dist = 0;
     //如果元素已经到达它的目的地，则退出这个函数
     if(xpos == finalX && ypos == finalY){
         return true;
     }
     
-    //如果元素尚未到达他的目的地，则把它像目的地移动一像素
+    //如果元素尚未到达他的目的地，则把它像目的地移动
     if(xpos < finalX){
-        xpos++;
+        dist = Math.ceil((finalX - xpos)/10);
+        xpos = xpos + dist;
     }
 
     if(xpos > finalX){
-        xpos--;
+        dist = Math.ceil((xpos - finalX)/10);
+        xpos = xpos - dist;
     }
 
     if(ypos < finalY){
-        ypos++;
+        dist = Math.ceil((finalY - ypos)/10);
+        ypos = ypos + dist;
     }
 
     if(ypos > finalY){
-        ypos--;
+        dist = Math.ceil((ypos - finalY)/10);
+        ypos = ypos - dist;
     }
 
     elem.style.left = xpos + "px";
