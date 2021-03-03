@@ -124,8 +124,34 @@ React是一个用来创建用户界面的库，最初由Facebook创建并开源�
 
 #### 2.1.2 多组件：组合关系与父子关系
 
+组件的可组合性：
+    1.兄弟关系
+    2.父子关系
+
+illustration Here
+
 #### 2.1.3 建立组件关系
 
 ### 2.2 用React创建组件
 
+#### 2.2.1 创建React元素
+
+```javascript
+ReactDOM.render(
+    ReactELement element,
+    DOMElement container,
+    [function callback]
+) -> ReactComponent
+```
+
+使用React DOM的render方法让React创建和管理组件。
+React DOM需要一个ReactElement类型的元素和一个DOM元素。
+
+##### ReactELement
+
+React元素是React中轻量、无状态、不可变的基础类型。React元素有ReactComponentElement和ReactDOMElement两种类型。
+
+###### ReactComponentELement：对React组件的一个函数或类的引用
+
+###### ReactDOMElement：DOM元素的虚拟表示
 
