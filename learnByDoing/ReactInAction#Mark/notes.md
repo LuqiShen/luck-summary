@@ -155,3 +155,10 @@ React元素是React中轻量、无状态、不可变的基础类型。React元�
 
 ###### ReactDOMElement：DOM元素的虚拟表示
 
+#### 2.2.4 创建React类
+
+```JavaScript
+class MyReactClassComponent extends Component {
+    render(){}
+}
+```
