@@ -160,12 +160,10 @@ React DOM需要一个ReactElement类型的元素和一个DOM元素。
 
 ##### ReactELement
 
-> React元素是React中轻量、无状态、不可变的基础类型。React元素有ReactComponentElement和ReactDOMElement两种类型。
+###### React元素是React中轻量、无状态、不可变的基础类型。React元素有ReactComponentElement和ReactDOMElement两种类型。
 
-> ###### 1. ReactComponentELement：对React组件的一个函数或类的引用
-
-> ###### 2. ReactDOMElement：DOM元素的虚拟表示
-
+1. ReactComponentELement：对React组件的一个函数或类的引用
+2. ReactDOMElement：DOM元素的虚拟表示
 
 #### 2.2.4 创建React类
 
@@ -174,3 +172,52 @@ class MyReactClassComponent extends Component {
     render(){}
 }
 ```
+
+#### 2.3 组件的一生
+
+##### 2.3.1 React的状态
+
+##### 2.3.2 设定初始状态
+
+###### 1. 什么时候使用状态?
+
+- 需要改变存储在组件的数据时
+
+###### 2. 如何设置初始状态
+
+- 在类构造函数中，调用super并将初始state对象赋值给类实例的state属性
+
+```JavaScript
+constructor(props){
+    super(props){
+        this.state = {
+            //初始状态
+        }
+    }
+}
+```
+
+###### 3. 更新组件初始状态
+
+- 不能直接覆盖this.state，因为React需要追踪状态并确保虚拟DOM和时机DOM保持同步
+  
+- 使用this.setState更新: 这个属性接收一个用来更新状态的更新器函数
+
+```JavaScript
+setState(
+    function(preState, props) -> nextState,
+    callback
+) -> void
+
+// this.setState接收一个返回对象的更新器函数，该对象与状态进行浅合并
+```
+
+- 直接赋值更改与使用this.setState更改的区别：React能够根据状态变化选择批量更新以便效率最大化，即this.setState无需立即执行，而是由React决定
+
+###### 4. 什么引起React进行更新
+
+- JavaScript由事件驱动。
+
+- React实现了一个合成事件系统作为虚拟DOM的一部分，这个部分将浏览器事件转化为React应用的事件
+
+- 因而亦是事件促使了React的更新

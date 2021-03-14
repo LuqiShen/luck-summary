@@ -66,6 +66,71 @@ class Comment extends React.Component {
     }
 }
 
+
+class CreateComment extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            content: '',
+            user: ''
+        };
+    }
+    handleUserChange(event) {
+        const val = event.target.value;
+        this.setState(() => ({
+            user: val
+        }))
+    }
+    handleTextChange(event){
+        const val = event.target.value;
+        this.setState(() => ({
+            content: val
+        }))
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        this.setState(() => ({
+            user: '',
+            content: ''
+        }))
+    }
+    render(){
+        return React.createElement(
+            'form',
+            {
+                className: 'createComment',
+                onSubmit: this.handleSubmit
+            },
+            React.createElement(
+                'input',
+                {
+                    className: 'userName',
+                    type: 'text',
+                    placeholder: 'Your name',
+                    value: this.state.user,
+                    onChange: this.handleUserChange
+                }
+            ),
+            React.createElement(
+                'input',
+                {
+                    className: 'comment',
+                    type: 'text',
+                    placeholder: 'Thoughts?',
+                    value: this.state.content,
+                    onChange: this.handleTextChange
+                }
+            ),
+            React.createElement(
+                'input',
+                {
+                    type:'submit',
+                    value: 'Post'
+                }
+            )
+        )
+    }
+}
 // Post.propTypes = {
 //     user: PropTypes.string.isRequired,
 //     content: PropTypes.string.isRequired,
@@ -82,7 +147,8 @@ const App = React.createElement(Post,
         id: 2,
         content: ' commented: wow!',
         user: 'bob'
-    })
+    }),
+    React.createElement(CreateComment)
 );
 
 ReactDOM.render(App, domElement);
