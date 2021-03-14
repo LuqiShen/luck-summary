@@ -40,11 +40,11 @@ class Post extends React.Component{
     }
 }
 
-// Post.propTypes = {
-//     user: PropTypes.string.isRequired,
-//     content: PropTypes.string.isRequired,
-//     id: PropTypes
-// }
+Post.propTypes = {
+    user: prop-types.string.isRequired,
+    content: prop-types.string.isRequired,
+    id: prop-types
+}
 
 const App = React.createElement(Post, {
     id: 1,
