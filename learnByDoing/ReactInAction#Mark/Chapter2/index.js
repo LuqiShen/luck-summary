@@ -34,22 +34,55 @@ class Post extends React.Component{
                         className: 'postBody'
                     },
                     this.props.content
+                ),
+                this.props.children
+            )
+        )
+    }
+}
+
+class Comment extends React.Component {
+    render(){
+        return React.createElement(
+            'div',
+            {
+                className: 'comment',
+            },
+            React.createElement(
+                'h3',
+                {
+                    className: 'commentAuthor'
+                },
+                this.props.user,
+                React.createElement(
+                    'span',
+                    {
+                        className: 'commentAuthor'
+                    },
+                    this.props.content
                 )
             )
         )
     }
 }
 
-Post.propTypes = {
-    user: prop-types.string.isRequired,
-    content: prop-types.string.isRequired,
-    id: prop-types
-}
+// Post.propTypes = {
+//     user: PropTypes.string.isRequired,
+//     content: PropTypes.string.isRequired,
+//     id: PropTypes
+// }
 
-const App = React.createElement(Post, {
-    id: 1,
-    content: ' said: This is a post!',
-    user: 'mark'
-});
+const App = React.createElement(Post, 
+    {
+        id: 1,
+        content: ' said: This is a post!',
+        user: 'mark'
+    },
+    React.createElement(Comment,{
+        id: 2,
+        content: ' commented: wow!',
+        user: 'bob'
+    })
+);
 
 ReactDOM.render(App, domElement);
