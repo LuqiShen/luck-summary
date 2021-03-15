@@ -189,10 +189,10 @@ class MyReactClassComponent extends Component {
 
 ```JavaScript
 constructor(props){
-    super(props){
-        this.state = {
-            //初始状态
-        }
+    super(props);
+    // 此处应补充super函数的作用
+    this.state = {
+        //初始状态
     }
 }
 ```
