@@ -74,6 +74,9 @@ class CreateComment extends React.Component{
             content: '',
             user: ''
         };
+        this.handleUserChange = this.handleUserChange.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleUserChange(event) {
         const val = event.target.value;
@@ -89,6 +92,10 @@ class CreateComment extends React.Component{
     }
     handleSubmit(event){
         event.preventDefault();
+        this.props.onCommentSubmit({
+            user: this.state.user.trim(),
+            content: this.state.content.trim()
+        });
         this.setState(() => ({
             user: '',
             content: ''
@@ -131,24 +138,98 @@ class CreateComment extends React.Component{
         )
     }
 }
+
+class CommentBox extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            conments: this.props.comments
+        };
+        this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    }
+
+    handleCommentSubmit(comment){
+        const comments = this.state.comments;
+        comment.id = Date.now();
+        const newComments = comments.concat([comment]);
+        this.setState({
+            comments: newComments
+        })
+    }
+
+    render(){
+        return React.createElement(
+            'div',
+            {
+                className: 'commentBox'
+            },
+            React.createElement(Post,{
+                id: this.props.post.id,
+                content: this.props.post.content,
+                usert: this.props.post.user
+            }),
+            // this.state.comments.map(function (comment) {
+            //     return React.createElement(Comment,{
+            //         key: comment.id,
+            //         id: comment.id,
+            //         content: comment.content,
+            //         user: comment.user
+            //     })
+            // }),
+            React.createElement(CreateComment, {
+                onCommentSubmit: this.handleCommentSubmit
+            })
+        )
+    }
+}
 // Post.propTypes = {
 //     user: PropTypes.string.isRequired,
 //     content: PropTypes.string.isRequired,
 //     id: PropTypes
 // }
 
-const App = React.createElement(Post, 
-    {
-        id: 1,
-        content: ' said: This is a post!',
-        user: 'mark'
+const data = {
+    post: {
+        id: 123,
+        content:
+            'What we hope ever to do with ease, we must first learn to do with diligence. - Samuel Johnson',
+        user: 'Mark Thomas'
     },
-    React.createElement(Comment,{
-        id: 2,
-        content: ' commented: wow!',
-        user: 'bob'
-    }),
-    React.createElement(CreateComment)
-);
+    comments:[
+        {
+            id: 0,
+            user: 'David',
+            content: 'such. win.'
+        },
+        {
+            id: 1,
+            user: 'Haley',
+            content: 'Love it.'
+        },
+        {
+            id: 2,
+            user: 'Peter',
+            content: 'Who was Samuel Johnson?'
+        },
+        {
+            id: 3,
+            user: 'Mitchell',
+            content: '@Peter get off Letters and do your homework'
+        },
+        {
+            id: 4,
+            user: 'Peter',
+            content: '@mitchell ok :P'
+        }
+    ]
+}
 
-ReactDOM.render(App, domElement);
+const App = React.createElement(
+    CommentBox,
+    {
+        comments: data.comments,
+        post: data.post
+    }
+ )
+
+ReactDOM.render(App,domElement);
