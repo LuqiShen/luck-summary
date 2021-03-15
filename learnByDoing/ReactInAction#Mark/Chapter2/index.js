@@ -143,7 +143,7 @@ class CommentBox extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            conments: this.props.comments
+            comments: this.props.comments
         };
         this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
     }
@@ -168,14 +168,19 @@ class CommentBox extends React.Component {
                 content: this.props.post.content,
                 usert: this.props.post.user
             }),
-            // this.state.comments.map(function (comment) {
-            //     return React.createElement(Comment,{
-            //         key: comment.id,
-            //         id: comment.id,
-            //         content: comment.content,
-            //         user: comment.user
-            //     })
-            // }),
+            this.state.comments.map(function (comment) {
+                return React.createElement(Comment,{
+                    key: comment.id,
+                    id: comment.id,
+                    content: comment.content,
+                    user: comment.user
+                });
+            }),
+            React.createElement(Comment, {
+                id: this.state.comments[0].id,
+                content: this.state.comments[0].content,
+                user: this.state.comments[0].user
+            }),
             React.createElement(CreateComment, {
                 onCommentSubmit: this.handleCommentSubmit
             })
