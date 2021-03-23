@@ -232,4 +232,36 @@ setState(
 
 ##### 2.4.1 使用JSX创建组件
 
-###### 
+###### JSX是什么
+
+- 是JavaScript的扩展，类似于XML且仅用于代码转换工具
+
+- 不会被并入ECMAScript规范
+
+###### Bable
+
+- Bable是将JavaScript代码转换成与旧浏览器兼容的代码的转义器
+
+- Bable如果被直接导入并在没有构建步骤的情况下（如Webpack）工作，运行会非常慢
+
+##### 2.4.2 JSX的好处以及JSX与HTML的差别
+
+###### 好处
+
+- 类似于HTML且语法简单
+
+- 声明式和封装：通过将组成视图的代码与相关联的方法包含在一起，使用者创建了一个功能组
+
+###### 与HTML的差别
+
+- HTML标签与React组件：使用React.createClass创建的自定义React组件按惯例首字母是大写的
+
+- 属性表达式：JSX为prop = {表达式}，而非prop = “”的写法
+
+- 布尔属性：省略属性的值（如 <Input checked /> ）会让JSX将其视为true，要传入false值需要使用表达式（attribute={false}）
+
+- 嵌套表达式：JSX要在元素内部插入表达式的值，也需要使用大括号
+
+### 2.5 小结
+
+## 第三章
