@@ -258,10 +258,12 @@ setState(
 
 - 属性表达式：JSX为prop = {表达式}，而非prop = “”的写法
 
-- 布尔属性：省略属性的值（如 <Input checked /> ）会让JSX将其视为true，要传入false值需要使用表达式（attribute={false}）
+- 布尔属性：省略属性的值（如 < Input checked /> ）会让JSX将其视为true，要传入false值需要使用表达式（attribute={false}）
 
 - 嵌套表达式：JSX要在元素内部插入表达式的值，也需要使用大括号
 
 ### 2.5 小结
 
-## 第三章
+## 第三章 React中的数据和数据流
+
+### 3.1 状态
