@@ -292,7 +292,7 @@ setState(
 
 ### 3.2 React中的状态
 
-#### 3.2.1 React中的可变组件：组件状态
+#### 3.2.1 React中的可变状态：状态（state）
 
 ```JavaScript
 setState(
@@ -331,3 +331,33 @@ setState(
 
 *个人回答*： 直接修改无法触发React更新DOM
 
+#### 3.2.2 React中的不可变状态：属性（props）
+
+##### React中，props是传递不可变数据的主要方式，所有组件都能接受属性并能在其构造函数、render和生命周期方法中使用
+
+- 属性通常由父组件传递
+
+- 一个组件的状态可以是另一个组件的属性
+
+- 属性一旦被传递给组件使用，就不能在组件内部改变它们
+
+- 属性可以随时间改变，但不是从组件内部改变
+
+##### 在render方法中调用setState
+
+报错：**Invariant Violation**
+Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
+
+#### 3.2.3 使用属性：PropTypes和默认属性
+
+##### PropTypes
+
+- 功能：类型检查，可以用来指定组件期望接收什么样的属性
+
+##### 默认类型：defaultProps
+
+- 功能：为组件提供默认属性
+
+#### 3.2.4 无状态函数组件
+
+- 无状态组件（函数组件）：没有继承React.Component的组件，因此不能访问组件状态或其他生命周期方法
