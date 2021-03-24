@@ -325,7 +325,7 @@ setState(
 
 - *解决方法*：制作对象的副本，深层更新该副本后，使用该副本/或是使用*immutable.js*库
 
-##### **思考**
+##### **思考 1**
 
 为什么需要通过setState API来修改状态，而不是直接修改？
 
@@ -342,13 +342,28 @@ setState(
 - 属性一旦被传递给组件使用，就不能在组件内部改变它们
 
 - 属性可以随时间改变，但不是从组件内部改变
+  
+##### **思考 2**
 
-##### 在render方法中调用setState
+*能否在render方法中调用setStat？*
 
 报错：**Invariant Violation**
 Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
 
 #### 3.2.3 使用属性：PropTypes和默认属性
+
+```JavaScript
+static propTypes = {
+    ···
+    //需要引入prop-types库，CDN引入时需要使用window.PropTypes
+}
+
+static defaultProps = {
+    ···
+}
+
+//均是静态属性，需要使用关键字static声明
+```
 
 ##### PropTypes
 
@@ -361,3 +376,40 @@ Maximum update depth exceeded. This can happen when a component repeatedly calls
 #### 3.2.4 无状态函数组件
 
 - 无状态组件（函数组件）：没有继承React.Component的组件，因此不能访问组件状态或其他生命周期方法
+
+- *无状态组件无法访问或使用React的状态API，所以它没有状态是因为它不会活的React进行管理的支撑实例，而非没有数据流动*
+
+- 没有组件状态，没有生命周期方法，意味着更小的内存
+
+- 与继承了React.Component的父组件结合使用时，功能强大
+
+##### **思考 3**
+
+*如何使用一个组件的状态来修改另一个组件的属性？*
+
+```JavaScript
+ <code>
+    {JSON.stringify({
+        name: 'String'
+    }, null, 2)}
+</code>
+```
+
+将code标签包裹的代码放入子组件，用新的字符串替换掉原本的文本
+
+### 3.3 组件通信
+
+#### 1. 组件关系
+
+- is-a
+
+- has-a
+
+#### 2. React中的组件通信
+
+##### 一般通过传递props，在传递porps的同时还会发生以下的情况
+
+- 访问父组件中的state或props
+
+- 传递数据给子组件
+
