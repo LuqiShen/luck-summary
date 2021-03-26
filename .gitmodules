@@ -1,0 +1,4 @@
+
+[submodule "learnByDoing/ReactInAction-Mark/letters-social"]
+	path = learnByDoing/ReactInAction-Mark/letters-social
+	url = git@github.com:LuqiShen/letters-social.git
