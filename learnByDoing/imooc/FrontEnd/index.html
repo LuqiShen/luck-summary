@@ -11,139 +11,149 @@
 </head>
 
 <body>
-    <h1>北京简介</h1>
-    <h2>北京的历史</h2>
-    <h3>建国前的历史</h3>
-    <h3>建国前的历史</h3>
-    <h3>建国后的历史</h3>
-    <h2>北京的旅游景点</h2>
-    <h2>北京的大学</h2>
+    <form action="" method="post">
+        <p>
+            请输入您的姓名：<input type="text">
+        </p>
+        <p>
+            报考院校：<input type="text" value="清华大学" disabled>
+        </p>
+        <p>
+            毕业院校：<input type="text" placeholder="请输入真实的毕业学校">
+        </p>
+        <p>
+            性别：
+            <label>
+                男<input type="radio" name="sex" value="男" checked>
+            </label>
+            <label>
+                女<input type="radio" name="sex" value="女">
+            </label>
+        </p>
+        <p>
+            血型：
+            <input type="radio" name="bloodtype" id="A" checked>
+            <label for="A">A</label>
+            <input type="radio" name="bloodtype" id="B">
+            <label for="B">B</label>
+            <input type="radio" name="bloodtype" id="O">
+            <label for="O">O</label>
+            <input type="radio" name="bloodtype" id="AB">
+            <label for="AB">AB</label>
+        </p>
 
+        <p>
+            爱好：
+            <label> <input type="checkbox" name="hobby">足球</label>
+            <label><input type="checkbox" name="hobby">羽毛球</label>
+            <label><input type="checkbox" name="hobby">篮球</label>
+        </p>
+    </form>
 
-    <h6>要购买的东西</h6>
-    <ul>
-        <li>牛奶</li>
-        <li>
-            咖啡
-            <p>不要买黑咖啡</p>
-        </li>
-        <li>牛奶</li>
-    </ul>
-    <!-- <a name="top">这里是顶部</a><br /> -->
+    <form action="" method="post">
+        <p>
+            名：
+            <input type="text">
+        </p>
+        <p>
+            姓:
+            <input type="text">
+        </p>
+        <p>
+            请输入密码：
+            <input type="password">
+        </p>
+        <p>
+            请选择你最喜欢的编程语言：
+            <select>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Java">Java</option>
+                <option value="PHP">Php</option>
+            </select>
+        </p>
 
-    <a href="#fruit">水果</a><br />
-    <a href="#vegetables">蔬菜</a><br />
-    <a href="#spots">运动</a>
+        <p>
+            留言：
+            <textarea name="" id="" cols="30" rows="10">
 
-    <h2 id="fruit">水果</h2>
-    <ul>
-        <li>香蕉</li>
-        <li>苹果</li>
-        <li>葡萄</li>
-        <li>梨</li>
-        <li>西瓜</li>
-        <li>樱桃</li>
-        <li>菠萝</li>
-        <li>橙子</li>
-        <li>柚子</li>
-        <li>芒果</li>
-        <li>香蕉</li>
-        <li>苹果</li>
-        <li>葡萄</li>
-        <li>梨</li>
-        <li>西瓜</li>
-        <li>樱桃</li>
-        <li>菠萝</li>
-        <li>橙子</li>
-        <li>柚子</li>
-        <li>芒果</li>
-        <li>香蕉</li>
-        <li>苹果</li>
-        <li>葡萄</li>
-        <li>梨</li>
-        <li>西瓜</li>
-        <li>樱桃</li>
-        <li>菠萝</li>
-        <li>橙子</li>
-        <li>柚子</li>
-        <li>芒果</li>
-        <li>香蕉</li>
-        <li>苹果</li>
-        <li>葡萄</li>
-        <li>梨</li>
-        <li>西瓜</li>
-        <li>樱桃</li>
-        <li>菠萝</li>
-        <li>橙子</li>
-        <li>柚子</li>
-        <li>芒果</li>
-        <li>香蕉</li>
-        <li>苹果</li>
-        <li>葡萄</li>
-        <li>梨</li>
-        <li>西瓜</li>
-        <li>樱桃</li>
-        <li>菠萝</li>
-        <li>橙子</li>
-        <li>柚子</li>
-        <li>芒果</li>
-        <li>香蕉</li>
-        <li>苹果</li>
-        <li>葡萄</li>
-        <li>梨</li>
-        <li>西瓜</li>
-        <li>樱桃</li>
-        <li>菠萝</li>
-        <li>橙子</li>
-        <li>柚子</li>
-        <li>芒果</li>
-    </ul>
-    <a href="#top">返回顶部</a>
+            </textarea>
+        </p>
+        <p><input type="button" value="普通按钮"></p>
+        <p><input type="submit" value="提交"></p>
+        <p><input type="reset" value="重置"></p>
 
-    <h2 id="vegetables">蔬菜</h2>
-    <ul>
-        <li>西红柿</li>
-        <li>黄瓜</li>
-        <li>土豆</li>
-        <li>芹菜</li>
-        <li>蒜苔</li>
-        <li>西葫芦</li>
-        <li>香菇</li>
-        <li>菠菜</li>
-        <li>豆角</li>
-        <li>油菜</li>
-        <li>西红柿</li>
-        <li>黄瓜</li>
-        <li>土豆</li>
-        <li>芹菜</li>
-        <li>蒜苔</li>
-        <li>西葫芦</li>
-        <li>香菇</li>
-        <li>菠菜</li>
-        <li>豆角</li>
-        <li>油菜</li>
-        <li>西红柿</li>
-        <li>黄瓜</li>
-        <li>土豆</li>
-        <li>芹菜</li>
-        <li>蒜苔</li>
-        <li>西葫芦</li>
-        <li>香菇</li>
-        <li>菠菜</li>
-        <li>豆角</li>
-        <li>油菜</li>
-        <li>西红柿</li>
-        <li>黄瓜</li>
-        <li>土豆</li>
-        <li>芹菜</li>
-        <li>蒜苔</li>
-        <li>西葫芦</li>
-        <li>香菇</li>
-        <li>菠菜</li>
-        <li>豆角</li>
-        <li>油菜</li>
-    </ul>
-    <a href="#top">返回顶部</a>
+        <input type="text" list="province-list">
+        <datalist id="province-list">
+            <option value="备选项">
+        </datalist>
+    </form>
+
+    <table border="1">
+        <caption>课程表</caption>
+        <tr>
+            <th>星期一</th>
+            <th>星期二</th>
+            <th>星期三</th>
+            <th>星期四</th>
+        </tr>
+        <tr>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>生物</td>
+        </tr>
+        <tr>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>生物</td>
+        </tr>
+        <tr>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>生物</td>
+        </tr>
+    </table>
+
+    <table border="1">
+        <tr>
+            <td colspan="2">A</td>
+            <td>B</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>D</td>
+            <td>E</td>
+        </tr>
+        <tr>
+            <td cospan="3">F</td>
+        </tr>
+    </table>
+
+    <table border="1" width="300">
+        <tr>
+            <td>A</td>
+            <td>B</td>
+            <td>C</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <td>E</td>
+            <td rowspan="2">F</td>
+            <td>G</td>
+            <td rowspan="3">H</td>
+        </tr>
+        <tr>
+            <td>I</td>
+            <td>J</td>
+        </tr>
+        <tr>
+            <td>K</td>
+            <td>L</td>
+            <td>L</td>
+        </tr>
+    </table>
 </body>
 
 </html>

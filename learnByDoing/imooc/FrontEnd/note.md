@@ -583,3 +583,255 @@ charset：字符集属性
 </p>
 ```
 
+### 第6章 表单标签
+
+#### 1.表单标签
+
+- 表单用来收集信息，注册、登录等
+
+##### 1.1 表单的创建
+
+- form元素创建
+
+```HTML
+<form action="save.php" method="post">
+
+</form>
+
+<!-- action属性表示表单要提交到后台程序的网址 -->
+<!-- method属性表示表单提交的方式 get或post-->
+```
+
+##### 1.2 基本控件
+
+###### 1.2.1 单行文本框
+
+```HTML
+<input type="text">
+```
+
+- type属性值被设置为text的input元素可以创建单行文本框，它是一个单标签
+
+- value属性：已经填好的值
+
+- placeholder属性：提示文本（浅色文本）
+
+- disabled属性：用户不能与这个元素进行交互，即"锁死"
+
+###### 1.2.2 单选按钮
+
+```HTML
+<input type="radio">
+```
+
+- type属性被设置为radio的input元素可以创建单选按钮
+  - 互斥的单选按钮其name值应当相同
+
+- value属性：单选按钮要有value属性值，向服务器提交的就是value值
+
+- checkd属性：默认被选中
+
+- 绑定文字和单选按钮，点击文字即视同选中单选按钮：label标签
+
+```HTML
+    <!-- HTML5 -->
+    <label>
+        <input type="radio">男
+    </label>
+
+    <!-- HTML4 -->
+    <input type="radio" id="nan">
+    <label for="nan">男</label>
+```
+
+###### 1.2.3 复选框
+
+```HTML
+<label> <input type="checkbox" name="hobby">足球</label>
+```
+
+- type属性值被设置为checkbox的input元素可以创建复选框
+
+- 同组复选框应该设置它们的name为相同值
+
+- 复选框要有value属性值，向服务器提交的就是value值
+
+###### 1.2.4 密码框
+
+```HTML
+<input type="password">
+
+```
+
+- type属性值设置为password的input元素可以创建密码框
+
+###### 1.2.5 下拉菜单
+
+```HTML
+<select>
+    <option value="alipay">支付宝</option>
+    <option value="wx">微信</option>
+    <option value="bank">网银</option>
+</select>
+```
+
+###### 1.2.6 多行文本框
+
+```HTML
+<textarea></textarea>
+```
+
+- textarea标签表示多行文本框
+
+- rows和cols属性，用于定义多行文本框的行数和列数
+
+- selected属性，默认选中
+
+###### 1.2.7 三种按钮
+
+```HTML
+<input type="button">
+
+<input type="submit">
+
+<input type="reset">
+```
+
+- input标签，type属性值如下
+
+| type属性值 | 按钮种类 |
+| ---- | ---- |
+| button | 普通按钮，简写为< button>< /button>|
+| submit | 提交按钮 |
+| reset  | 重置按钮 |
+
+###### 1.2.8 HTML5新增的input类型
+
+| type属性值 | 控件 |
+| ---- | ---- |
+| color | 颜色选择控件|
+| date、time| 日期、时间选择控件|
+| email | 电子邮件输入控件 |
+| file | 文件选择控件|
+| number | 数字输入控件 min/max |
+| range | 拖拽条 min/max|
+| search | 搜索框 |
+| url | 网址输入控件 http://www |
+
+- required 必填
+
+###### 1.2.9 datalist控件
+
+```HTML
+<input type="text" list="province-list">
+<datalist id="province-list">
+    <option value="备选项">
+</datalist>
+<!-- option标签为单标签 -->
+```
+
+- datalist控件可以为输入框提供一些备选项，当用户输入的内容与备选项文字相同时，将会显示智能感应
+
+### 第7章 表格标签
+
+#### 7.1 table、tr、td
+
+```HTML
+<table>
+    <caption>标题</caption>
+    <tr>
+        <th>列标题</th>
+        <th>列标题</th>
+        <th>列标题</th>
+        <th>列标题</th>
+    </tr>
+    <tr>
+        <th>行标题</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+```
+
+- table表格，tr表格行，td表格数据
+
+- border属性：表格边框的宽窄
+
+- th级别与td相同
+
+#### 7.2 colspan属性
+
+```HTML
+<table>
+    <tr>
+        <td colspan="2"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td cospan="3"></td>
+    </tr>
+</table>
+```
+
+- colspan属性：设置td或者th的列跨度
+
+- tr中的td不一样多
+
+#### 7.3 rowspan属性
+
+```HTML
+<table>
+    <tr>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+        <td>D</td>
+    </tr>
+    <tr>
+        <td>E</td>
+        <td rowspan="2">F</td>
+        <td>G</td>
+        <td rowspan="3">H</td>
+    </tr>
+    <tr>
+        <td>I</td>
+        <td>J</td>
+    </tr>
+    <tr>
+        <td>K</td>
+        <td>L</td>
+        <td>L</td>
+    </tr>
+</table>
+```
+
+- rowspan属性：设置td或th的行跨度
+
+- 注意：分清每个小格属于哪行
+
+#### 7.4 thead/tbody/tfoot标签
+
+- thead：表头，可以包括多个tr
+
+- tbody：表
+
+- tfoot: 表脚
+
+#### 7.5 cellspacing/cellpadding属性
+
+- cellspacing属性：表格单元的内容和边框之间的空间，可被css代替
+
+- cellpadding属性：（使用百分比像素）定义了两个单元格之间的空间大小，可被css代替
+
+#### 7.6 width/height/align属性
+
+- width/height属性：设置宽高，默认单位为px（可省略），也可用百分比
+
+- align属性：值为left、center、right，调整table整体的水平位置
