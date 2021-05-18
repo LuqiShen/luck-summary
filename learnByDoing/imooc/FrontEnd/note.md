@@ -835,3 +835,130 @@ charset：字符集属性
 - width/height属性：设置宽高，默认单位为px（可省略），也可用百分比
 
 - align属性：值为left、center、right，调整table整体的水平位置
+
+## 第2周 CSS基础语法与和模型
+
+### 第1章 CSS基础入门
+
+#### 1. CSS简介
+
+- CSS层叠式样式表，用来给HTML标签添加样式 cascading style sheet
+
+- 前端三层
+  ||语言|功能|
+  | ----| ---- | ---- |
+  | 结构层 | HTML | 搭建结构、放置部件、描述语义 |
+  | 样式层 | CSS  | 美化页面、实现布局 |
+  | 行为层 | JavaScript | 实现交互效果、数据收发、表单验证 |
+
+- CSS使样式和结构分离
+
+- “选择器”结合HTML和CSS
+
+- CSS本质(不是编程)：样式清单 —— 选择器选择标签，罗列样式
+
+#### 2. CSS3的书写位置
+
+- 1. 内嵌式：嵌在.html文件中
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 样式表 -->
+    <style>
+
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
+```
+
+- 2. 外链式：存储为单独的.css文件，然后使用link标签引入
+  - 优点：多个HTML网页可以共用一个css样式表文件
+  - link标签要放在head标签内
+  - 页面加载时会同时加载样式
+
+```HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- 外链样式表 -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- rel表示的是链接和本.html文件的关系 -->
+</head>
+<body>
+    
+</body>
+</html>
+```
+
+- 3. 导入式：不常见
+  - 受用导入式引入的样式表，不会等待css文件加载完毕，而是立即渲染HTML结构，所以页面中会有几秒“只有HTML没有样式”的情况
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        @import url(css/style.css);
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
+```
+
+- 4. 行内式：通过style属性写在标签身上
+  - 行内式牺牲了样式表批量设置样式的能力
+  - 后台工程师常用
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="color:red;"></h1>
+</body>
+</html>
+```
+
+#### 3. CSS3的基本语法
+
+- 选择器，大括号对，罗列样式(k:v;|其中k为属性名，v为属性值，最后一条样式可以不书写分号)
+
+```CSS
+p {
+    color: red;
+}
+/* 注释 */
+```
+
+- 注释
+
+```CSS
+  /* 注释 */
+```
