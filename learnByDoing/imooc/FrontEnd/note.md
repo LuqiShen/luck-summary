@@ -1331,10 +1331,99 @@ h3~span {
 font-family: serif, "Times New Roman", "微软雅黑";
 
 /* 
-    1.字体名称中有空格，必须用引号包裹
+    1.字体名称中有空格，必须用引号包裹；引号嵌套，外面使用双引号，里面使用单引号
     2.中文字体用引号包裹
 */
 ```
 
 - 字体可以是列表形式，一般英语字体放到前面，后面的字体是前面字体的“后备”字体
 
+| 中文字体名 | 英文字体名 |
+| :----: | :----: |
+| font-family: "微软雅黑" | font-family: "Microsoft Yahei" |
+| font-family: "宋体" | font-family: "SimSun" |
+
+- 中文字体有等价英文名；中文字体应该放在英文字体后边，英文字体失效
+
+- 字体通常必须是用户算机中已经安装好的字体，因而一般宋体和微软雅黑的较多
+
+- 设置为用户电脑中没有的字体：自己定义字体需要有字体文件，在用户加载网页的同时下载
+  - 字体文件根据操作系统和浏览器的不同有eot、woff2、woff、ttf、svg文件格式，需要同时有这5中文件
+  - 定义字体：@font-face
+  - 注意授权：阿里巴巴免费商用授权的普惠字体，网址https://www.iconfont.cn/webfont；普惠体不需要下载
+  - Google也有免费字体
+
+```CSS
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2"),
+       url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+}
+```
+
+#### 3. 段落、行的相关属性
+
+##### 3.1 text-indent属性
+
+- 定义首行文本内容之前的缩进量
+
+- 如果不使用这个属性，想要让文本实现缩进，使用转义空格字符&nbsp；也可以，一个&nbsp；代表一个空格。因为普通的空格在html里不管出现几个，都被认为是一个空格，所以要用text-indent属性，或者在html代码中加入&nbsp；&nbsp；可能会受到字体样式的影响， 可能出现一个汉字使用2个&nbsp ，也会有一个汉字使用4个&nbsp；的情况 。但是目前 ，大部分主浏览器默认的字体 ，也就是“微软雅黑”，是一个汉字使用4个&nbsp；
+
+```CSS
+text-indent: 2em;
+
+/* em表示字符宽度，意味缩进两个字符 */
+```
+
+##### 3.2 line-height属性
+
+- 定义行高
+
+- 字在行中是上下居中的
+
+- 可以用px、字号倍数的数值、百分数规定行高
+
+```CSS
+
+/* px规定高度 */
+line-height: 30px;
+
+/* 字号倍数，推荐 */
+line-height: 1.5;
+
+/* 百分数，字号倍数 */
+line-height: 150%;
+```
+
+- 单行文本垂直居中：行高=盒子高度
+  - text-align:center, 实现文字水平居中
+
+##### 3.3 font合写属性
+
+- font属性可以用来作为font-style, font-weight, font-size, line-height和font-family属性的合写
+
+- 必须设置font-size或font-family才能生效
+
+```CSS
+font: italic bold 20px/1.5 Arail, "微软雅黑";
+
+/* 倾斜、加粗 */
+/* 20px/1.5 字号/行高 */
+/* 字体 */
+```
+
+#### 4. 继承性
+
+- 文本相关的属性普遍具有继承性，只需要给祖先标签设置，即可在后代所有标签中生效
+  - color
+  - font-
+  - list-
+  - text-
+  - line-
+  
+- 因为文本相关的属性通常具有继承性，所以通常会设置body标签的字号、颜色、行高等，这样就能当作整个网页的默认样式了
+
+- 就近原则：在继承的情况下（未直接选中该标签，采用继承的方式规定该标签的样式），选择器权重计算失效，而是"就近原则"
+  - 继承的标签不如选中的标签权重大
+  - 都未选中的情况下继承：离得近 > 离得远
+  
