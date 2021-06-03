@@ -1268,4 +1268,73 @@ h3~span {
 
 3. #id > .class > 标签
 
-4. 复合选择器计算权重：先比较id个数，再比较class个数，再比较标签个数。
+4. 复合选择器计算权重：先比较id个数，再比较class个数，再比较标签个数
+
+### 第3章 文本与字体属性
+
+#### 1. 常用文本样式属性
+
+##### 1.1 color属性
+
+- 设置文本内容的前景色
+
+- 表示：
+  - 英语单词：工作基本不用
+  - 十六进制：设计软件中通用的颜色表示
+    - #aabbcc：其中aa为红色分量，bb为绿色分量，cc为蓝色分量（可以简写为#abc）
+    - 黑色#000，白色#fff，灰色#ccc/#333/#2f2f2f
+  - rgb(a,b,c)：a,b,c为0~255的数字，红绿蓝
+  - IE9开始兼容/rgba(a,b,c,d)：a,b,c为0~255的数字，红绿蓝；d为0~1，表示透明度
+
+##### 1.2 font-size属性
+
+- 设置字号，单位通常为px；也有em、rem
+
+- 网页正文字号通常是16px，浏览器最小支持10px字号，字号通常是双数
+
+##### 1.3 font-weight属性
+
+- 设置文字的粗细程度，常用的为normal和bold
+
+| 示例 | 意义 |
+| :----: | :----: |
+| font-weight:normal | 正常粗细，与400等值 |
+| font-weight:bold | 加粗，与700等值 |
+| font-weight:lighter | 更细，大多数中文字体不支持 |
+| font-weight:bolder | 更粗，大多数中文字体不支持 |
+
+##### 1.4 font-style属性
+
+- 设置字体倾斜
+
+| 示例 | 意义 |
+| :----: | :----: |
+| font-style:normal | 取消倾斜（如取消i、em标签自带的倾斜）|
+| font-style:italic | 设置为倾斜字体（常用）|
+| font-style:oblique| 设置为倾斜字体（用于常规字体模拟，不常用）|
+
+##### 1.5 text-decoration属性
+
+- 设置文本的修饰线外观
+
+| 示例 | 意义 |
+| :----: | :----: |
+| text-decoration:none | 没有修饰线 |
+| text-decoration:underline | 下划线 |
+| text-decoration:line-through | 删除线 |
+
+#### 2. 字体属性详解
+
+##### font-family属性用于设置字体
+
+```CSS
+font-family: serif, "Times New Roman", "微软雅黑";
+
+/* 
+    1.字体名称中有空格，必须用引号包裹
+    2.中文字体用引号包裹
+*/
+```
+
+- 字体可以是列表形式，一般英语字体放到前面，后面的字体是前面字体的“后备”字体
+
