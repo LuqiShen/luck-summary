@@ -1427,3 +1427,159 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
   - 继承的标签不如选中的标签权重大
   - 都未选中的情况下继承：离得近 > 离得远
   
+### 第4章 盒模型
+
+#### 1. 盒模型的基本概念
+
+##### 1.1 盒模型
+
+1. 所有HTML标签都可以看成矩形盒子，由width、height、padding、border构成，称为“盒模型”
+    - width: 内容的宽度；不包括padding和border
+    - height: 内容的高度；不包括padding和border
+    - padding: 内边距
+    - border: 边框
+
+2. 盒子的总宽度 = width + 左右padding + 左右border
+
+##### 1.2 width和height属性详解
+
+###### 1.2.1 width属性
+
+1. width: 盒子内容的宽度
+
+2. 属性单位通常是px，移动端开发也会涉及百分数、rem等单位
+
+3. 当块级元素（div、h系列、li等）没有设置width属性时，它将自动撑满，但这并不意味着width属性可以继承
+
+###### 1.2.2 height属性
+
+1. height: 盒子内容的高度
+
+2. 属性单位通常是px，移动端开发也会涉及百分数、rem等单位
+
+3. 盒子的height属性如果不设置，它将自动被其内容撑开；如果没有内容，则height默认是0
+
+##### 1.3 padding属性详解
+
+1. padding: 盒子的内边距，即盒子边框内壁到文字的距离
+
+2. padding是四个方向的：
+   1. padding-top/pdt
+   2. padding-right/pdr
+   3. padding-bottom/pdb
+   4. padding-left/pdl
+
+3. padding的四数值写法：
+
+    ```CSS
+        padding: 10px 20px 30px;
+        /* 上 右 下 左 */
+        padding: 10px 20px 30px;
+        /* 上 右 下 （左=右）*/
+        padding: 10px 20px;
+        /* 上 右 （下=上） （左=右） */
+    ````
+
+4. 灵活设置padding属性
+   - 上=下
+
+       ```CSS
+        padding: 30px 0;
+       ```
+
+   - 上 左=右 下
+
+       ```CSS
+        padding: 30px 10px 20px;
+       ```
+
+   - 上 左=右
+
+        ```CSS
+        padding: 30px 10px 0;
+        ```
+
+   - 上=左=右
+
+        ```CSS
+        padding: 40px;
+        padding-bottom: 0;
+        <!-- 小属性层叠大属性 优选 -->
+
+        padding: 40px 40px 0;
+        ```
+
+##### 1.4 margin属性详解
+
+1. margin是盒子的外边距，即盒子和其他盒子的距离
+
+2. margin有四个方向：
+   1. margin-top
+   2. margin-right
+   3. margin-bottom
+   4. margin-left
+
+3. margin的塌陷（仅限上下，左右不存在塌陷现象）：小的margin会塌陷到大的margin中，从而margin不叠加，只以大值为准
+
+4. 默认的margin：
+   - body、ul、p等标签有默认的margin
+   - 在开始制作网页时，要将他们清除
+
+     ```CSS
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        <!-- * 通配符选择器 -->
+        <!-- 表示选择所有元素 -->
+        <!-- 通配符有效率问题 -->
+
+        body,ul,p {
+            margin: 0;
+            padding: 0;
+        }
+        <!-- 并集选择器 -->
+     ```
+
+5. 盒子水平居中
+   - 将盒子左右两边的margin都设置为auto，盒子将水平居中
+
+        ```CSS
+        .box {
+            margin: 0 auto;
+        }
+        <!-- 上下是0，左右自动 -->
+        ```
+
+   - 文本居中是text-align：center；和盒子水平居中是两个概念
+
+   - 盒子的垂直居中，需要使用绝对定位技术实现
+
+   - 行高=盒子高，文字垂直居中
+
+6. margin的传递：当盒模型有嵌套的时候，若父盒子与子盒子都不设magin属性，则都在顶部显示；若只给子盒子设了magin属性，则父盒子也会被拖拽
+   - 解决方案：
+        1. 将magin换成padding,若要保证盒子的高度宽度不变，需要变更盒子的width和height属性；
+        2. 给父盒子设置overflow:hidden，超出隐藏。当子元素必须超过父元素才能实现效果时，不建议使用。
+
+##### 1.5 盒模型计算
+
+```CSS
+.father {
+    width: 400px;
+    height: 300px;
+    padding: 10px;
+    border: 6px solid blue;
+}
+```
+##### 1.6 box-sizing属性
+
+#### 2. 行内元素和块级元素
+
+##### 2.1 display属性
+
+##### 2.2 行内元素和块级元素的相互转换
+
+##### 2.3 元素的隐藏
+
+<!-- css布局 -->
