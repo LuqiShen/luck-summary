@@ -1564,15 +1564,29 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 1.5 盒模型计算
 
-```CSS
-.father {
-    width: 400px;
-    height: 300px;
-    padding: 10px;
-    border: 6px solid blue;
-}
-```
+1. width/height
+   1. 实际的可用面积
+   2. 留给后代用的面积
+
+2. padding、border
+   1. padding、border不属于width/height表示的面积，计算整个盒子大小时需要单独计算
+   2. padding、border分为上下、左右两组，对称出现时记得乘2
+
 ##### 1.6 box-sizing属性
+
+```CSS
+    box-sizing: border-box;
+```
+
+1. 将盒子添加了如上属性，盒子的width/height数字就表示盒子实际占有的宽度和高度（不含margin），即padding、border变为“内缩”的，不再“外扩”
+
+2. 大量应用于移动网页制作中，因为它结合百分比布局、弹性布局等非常好用，在PC页面开发中使用较少
+
+3. 兼容到IE9
+
+##### ♦ 数值相同的情况下，div和button按钮为何会产生差别？
+
+- div的box-sizing属性属于默认情况，padding和border外扩；button内置了box-sizing属性为border-box，padding和border内缩
 
 #### 2. 行内元素和块级元素
 
