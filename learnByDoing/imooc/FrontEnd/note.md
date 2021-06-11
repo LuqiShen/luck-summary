@@ -1572,6 +1572,10 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
    1. padding、border不属于width/height表示的面积，计算整个盒子大小时需要单独计算
    2. padding、border分为上下、左右两组，对称出现时记得乘2
 
+3. 元素的实际大小和元素的空间尺寸
+   - 实际大小：加上padding、border
+   - 空间尺寸：加上padding、border、margin
+
 ##### 1.6 box-sizing属性
 
 ```CSS
@@ -1592,8 +1596,36 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 2.1 display属性
 
+| display属性 | 是否能并排显示 | 是否能设置宽高 | 当不设置width属性时 | 举例 |
+|:----:|:----:|:----:|:----:|:----:|
+|块级元素|否|是|width自动撑满|div、section、header、h系列、li、ul等|
+|行内元素（margin失效）|是|否|width自动收缩|a、span、em、b、u、i等|
+
+- 行内块：能并排；能设置宽高
+   1. img
+   2. form
+
 ##### 2.2 行内元素和块级元素的相互转换
 
+```CSS
+    display: block;
+    /* 将元素转为块级元素 */
+
+    display: inline;
+    /* 将元素转为行内元素（不多见） */
+
+    display: inline-block;
+    /* 将元素转为行内块 */
+```
+
 ##### 2.3 元素的隐藏
+
+```CSS
+    display: none;
+    /* 将元素隐藏，同时元素将彻底放弃自己的位置，如同没有写它的标签 */
+
+    visibility: hidden;
+    /* 将元素隐藏，但是元素不放弃自己的位置 */
+```
 
 <!-- css布局 -->
