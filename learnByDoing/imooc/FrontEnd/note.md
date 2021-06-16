@@ -397,9 +397,11 @@ charset：字符集属性
 - a标签制作超级链接 anchor
   - 自带样式：下划线；手指标；点击后变色
   - 作用是帮用户输入了链接的地址，从而实现了页面的跳转
+  - a标签点击之后会刷新当前页面
   
 ```HTML
-    <a href="">链接</a>
+    <a href="">链接（点击刷新当前界面）</a>
+    <a href="#">链接（点击不刷新当前界面）</a>
 ```
 
 ###### 2.1 a标签的属性
@@ -1646,7 +1648,7 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 1. 浮动的最本功能：浮动用来实现并排
 
-2. 浮动使用要点、
+2. 浮动使用要点
    1. 要浮动，并排的盒子都要设置浮动
    2. 父盒子要有足够的宽度，否则子盒子会掉下去
 
@@ -1701,6 +1703,8 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 - 清除浮动：浮动一定要封闭到一个盒子中，否则就会对页面后续元素产生影响
 
+- 原因是有些盒子不能设置高度，因为高度由用户输入的内容决定
+
 - 清除浮动的方法：
   1. 让内部有浮动的父盒子形成BFC，他就能关闭住内部的浮动；此时最好的方法是，overflow:hidden
   2. 给后面的父盒子设置clear:both属性，clear表示清除浮动对自己的影响，both表示左右浮动都清除;副作用是margin失效
@@ -1746,6 +1750,228 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 2.1 相对定位
 
+```CSS
+    position: relative;
+    top: 100px;
+    left: 100px;
+    /* 相对定位，相对自己原来的位置，向下100px，向右100px */
+```
+
+1. 相对定位：盒子可以相对自己原来的位置进行位置调整，称为相对定位
+
+2. 位置描述词：
+   1. left向右移动；right向左移动；top向下移动；bottom向上移动
+   2. 值可以为复数，即往规定方向移动
+
+3. 相对定位的性质，会在“老家留坑”，本质上仍然是在原来的位置，只不过渲染在新的地方而已，渲染的图形可以比喻为“影子”，不会对页面其他元素产生影响
+
+4. 相对定位不脱离文档流，会覆盖住别的元素，但不会影响别的元素的布局
+
+5. 相对定位的用途：
+   1. 相对定位用来微调元素位置
+   2. 相对定位的元素，可以当做绝对定位的参考盒子
+
 ##### 2.2 绝对定位
 
+```CSS
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    /* 绝对定位，在浏览器中，距上边界100px，距左边界100px */
+```
+
+1. 绝对定位：盒子可以在浏览器中以坐标进行位置精准描述，拥有自己的绝对位置
+
+2. 位置描述词
+   1. left: 到左边的距离
+   2. right：到右边的距离
+   3. top：到上边的距离
+   4. bottom：到下边的距离
+
+3. 绝对定位的元素脱离文档流，将释放自己的位置，对其他元素不会产生任何干扰，而是对它们进行压盖
+
+4. 脱离标准文档流的方法：
+   1. 浮动
+   2. 绝对定位
+   3. 固定定位
+
+5. 绝对定位的参考盒子
+   1. 绝对定位的盒子并不是永远以浏览器作为基准点
+   2. 绝对定位的盒子会以自己祖先元素中，离自己最近的拥有定位属性的盒子，当作基准点。这个盒子通常是相对定位的，所以这个性质也叫做“子绝父相”
+
+6. 绝对定位的盒子垂直居中
+
+   ```CSS
+        .vertical-center {
+            position: absolute;
+            top: 50%;
+            margin-top: -自己高度的一半;
+        }
+        
+        .center {
+            <!-- vertical -->
+            position: absolute;
+            top: 50%;
+            margin-top: -自己高度的一半;
+
+            <!-- horizontal -->
+            position: absolute;
+            left: 50%;
+            margin-left: -自己宽度的一半;
+
+            <!-- 为什么不使用margin:0 auto; -->
+            <!-- 定位为absolute的元素已经脱离文档流  -->
+        }
+   ```
+
+7. 堆叠顺序z-index属性
+   - z-index属性是一个没有单位的正整数，数值大的能够压住数值小的
+
+8. 绝对定位的用途
+   1. 制作“压盖”、“遮罩”的效果
+   2. 结合CSS精灵使用
+   3. 结合JS实现动画
+
+9. 轮播图布局
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Keywords" content="手机, 5G手机">
+    <meta name="Description" content="先进手机">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .carousel {
+            position: relative;
+            height: 768px;
+            width: 1366px;
+            margin: 40px auto;
+        }
+
+        .carousel .btn {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 50%;
+            margin-top: -20px;
+
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            background-color: rgba(255,255,255,.5);
+
+            cursor: pointer;
+            font-family: consolas;
+            font-size: 26px;
+        }
+
+        .carousel .btn:hover {
+            background-color: gray;
+            color: white;
+        }
+
+        .carousel a {
+            text-decoration: none;
+        }
+
+        .carousel .leftbtn {
+            left: 10px;
+        }
+
+        .carousel .rightbtn {
+            right: 10px;
+        }
+
+        .carousel ol {
+            position: absolute;
+            width: 200px;
+            height: 40px;
+            right: 20px;
+            bottom: 20px;
+            list-style: none;
+        }
+
+        .carousel ol li {
+            float: left;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: rgba(255,255,255,.5);
+            cursor: pointer;
+        }
+
+        .carousel ol li.current {
+            background-color: gold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="carousel">
+        <img src="images/风景_01.jpg" alt="">
+        <a href="#" class="leftbtn btn">&lt;</a>
+        <a href="#" class="rightbtn btn">&gt;</a>
+
+        <ol>
+            <li>
+                <a href=""></a>
+            </li>
+            <li class="current">
+                <a href=""></a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+            <li>
+                <a href=""></a>
+            </li>
+        </ol>
+    </div>
+
+</body>
+
+</html>
+```
+
 ##### 2.3 固定定位
+
+```CSS
+    .fix {
+        position: fixed;
+        top: 100px;
+        left: 100px;
+    }
+```
+
+- 固定定位：不管页面如何滚动，被固定的盒子永远固定在同一位置
+
+- 固定定位只能以页面为参考点
+
+- 固定定位脱离标准文档流
+
+- 用途：“返回顶部”、“楼层导航”
+
+##### ♦ 几种定位应用场景
+
+1. 可以通过对比来分析几种定位之间的区别
+    1. 相对定位：不脱离文档流；会覆盖住别的盒子，但不影响布局
+    2. 绝对定位：脱离文档流；以祖辈中定位为相对定位的盒子为参考；覆盖别的盒子，可以通过z-index属性调整
+    3. 固定定位：脱离文档流；只以界面为参考
+2. 可以通过举例来说明某种定位的应用场合
+   1. 相对定位：微调；绝对定位的参考盒子
+   2. 绝对定位：覆盖
+   3. 固定定位：冻结
+
+##### ♦ margin传递问题

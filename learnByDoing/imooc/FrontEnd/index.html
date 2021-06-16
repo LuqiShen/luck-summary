@@ -3,41 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Keywords" content="手机, 5G手机">
-    <meta name="Description" content="先进手机">
     <title></title>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        .main img{
+            display: block;
+            margin: 0 auto;
         }
-        div {
-            overflow: hidden;
+
+        .main .ad{
+            position: fixed;
+            top: 50%;
+            margin-top: -182px;
         }
-        p {
-            float: left;
-            width: 100px;
-            height: 100px;
-            background-color: orange;
-            margin: 20px 20px;
+
+        .main .leftad {
+            left: 0;
+        }
+
+        .main .rightad {
+            right: 0;
         }
     </style>
 </head>
 
 <body>
-    
-    <div>
-        <p></p>
-        <p></p>
+    <div class="main">
+        <img src="http://climg.mukewang.com/59c9f7ce0001839219034033.png" alt="">
+        <div class="ad leftad">
+            <img src="http://climg.mukewang.com/5a3383d00001a3dd02240364.png" alt="">
+        </div>
+        <div class="ad rightad">
+            <img src="http://climg.mukewang.com/5a3383c70001f1b702240364.png" alt="">
+        </div>
     </div>
-
-    <div>
-        <p></p>
-        <p></p>
-    </div>
-
 </body>
 
 </html>
