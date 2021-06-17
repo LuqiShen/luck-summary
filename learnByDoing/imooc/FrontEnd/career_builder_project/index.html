@@ -8,86 +8,94 @@
     <title>Career Builder</title>
     <meta name="Keywords" content="">
     <meta name="Description" content="">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
     <!-- header -->
     <header>
         <!-- logo -->
-        <div class="logo">
-            <img src="images/logo.png" alt="">
+        <div class="main-header">
+            <div class="logo">
+                <img src="images/logo.png" alt="">
+            </div>
+
+            <!-- nav -->
+            <nav class="main-nav">
+                <ul>
+                    <li class="cur-nav"><a href="">HOME</a></li>
+                    <li><a href="">ABOUT</a></li>
+                    <li><a href="">GALLERY</a></li>
+                    <li><a href="">FACULTY</a></li>
+                    <li><a href="">EVENTS</a></li>
+                    <li><a href="">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- banner -->
+    <section class="banner">
+
+        <!-- banner image -->
+        <img class="banner-img" src="images/banner3.jpg" alt="">
+
+        <!-- banner mask -->
+        <div class="banner-center">
         </div>
 
-        <!-- nav -->
-        <nav>
-            <ul>
-                <li><a href="">HOME</a></li>
-                <li><a href="">ABOUT</a></li>
-                <li><a href="">GALLERY</a></li>
-                <li><a href="">FACULTY</a></li>
-                <li><a href="">EVENTS</a></li>
-                <li><a href="">CONTACT</a></li>
-            </ul>
-        </nav>
-        </img>
+        <!-- banner form -->
+        <div class="banner-form">
+            <form action="" method="post">
+                <p>
+                    <input type="text" placeholder="yourName">
+                </p>
+                <p>
+                    <input type="text" placeholder="yourPhone">
+                </p>
+                <p>
+                    <input type="text" placeholder="yourEmail">
+                </p>
+                <p>
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Write Your Comment Here"></textarea>
+                </p>
+                <button>SEND MESSAGE</button>
+            </form>
+        </div>
 
-        <!-- banner -->
-        <section class="banner">
 
-            <!-- banner image -->
-            <div class="banner-image">
-                <a href="">
-                    <img src="images/banner3.jpg" alt="">
-                </a>
+    </section>
+
+    <main>
+        <!-- about -->
+        <div class="about">
+
+            <!-- about上半部分 -->
+            <div class="about-top">
+                <h2>
+                    ABOUT
+                </h2>
+
+                <hr>
+                </hr>
+
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                    the industry's standard dummy text ever since the 1500s.
+                </p>
             </div>
 
-            <!-- banner mask -->
-            <div class="banner-mask">banner遮罩层</div>
-
-            <!-- banner form -->
-            <div class="banner-form">
-                <form action="" method="post">
-                    <p>
-                        <input type="text" placeholder="yourName">
-                    </p>
-                    <p>
-                        <input type="text" placeholder="yourPhone">
-                    </p>
-                    <p>
-                        <input type="text" placeholder="yourEmail">
-                    </p>
-                    <p>
-                        <textarea name="" id="" cols="30" rows="10" placeholder="Write Your Comment Here"></textarea>
-                    </p>
-                    <button>SEND MESSAGE </button>
-                </form>
-            </div>
-        </section>
-
-        <main>
-            <!-- about -->
-            <div class="about">
-
-                <!-- about上半部分 -->
-                <div class="top-about">
+            <!-- about下半部分 -->
+            <div class="about-bottom">
+                <div class="about-world">
                     <h2>
-                        ABOUT
+                        A WORD
                     </h2>
-
-                    <p>分割线</p>
-
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s.
-                    </p>
+                    <h2>
+                        ABOUT US
+                    </h2>
                 </div>
-
-                <!-- about下半部分 -->
-                <div class="bottom-about">
-                    <h3>
-                        A WORD ABOUT US
-                    </h3>
-
+                <div class="about-explore">
                     <p>
                         Praesent dignissim viverra est, sed bibendum ligula congue non. Sed ac nisl et felis gravida
                         commodo? Suspendisse eget ullamcorper ipsum. Suspendisse diam amet.
@@ -98,135 +106,142 @@
                             EXPLORE
                         </button>
                     </a>
+                </div>
+                <div class="about-img">
                     <img src="images/bb3.jpg" alt="">
-                    <div>
-                        <p>70000</p>
-                        <p>分割线</p>
+                </div>
+                <div class="about-number">
+                    <div class="about-brief">
+                        <h3>70000</h3>
+                        <hr>
                         <p>Students</p>
                     </div>
-                    <div>
-                        <p>600</p>
-                        <p>分割线</p>
+
+                    <div class="about-brief">
+                        <h3>600</h3>
+                        <hr>
                         <p>Faculty</p>
                     </div>
                 </div>
+
+            </div>
+        </div>
+
+        <!-- images-and-texts -->
+        <div class="images-and-texts">
+            <!-- image 1 -->
+            <div>
+                <img src="images/b1.jpg" alt="">
             </div>
 
-            <!-- images-and-texts -->
-            <div class="images-and-texts">
-                <!-- image 1 -->
-                <div>
-                    <img src="images/b1.jpg" alt="">
-                </div>
-
-                <!-- text 2 -->
-                <div>
-                    <h3>Library</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry
-                    </p>
-                    <button>EXPLORE</button>
-                </div>
-                
-                <!-- image 3 -->
-                <div>
-                    <img src="images/b2.jpg" alt="">
-                </div>
-                
-                <!-- text 4 -->
-                <div>
-                    <h3>Library</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry
-                    </p>
-                    <button>EXPLORE</button>
-                </div>
-                
-                <!-- image 5 -->
-                <div>
-                    <img src="images/b3.jpg" alt="">
-                </div>
-                
-                <!-- text 6 -->
-                <div>
-                    <h3>Library</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry
-                    </p>
-                    <button>EXPLORE</button>
-                </div>
-                
-                <!-- image 7 -->
-                <div>
-                    <img src="images/b4.jpg" alt="">
-                </div>
-                
-                <!-- text 8 -->
-                <div>
-                    <h3>Library</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry
-                    </p>
-                    <button>EXPLORE</button>
-                </div>
+            <!-- text 2 -->
+            <div>
+                <h3>Library</h3>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry
+                </p>
+                <button>EXPLORE</button>
             </div>
 
-            <!-- gallery -->
-            <div class="gallery">
-                <!-- gallery上半部分 -->
-                <div class="top-gallery">
-                    <h2>Gallery</h2>
-                    <p>分割线</p>
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a type specimen book.
-                    </p>
-                </div>
-                <!-- gallery下半部分 -->
-                <div class="bottom-gallery">
-                    <dl>
-                        <dt>
-                            <img src="images/03-01.jpg" alt="">
-                        </dt>
-                        <dd>Science Lab</dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <img src="images/03-02.jpg" alt="">
-                        </dt>
-                        <dd>Indoor Stadium</dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <img src="images/03-03.jpg" alt="">
-                        </dt>
-                        <dd>Transportation</dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <img src="images/03-04.jpg" alt="">
-                        </dt>
-                        <dd>Kids Room</dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <img src="images/03-05.jpg" alt="">
-                        </dt>
-                        <dd>Meditation Classes</dd>
-                    </dl>
-                    <dl>
-                        <dt>
-                            <img src="images/03-06.jpg" alt="">
-                        </dt>
-                        <dd>Kids Play Ground</dd>
-                    </dl>
-                </div>
+            <!-- image 3 -->
+            <div>
+                <img src="images/b2.jpg" alt="">
             </div>
-        </main>
 
-        <!-- footer -->
-        <footer>
-            <p>&copy; 2016 imooc.com 京JCP备13046642号</p>
-        </footer>
+            <!-- text 4 -->
+            <div>
+                <h3>Library</h3>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry
+                </p>
+                <button>EXPLORE</button>
+            </div>
+
+            <!-- image 5 -->
+            <div>
+                <img src="images/b3.jpg" alt="">
+            </div>
+
+            <!-- text 6 -->
+            <div>
+                <h3>Library</h3>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry
+                </p>
+                <button>EXPLORE</button>
+            </div>
+
+            <!-- image 7 -->
+            <div>
+                <img src="images/b4.jpg" alt="">
+            </div>
+
+            <!-- text 8 -->
+            <div>
+                <h3>Library</h3>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry
+                </p>
+                <button>EXPLORE</button>
+            </div>
+        </div>
+
+        <!-- gallery -->
+        <div class="gallery">
+            <!-- gallery上半部分 -->
+            <div class="top-gallery">
+                <h2>Gallery</h2>
+                <p>分割线</p>
+                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+            <!-- gallery下半部分 -->
+            <div class="bottom-gallery">
+                <dl>
+                    <dt>
+                        <img src="images/03-01.jpg" alt="">
+                    </dt>
+                    <dd>Science Lab</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <img src="images/03-02.jpg" alt="">
+                    </dt>
+                    <dd>Indoor Stadium</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <img src="images/03-03.jpg" alt="">
+                    </dt>
+                    <dd>Transportation</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <img src="images/03-04.jpg" alt="">
+                    </dt>
+                    <dd>Kids Room</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <img src="images/03-05.jpg" alt="">
+                    </dt>
+                    <dd>Meditation Classes</dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <img src="images/03-06.jpg" alt="">
+                    </dt>
+                    <dd>Kids Play Ground</dd>
+                </dl>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <p>&copy; 2016 imooc.com 京JCP备13046642号</p>
+    </footer>
 </body>
 
 </html>
