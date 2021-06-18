@@ -1976,3 +1976,223 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### ♦ margin传递问题
 
+### 第2章 边框与圆角
+
+- 小属性均是用来层叠大属性
+
+#### 1. 边框
+
+##### 1.1 边框的三要素
+
+```CSS
+    .box {
+        border: 1px solid red;
+    }
+
+    <!-- 线宽度 线型 线颜色 -->
+```
+
+1. 线宽度 border-width
+
+2. 线型 border-style
+   | 线型值 | 意义|
+   | :----: | :----: |
+   | solid | 实线 |
+   | dashed | 虚线 |
+   | dotted | 点状线 |
+
+3. 线颜色 border-color
+
+4. border的width、color属性会有默认值
+
+##### 1.2 四个方向的边框
+
+| 属性 | 意义 |
+| :----: | :----: |
+| border-top | 上边框 |
+| border-right | 右边框 |
+| border-bottom | 下边框 |
+| border-left | 左边框 |
+
+| 小属性 | 意义|
+| :----: | :----: |
+| border-top-width | 上边框宽度 |
+| border-top-style | 上边框线型 |
+| border-top-color | 上边框颜色 |
+| border-right-width | 右边框宽度 |
+| border-right-style | 右边框线型 |
+| border-right-color | 右边框颜色 |
+| border-left-width | 左边框宽度 |
+| border-left-style | 左边框线型 |
+| border-left-color | 左边框颜色 |
+| border-bottom-width | 下边框宽度 |
+| border-bottom-style | 下边框线型 |
+| border-bottom-color | 下边框颜色 |
+
+##### 1.3 去掉边框
+
+```CSS
+    .box {
+        /* 去掉所有边框 */
+        border: none;
+
+        /* 去掉指定方向的边框 */
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-bottom: none;
+    }
+```
+
+##### 1.4 利用边框制作三角形
+
+```CSS
+    .trangle {
+        width: 0;
+        height: 0;
+        /* 不能去掉透明的边框，去掉会没有斜线出现 */
+        border: 100px solid transparent;
+
+        border-top-color: red;
+        /* 上边框，向下三角 */
+
+        border-bottom-color: orange;
+        /* 下边框，向上三角 */
+
+        border-left-color: yellow;
+        /* 左边框，向右三角 */
+
+        border-right-color: green;
+        /* 右边框，向左三角 */
+    }
+
+```
+
+#### 2. 圆角
+
+```CSS
+    .box {
+        border-radius: 10px;
+        /* 值越大越圆 */
+    }
+
+```
+
+1. border-radius属性的值通畅为px单位，表示圆角的半径
+
+2. 单独设置四个圆角
+
+   ```CSS
+        .box {
+            border-radius: 10px 20px 30px 40px;
+            <!-- 左上 右上 右下 左下 -->
+            <!-- 左上顺时针 -->
+        }
+   ```
+
+   | 属性 | 意义 |
+   | :----: | :----: |
+   | border-top-left-radius | 左上 |
+   | border-top-right-radius | 右上 |
+   | border-bottom-right-radius | 右下|
+   | border-bottom-left-radius | 左下|
+
+    - border-radius有三个值得话，第一个值表示对左上角的设置，第二个值表示对右上角和左下角的设置，第三个值表示对右下角的设置
+    - border-radius有两个属性值的话，第一个值表示左上角和右下角，第二个值表示右上角和左下角
+
+3. 百分比：表示半径的长度占长宽的百分比
+
+    ```CSS
+        .box {
+            border-radius: 10px;
+            /* 值越大越圆 */
+        }
+    
+        .circle {
+            /* 为正方形 */
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+    
+        .oval {
+            <!-- 为长方形 -->
+            width: 400px;
+            height: 200px;
+            border-radius: 50%;
+            <!-- 不能使用px，会变成胶囊 -->
+        }
+
+    ```
+
+    ```HTML
+        <!-- 蝴蝶结 -->
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>边框</title>
+            <style>
+                /*补充代码*/
+                .box {
+                    width: 100px;
+                    height: 100px;
+                    position: relative;
+                }
+
+                .bd1 {
+                    width: 0;
+                    height: 0;
+                    border: 100px solid transparent;
+                    border-left-color: red;
+                    border-radius: 80px;
+                }
+
+                .bd2 {
+                    width: 0;
+                    height: 0;
+                    border: 100px solid transparent;
+                    border-right-color: red;
+                    border-radius: 80px;
+                    position: absolute;
+                    top: 0;
+                    left: -20px;
+                }
+
+            </style>
+        </head>
+
+        <body>
+            <div class="box">
+                <div class="bd1"></div>
+                <div class="bd2"></div>
+            </div>
+        </body>
+        </html>
+    ```
+
+#### 3. 盒子阴影
+
+```CSS
+    .box {
+        box-shadow: 10px 20px 30px rgba(0,0,0,.4);
+        /* x偏移 y偏移 模糊量 颜色 */
+    }
+
+    /* 阴影延展 */
+    .another-box {
+        box-shadow: 10px 20px 30px 40px rgba(0,0,0,.4);
+        /* x偏移 y偏移 模糊量 阴影延展（四个方向） 颜色 */
+    }
+
+    /* 内阴影 */
+    .another-another-box {
+        box-shadow: inset 0 0 30px rgba(0,0,0,.4);
+        /*内阴影 x偏移 y偏移 模糊量 颜色 */
+    }
+
+    /* 多阴影 */
+    .another-another-box {
+        box-shadow: 10px 20px 30px rgba(0,0,0,.4), 10px 20px 30px rgba(244,244,244,.4), 10px 20px 30px rgba(255,255,255,.4);
+        /*x偏移 y偏移 模糊量 颜色 */
+    }
+```
