@@ -1,0 +1,388 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+header {
+    overflow: hidden;
+    background-color: #07cbc9;
+}
+
+header .main-header {
+    width: 1800px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+header .logo {
+    height: 80px;
+    width: 300px;
+    float: left;
+    text-align: center;
+
+    position: relative;
+}
+
+header .logo img {
+    position: absolute;
+    top: 50%;
+    margin-top: -24px;
+}
+
+header .main-nav {
+    float: right;
+    width: 900px;
+    height: 80px;
+}
+
+header .main-nav ul {
+    list-style: none;
+    height: 80px;
+    width: 900px;
+}
+
+header .main-nav ul li {
+    height: 80px;
+    width: 150px;
+    float: left;
+
+    line-height: 80px;
+    text-align: center;
+    font-size: 16px;
+}
+
+header .main-nav ul li a {
+    text-decoration: none;
+    display: block;
+    height: 80px;
+    width: 150px;
+    color: white;
+}
+
+header .main-nav ul li a:hover {
+    background-color: #82d6d1;
+}
+
+header .main-nav ul li.cur-nav {
+    background-color: #08998f;
+}
+
+/* banner */
+.banner {
+    width: 100%;
+    height: 600px;
+    position: relative;
+}
+
+.banner .banner-img {
+    height: 600px;
+    width: 100%;
+}
+
+.banner .banner-center {
+    width: 100%;
+    height: 600px;
+    background: rgba(0, 0, 0, 0.5);
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.banner .banner-form {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    margin-left: -252px;
+    text-align: center;
+}
+
+.banner .banner-form input {
+    background: none;
+    width: 504px;
+    height: 40px;
+    margin-top: 20px;
+    border: 1px solid #808080;
+}
+
+.banner .banner-form textarea {
+    background: none;
+    width: 504px;
+    height: 110px;
+    margin-top: 20px;
+    border: 1px solid #808080;
+}
+
+.banner .banner-form button {
+    background: none;
+    width: 200px;
+    height: 40px;
+    margin-top: 20px;
+    border: 1px solid #808080;
+    color: #808080;
+    cursor: pointer;
+}
+
+/* about */
+.about {
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    overflow: hidden;
+}
+
+.about .about-top {
+    text-align: center;
+}
+
+.about .about-top h2 {
+    font-size: 32px;
+    line-height: 40px;
+}
+
+.about .about-top hr {
+    width: 60px;
+    height: 3px;
+    background: #07cbc9;
+    margin: 10px auto;
+    border: none;
+}
+
+.about .about-top p {
+    color: gray;
+    font-size: 14px;
+    width: 550px;
+    margin: 0 auto;
+}
+
+.about .about-bottom {
+    width: 1200px;
+    height: 435px;
+    padding-top: 30px;
+    position: relative;
+}
+
+.about .about-bottom .about-world {
+    float: left;
+    width: 200px;
+}
+
+.about .about-bottom .about-explore {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 300px;
+    padding: 20px;
+    font-size: 18px;
+    border: 1px solid gray;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.about .about-bottom .about-explore button {
+    height: 40px;
+    width: 140px;
+    background-color: black;
+    margin-top: 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.about .about-bottom .about-img {
+    width: 700px;
+    float: left;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about .about-bottom .about-number {
+    float: left;
+    width: 300px;
+}
+
+.about .about-bottom .about-number .about-brief {
+    width: 260px;
+    height: 90px;
+    margin-bottom: 30px;
+    border: 1px solid #07cbc9;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.about .about-bottom .about-number .about-brief h3 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.about .about-bottom .about-number .about-brief hr {
+    width: 60px;
+    height: 3px;
+    background: #07cbc9;
+    margin: 10px auto;
+    border: none;
+}
+
+/* images-and-texts 图文混排区 */
+.images-and-texts {
+    padding-top: 50px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.images-and-texts .imgs,
+.texts {
+    width: 25%;
+    height: 380px;
+
+    float: left;
+    background-color: #07cbc9;
+}
+
+.images-and-texts .imgs img {
+    display: block;
+    width: 100%;
+}
+
+.images-and-texts .l-tr::before {
+    content: "";
+    border: 20px solid transparent;
+    border-right-color: #07cbc9;
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.images-and-texts .r-tr::after {
+    content: "";
+    border: 20px solid transparent;
+    border-left-color: #07cbc9;
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.images-and-texts .texts .text-main {
+    color: white;
+    padding: 20px 20px;
+    height: 100%;
+    position: relative;
+}
+
+.images-and-texts .texts .text-main h3 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.images-and-texts .texts .text-main p:nth-of-type(1) {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.images-and-texts .texts .text-main p:nth-of-type(2) {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 30px;
+}
+
+.images-and-texts .texts .text-main button {
+    background-color: black;
+    border: none;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+
+    height: 40px;
+    width: 138px;
+
+    position: absolute;
+    left: 50%;
+    margin-left: -69px;
+}
+
+/* gallery */
+
+.gallery {
+    overflow: hidden;
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.gallery .gallery-top {
+    text-align: center;
+}
+
+.gallery .gallery-top h2 {
+    font-size: 32px;
+    line-height: 40px;
+}
+
+.gallery .gallery-top hr {
+    width: 60px;
+    height: 3px;
+    background: #07cbc9;
+    margin: 10px auto;
+    border: none;
+}
+
+.gallery .gallery-top p {
+    color: gray;
+    font-size: 14px;
+    width: 550px;
+    margin: 0 auto;
+}
+
+.gallery .gallery-bottom {
+    width: 1200px;
+    height: 640px;
+    padding: 20px 20px;
+}
+
+.gallery .gallery-bottom dl {
+    float: left;
+    width: 360px;
+    height: 290px;
+    margin-right: 40px;
+    margin-bottom: 30px;
+}
+
+.gallery .gallery-bottom dl:nth-of-type(3) {
+    margin-right: 0;
+}
+
+.gallery .gallery-bottom dl:nth-of-type(6) {
+    margin-right: 0;
+}
+
+.gallery .gallery-bottom dl dt {
+    height: 240px;
+    width: 360px;
+}
+
+.gallery .gallery-bottom dl dd {
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    height: 50px;
+    line-height: 50px;
+
+    width: 340px;
+    padding-left: 20px;
+}
+
+/* footer */
+footer {
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    background-color: #07cbc9;
+    text-align: center;
+}

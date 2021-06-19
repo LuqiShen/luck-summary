@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.shopping-cart {
+    background-color: #FAFAFA;
+    overflow: hidden;
+    width: 600px;
+    height: 150px;
+    position: relative;
+}
+
+.shopping-cart .post-btn {
+    float: left;
+    height: 150px;
+    position: absolute;
+    top: 50%;
+    margin-top: -38px;
+}
+
+.shopping-cart .sc-img {
+    float: right;
+    position: relative;
+    height: 150px;
+}
+
+.shopping-cart .sc-img img {
+    width: 150px;
+    height: 150px;
+}
+
+.shopping-cart .sc-img .number {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    border-radius: 50%;
+}

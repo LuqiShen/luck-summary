@@ -1,0 +1,582 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font: normal 14px/25px '微软雅黑';
+}
+
+/* header */
+
+header {}
+
+header .header-top {
+    width: 1201px;
+    margin: 0 auto;
+
+    /* 清除浮动 */
+    overflow: hidden;
+}
+
+header .header-top .logo {
+    padding-top: 27px;
+    width: 221px;
+    height: 63px;
+    float: left;
+}
+
+header .header-top .logo h1 {
+    width: 221px;
+    height: 63px;
+}
+
+header .header-top .tool {
+    float: right;
+
+    width: 266px;
+    height: 77px;
+    padding-top: 22px;
+}
+
+header .header-top .tool .r1 .tel {
+    width: 32px;
+    height: 25px;
+}
+
+header .header-top .tool .r1 .tel-number {
+    font-size: 20px;
+    color: #00978E;
+
+    display: inline-block;
+    width: 158px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+}
+
+header .header-top .tool .r1 .icon {
+    width: 24px;
+    height: 24px;
+}
+
+header .header-top .tool .r1 .chinese_icon {
+    margin-right: 15px;
+}
+
+header .header-top .tool .r2 {
+    width: 264px;
+    height: 28px;
+    border: 1px solid rgba(202, 202, 202, 0.60);
+    margin-top: 12px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+header .header-top .tool .r2 input {
+    float: left;
+    width: 244px;
+    height: 28px;
+    /* 去掉边框 */
+    border: none;
+    padding-left: 20px;
+    /* 去掉鼠标点击时的外围线 */
+    outline: none;
+}
+
+header .header-top .tool .r2 button {
+    float: left;
+    width: 20px;
+    height: 20px;
+    /* 去掉背景 */
+    background: none;
+    /* 去掉边框 */
+    border: none;
+    /* 去掉外围线 */
+    outline: none;
+    /* 设置触碰时的鼠标指针样式 */
+    cursor: pointer;
+
+    position: relative;
+    top: 4px;
+    left: -5px;
+}
+
+header .main-nav {
+    height: 60px;
+    background-color: #00978E;
+    margin-top: 20px;
+}
+
+header .main-nav ul {
+    width: 1200px;
+    height: 60px;
+    margin: 0 auto;
+}
+
+header .main-nav ul li {
+    width: 150px;
+    height: 60px;
+    float: left;
+
+    font-size: 16px;
+    line-height: 60px;
+    text-align: center;
+    color: white;
+}
+
+header .main-nav ul li.nav-current {
+    background-color: #015E58;
+}
+
+header .main-nav ul li a {
+    display: block;
+    width: 150px;
+    height: 60px;
+    color: white;
+}
+
+header .main-nav ul li a:hover {
+    background-color: #75ccc6;
+}
+
+/* banner */
+
+.banner {
+    width: 100%;
+    position: relative;
+}
+
+.banner .banner-img {
+    width: 100%;
+}
+
+
+
+.banner .center {
+    width: 1200px;
+    height: 300px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -600px;
+}
+
+.banner .center .btn {
+    width: 56px;
+    height: 74px;
+    background-color: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 50%;
+    margin-top: -37px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.banner .center .leftbtn {
+    left: 0;
+}
+
+.banner .center .rightbtn {
+    right: 0;
+}
+
+.banner .center h2 {
+    position: absolute;
+    width: 504px;
+    height: 79px;
+
+    font-size: 60px;
+    color: #015E58;
+    font-weight: normal;
+
+    top: 50%;
+    margin-top: -50px;
+
+    left: 114px;
+}
+
+.banner ol {
+    width: 120px;
+    height: 12px;
+    /* 水平居中，拉回负width的一半 */
+    position: absolute;
+    left: 50%;
+    margin-left: -60px;
+    bottom: 20px;
+}
+
+.banner ol li {
+    float: left;
+    width: 20px;
+    height: 12px;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+/* 最后一个没有margin */
+.banner ol li:last-child {
+    margin-right: 0;
+}
+
+.banner ol li.cur-img {
+    width: 30px;
+    background-color: #00978E;
+}
+
+/* content useful-links */
+.content {
+    padding-top: 71px;
+}
+
+.content h3 {
+    border-left: 8px solid #00978E;
+    padding-left: 10px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.content .useful-links {
+    width: 904px;
+    height: 151px;
+    margin: 0 auto;
+}
+
+.content .useful-links ul {
+    /* 清除浮动 */
+    overflow: hidden;
+}
+
+.content .useful-links ul li {
+    float: left;
+    width: 104px;
+    margin-right: 56px;
+    color: #333;
+    font-size: 20px;
+
+    line-height: 40px;
+}
+
+.content .useful-links ul li:last-child {
+    margin-right: 0;
+}
+
+.content .useful-links ul li span {
+    /* 将span转为块级元素，不设置宽度，就相当于width属性为100%，此时文字可以使用text-align:center居中 */
+    display: block;
+    text-align: center;
+}
+
+/* 医院动态和医院公告 */
+
+.content .news-and-notice {
+    width: 1200px;
+    height: 376px;
+    margin: 0 auto;
+    margin-top: 56px;
+}
+
+.content .news-and-notice .news {
+    float: left;
+    width: 877px;
+    height: 376px;
+}
+
+.content .news-and-notice .notice {
+    float: left;
+    width: 323px;
+    height: 376px;
+}
+
+.content .news-and-notice .news h3 {
+    height: 33px;
+    margin-bottom: 10px;
+}
+
+.content .news-and-notice .news .news-content .hot-news {
+    float: left;
+    width: 422px;
+    height: 328px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.content .news-and-notice .news .news-content .hot-news .info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 422px;
+    background-color: rgba(0, 0, 0, .3);
+    text-align: center;
+    color: white;
+    line-height: 40px;
+}
+
+.content .news-and-notice .news .news-content ul {
+    float: left;
+    width: 400px;
+    height: 328px;
+}
+
+.content .news-and-notice .news .news-content ul li {
+    line-height: 40px;
+}
+
+.content .news-and-notice .news .news-content ul li.spec a {
+    color: #00978E;
+}
+
+.content .news-and-notice .news .news-content ul li a {
+    float: left;
+    color: #666;
+}
+
+.content .news-and-notice .news .news-content ul li span {
+    float: right;
+}
+
+.content .news-and-notice .notice h3 {
+    margin-bottom: 10px;
+}
+
+.content .news-and-notice .notice ol li {
+    overflow: hidden;
+    margin-bottom: 11px;
+}
+
+.content .news-and-notice .notice ol li .number {
+    float: left;
+    width: 53px;
+    height: 57px;
+    background-color: #00978E;
+
+    color: white;
+    line-height: 57px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: normal;
+
+    margin-right: 9px;
+}
+
+.content .news-and-notice .notice ol li dl dt a {
+    color: #666;
+}
+
+.content .news-and-notice .notice ol li dl dd a {
+    color: #999;
+}
+
+/* 广告图片 */
+.content .ad-images {
+    width: 1200px;
+    margin: 20px auto;
+}
+
+
+/* 科室介绍 */
+.content .dep-info {
+    height: 400px;
+    background-color: #FAFAFA;
+}
+
+.content .dep-info .center {
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-top: 37px;
+
+    position: relative;
+}
+
+.content .dep-info .center .more {
+    position: absolute;
+    right: 0;
+    top: 37px;
+    color: #999;
+}
+
+.content .dep-info .center .dep-content .col {
+    float: left;
+    width: 270px;
+    padding-left: 30px;
+}
+
+.content .dep-info .center .dep-content .col h4::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    background-color: #00978E;
+    left: 60px;
+    top: 12px;
+}
+
+.content .dep-info .center .dep-content .col h4::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    background-color: #00978E;
+    left: 162px;
+    top: 12px;
+}
+
+.content .dep-info .center .dep-content .col h4 {
+    text-align: center;
+    margin: 18px auto;
+    position: relative;
+}
+
+.content .dep-info .center .dep-content .col li {
+    float: left;
+    text-align: center;
+    width: 119px;
+    height: 34px;
+    border: 1px solid lightgray;
+    text-align: center;
+    height: 34px;
+    line-height: 34px;
+    margin-right: 17px;
+    margin-bottom: 16px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.content .dep-info .center .dep-content .col li:nth-child(2n) {
+    margin-right: 0;
+}
+
+.content .dep-info .center .dep-content .col li a {
+    color: #333;
+}
+
+.content .dep-info .center .dep-content .col li.spec a {
+    color: #00978E;
+    font-weight: bold;
+}
+
+.content .exp-info {
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 24px;
+    overflow: hidden;
+}
+
+.content .exp-info .center {
+    position: relative;
+}
+
+.content .exp-info .center h3 {
+    margin-bottom: 30px;
+}
+
+.content .exp-info .center .more {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #999;
+}
+
+.content .exp-info .center ul li {
+    float: left;
+    width: 400px;
+    height: 240px;
+}
+
+.content .exp-info .center ul li .picbox {
+    float: left;
+    width: 152px;
+}
+
+.content .exp-info .center ul li .picbox a {
+    display: block;
+}
+
+.content .exp-info .center ul li .picbox a img {
+    display: block;
+    width: 100%;
+}
+
+.content .exp-info .center ul li .wordbox {
+    float: left;
+    width: 225px;
+    padding-left: 15px;
+    line-height: 28px;
+}
+
+/* footer */
+footer {
+    height: 395px;
+    background-color: #FAFAFA;
+}
+
+footer .center {
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 67px;
+}
+
+footer .center h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+footer .center .friend-links {
+    padding-bottom: 30px;
+}
+
+footer .center .friend-links ul {
+    overflow: hidden;
+}
+
+footer .center .friend-links ul li {
+    float: left;
+    font-size: 16px;
+    padding: 20px 50px;
+}
+
+footer .center address {
+    overflow: hidden;
+    width: 675px;
+    font-style: normal;
+}
+
+footer .center address h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+footer .center address ul {
+    width: 705px;
+    overflow: hidden;
+}
+
+footer .center address ul li {
+    width: 235px;
+    float: left;
+    padding-top: 20px;
+    font-size: 16px;
+}
