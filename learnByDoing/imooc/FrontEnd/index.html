@@ -5,66 +5,16 @@
     <meta charset="UTF-8">
     <title>background-size</title>
     <style type="text/css">
-        a {
-            text-decoration: none;
-        }
-
-        ul {
-            list-style: none;
-        }
-
         div {
-            background-image: url("http://climg.mukewang.com/582c37e50001b08102000065.jpg");
-            width: 100px;
-            height: 100px;
-            display: none;
-            border: 2px solid red;
-            background-repeat: no-repeat;
-        }
-
-        /*补充代码*/
-        .length h3:hover+div {
-            display: block;
-            background-size: 100px 100px;
-        }
-
-        .percent h3:hover+div {
-            display: block;
-            background-size: 50% 50%;
-        }
-
-        .cover h3:hover+div {
-            display: block;
-            background-size: cover;
-        }
-
-        .contain h3:hover+div {
-            display: block;
-            background-size: contain;
+            height: 500px;
+            width: 500px;
+            background-image: radial-gradient(500px 250px, white, red,orange,yellow,green,blue,purple);
         }
     </style>
 </head>
 
 <body>
-    <h2>background-size不同属性值不同效果</h2>
-    <ul>
-        <li class="length">
-            <h3><a href="">100px 100px</a></h3>
-            <div></div>
-        </li>
-        <li class="percent">
-            <h3><a href="">50% 50%</a></h3>
-            <div></div>
-        </li>
-        <li class="cover">
-            <h3><a href="">cover</a></h3>
-            <div></div>
-        </li>
-        <li class="contain">
-            <h3><a href="">contain</a></h3>
-            <div></div>
-        </li>
-    </ul>
+    <div></div>
 </body>
 
 </html>

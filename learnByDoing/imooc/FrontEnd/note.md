@@ -2263,14 +2263,124 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 2.3 背景裁切
 
+```CSS
+    .box {
+        background-clip: ;
+    }
+```
+
+1. background-clip属性：用来设置元素的背景裁切到哪个盒子，兼容到IE9
+
+| 值 | 意义 |
+| :----: | :----: |
+| border-box | 背景延申至边框（默认值） |
+| padding-box | 背景延申至内边(padding), 不会绘制到边框处（仅在dotted、dashed边框可察觉） |
+| content-box | 背景被裁剪至内容区 |
+
 ##### 2.4 背景固定
 
-##### 2.5 背景图片卫视
+```CSS
+    .box {
+        background-attachment
+    }
+```
+
+- background-attachment属性决定背景图像的位置是在视口内固定，或者随着包含它的区块滚动
+
+| 值 | 意义 |
+| :----: | :----: |
+| fixed | 自己滚动条不动，外部滚动条不动 |
+| local | 自己滚动条动，外部滚动条动 |
+| scroll | 自己滚动条不动，外部滚动条动（默认）|
+
+##### 2.5 背景图片位置
+
+```CSS
+    .box {
+        background-position: 100px 200px;
+    }
+    /* 表示图片出现在盒子的左100px 上200px的位置上 */
+
+    .box {
+        background-size: cover;
+        background-position: center center;
+    }
+```
+
+1. background-position属性用来描述图片出现在盒子的什么位置上
+   - 描述词：left、top、right、bottom、center
+   - 如果background-position中如果仅规定了一个关键词，那么第二个值将是"center"
+
+2. CSS精灵：将多个小图标合并制作到一张图片上，使用background-position属性单独显示其中一个，这样的技术叫做CSS精灵技术，也叫做CSS雪碧图
+   - CSS精灵可以减少HTTP请求数，加快网页显示速度。缺点也很明显：不方便测量、后期改动麻烦
+   - i标签/绝对定位/负号
+
+3. background-position设置背景图片出现在盒子的什么位置
+
+4. 可以用top、bottom、center、left、right描述图片出现的位置
 
 ##### 2.6 background综合属性
 
+```CSS
+    .box {
+        background: white url(images/archer.png) no-repeat center center;
+    }
+    /* 背景颜色 背景图片 背景重复 背景位置 */
+```
+
 #### 3. 渐变背景
 
-##### 3.1 线性渐变
+##### 3.1 线性渐变、
+
+```CSS
+    .box {
+        background-image: liner-gradient(to right, blue, red);
+    }
+    /* 渐变方向 开始颜色 结束颜色 */
+
+    .box {
+        background-image: liner-gradient(45deg, blue, red);
+    }
+    /* 用度数定义方向 */
+
+
+    .box {
+        background-image: liner-gradient(to bottom , red, orange, yellow, green, blue, purple);
+    }
+
+    .box {
+        background-image: liner-gradient(to bottom , blue, yellow 20%, red);
+    }
+    /* 多颜色定义 */
+```
+
+1. 盒子的background-image属性可以用linear-gradient()形式创建线性渐变背景
+
+2. 渐变方向
+   1. to left
+   2. to right
+   3. to top
+   4. to bottom
+   5. 度数：45deg, 起点为钟表12点方向
+
+3. 可以有多个颜色值，并可以用百分数定义它们出现的位置
+
+4. 浏览器私有前缀：不同浏览器有不同的私有前缀，用来对试验性质的css属性加以标识
+    | 品牌 | 前缀 |
+    | :----: | :----: |
+    | Chrome | -wekit-|
+    | Firefox | -moz- |
+    | IE、Edge | -ms- |
+    | 欧朋 | -o- |
 
 ##### 3.2 径向渐变
+
+```CSS
+    .box {
+        background-image: radial-gradient(50% 50%, red, blue);
+    }
+    /* 圆心坐标，坐标原点颜色，渐变颜色 */
+```
+
+- 工作用的少，可以拓展
+

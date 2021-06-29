@@ -38,6 +38,9 @@ header .header-top .logo {
 header .header-top .logo h1 {
     width: 221px;
     height: 63px;
+    background-image: url(../images/小慕医生.png);
+    /* 将段首缩进的属性设置为复数，是一个很巧妙的做法，可以隐藏文字 */
+    text-indent: -999em;
 }
 
 header .header-top .tool {
