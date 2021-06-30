@@ -2384,3 +2384,106 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 - 工作用的少，可以拓展
 
+### 第4章 变形
+
+#### 1. 2D变形
+
+##### 1.1 旋转变形
+
+```CSS
+    .box {
+        transform: rotate(45deg);
+    }
+    /*  */
+```
+
+```CSS
+    .box {
+        transform-origin: 0 0; 
+        /* 左上角为中心点旋转 */
+    }
+```
+
+1. 将transform属性的值设置为rotate()，即可实现旋转变形
+
+2. 角度为正，顺时针旋转；角度为负，逆时针旋转
+
+3. transform-origin用于设置旋转的中心点
+
+##### 1.2 缩放变形
+
+```CSS
+    .box {
+        transform: scale(3);
+    }
+```
+
+1. transform属性设置为scale()，即可实现缩放变形，中心点为原点
+
+2. 当数值小于1时，表示缩小元素；大于1，表示放大元素
+
+3. transform: scale(sx,sy) 中，sx表示宽度缩放为原元素的sx倍，sy表示高度缩放为原元素的sy倍。所以缩放的应该是transform: scale(300/1000, 100/500)，即transform: scale(.3, .2)。
+
+##### 1.3 斜切变形
+
+```CSS
+    .box {
+        transform: skew(10deg,20deg);
+        /* x斜切角度，y斜切角度 */
+    }
+```
+
+1. transform属性设置为skew()，即可实现斜切变形
+
+2. transform: skew(<angle> [, <angle>]) （备注：中括号包裹的参数表示可选参数），其中angle为倾斜角度，角度方向跟随极坐标角度方向，逆时针为正方向，顺时针为负方向。当只有一个参数的时候，第二个参数默认为0deg，所以transform: skew(45deg);为元素的水平方向逆时针倾斜45度，竖直方向倾斜0度
+
+##### 1.4 位移变形
+
+```CSS
+    .box {
+        transform: translate(100px, 200px);
+        /* 相对于原来的位置，向右移动的距离，向下移动的距离 */
+    }
+```
+
+1. transform属性设置为translate()，即可实现位移变形
+
+2. 和相对定位非常像，位移变形也会“老家留坑”，“形影分离”，但只兼容到IE9
+
+#### 2. 3D变形
+
+##### 2.1 3D旋转
+
+```CSS
+    .box1-father {
+        perspective: 200px;
+    }
+    .box1 {
+        transform: rotateX(30deg);
+    }
+    /* 绕X轴旋转，后仰为正方向 */
+
+    .box2-father {
+        perspective: 300px;
+    }
+    .box2 {
+        transform: rotateY(30deg);
+    }
+    /* 绕Y轴旋转，右转为正方向 */
+```
+
+1. transform属性设置为rotateX()或rotateY(),即可实现3D旋转
+
+2. perspective属性用来定义透视强度，可以理解为“人眼到舞台的距离”，单位是px；舞台是旋转元素的父盒子
+
+##### 2.2 空间移动
+
+```CSS
+    .box {
+        transform: rotateX(30deg) translateX(30px) translateZ(100px);
+    }
+```
+
+1. 当元素进行3D旋转后，即可继续添加translateX()、translateY()、translateZ()属性让元素在空间进行移动
+
+2. 注意： 空间移动要添加在3D旋转之后
