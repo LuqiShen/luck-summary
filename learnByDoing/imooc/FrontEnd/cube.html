@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>background-size</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            margin: 100px auto;
+            perspective: 300px;
+            position: relative;
+        }
+
+        .box p {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+        }
+
+        .box p:nth-child(1) {
+            background-color: rgba(224, 113, 206, 0.6);
+            /* 前面 */
+            transform: translateZ(100px);
+        }
+
+        .box p:nth-child(2) {
+            background-color: rgba(15, 194, 110, 0.6);
+            /* 顶面 */
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .box p:nth-child(3) {
+            background-color: rgba(22, 128, 228, 0.6);
+            /* 背面 */
+            transform: rotateX(180deg) translateZ(100px);
+        }
+
+        .box p:nth-child(4) {
+            background-color: rgba(221, 109, 61, 0.945);
+            /* 底面 */
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        .box p:nth-child(5) {
+            background-color: rgba(247, 247, 14, 0.849);
+            /* 侧面 */
+             transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .box p:nth-child(6) {
+            /* 侧面 */
+            background-color: rgba(0, 0, 0, 0.829);
+            transform: rotateY(90deg) translateZ(100px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+</body>
+
+</html>
