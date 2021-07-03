@@ -2663,4 +2663,289 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ### 第2章 JS基本数据类型
 
+#### 1. 数据类型简介和检测
+
+1. JavaScript的两大数据类型
+   1. 基本数据类型：Number、String、Boolean、Undefined、Null
+   2. 复杂数据类型：Object、Array、Function、RegExp、Date、Map、Set、Symbol等
+
+2. typeof运算符
+
+   ```Javascript
+        console.log(typeof 5); // number
+        console.log(typeof '慕课网'); // string
+        console.log(typeof '5'); // string
+   ```
+
+   1. 功能：检测值或者变量的数据类型
+   2. typeof不是函数，是操作符
+   3. JavaScript是弱类型的编程语言
+   4. 5种基本数据类型的typeof检测结果
+        | 类型名 | typeof检测结果 |
+        | :----: | :----: |
+        | 数字类型 | number |
+        | 字符串类型 | string |
+        | 布尔类型 | boolean |
+        | undefined类型 | undefined|
+        | null类型 | object |
+   5. typeof的使用方法有两种：typeof 变量 和 typeof（变量）
+   6. typeof的返回值是string类型
+
+#### 2. 基本数据类型
+
+##### 2.1 数字类型 Number
+
+1. 所有数字不分大小、不分整浮、不分正负，都是数字类型
+
+2. 0.5 = .5 类似的0可以省略
+
+3. 科学计数法
+   1. 3e8 = 300000000
+   2. 3e-4 = 0.0003
+   3. .3e5 = 30000
+
+4. 二进制：以0b开头
+   1. 0b11 = 2
+   2. 0b1111 = 15
+
+5. 八进制：以0开头
+   1. 017 = 15
+
+6. 十六进制：0x开头
+   1. 0x11 = 17
+
+7. NaN
+   1. NaN = “not a number”，不是一个数（非数值）
+   2. 它是一个数字类型的值：typeof NaN //Number
+   3. 0/0 = NaN
+   4. 字符串 * 字符串 = NaN
+   5. NaN不自等
+   6. 任何涉及NaN的操作都会返回NaN
+
+8. Infinity无穷大
+   1. 非零数字除以0时，结果是Infinity或-Infinity
+   2. 使用typeof检测Infinity的类型是number
+
+##### 2.2 字符串类型
+
+1. 字符串是“人类的自然语言”
+
+2. 字符串需要用引号包裹，单引号或双引号
+
+3. 分清数字和字符串
+
+    ```JavaScript
+        typeof 11; //number
+        typeof '11'; //string
+    ```
+
+4. 字符串的拼接
+   1. 加号可以用来拼接多个字符串
+   2. 字符串也可和变量拼接：将一个变量“插入”到字符串中，要“斩断连接”
+
+5. 空字符串：闭合的引号对
+
+   ```JavaScript
+        var str = '';
+   ```
+
+6. 字符串的length属性：打点调用
+   - length属性表示字符串的长度
+
+7. 字符串的常用方法
+    | 方法 | 功能 |
+    | :----: | :----: |
+    | charAt() | 得到指定位置字符 |
+    | substring() | 提取子串 |
+    | substr() | 提取字串 |
+    | slice() | 提取字串 |
+    | toUpperCase() | 将字符串变为大写 |
+    | toLowerCase() | 将字符串变为小写 |
+    | indexOf() | 检索字符串 |
+
+    1. charAt(index)
+       - 传参为位置
+       - 位置不存在返回空字符串
+    2. sunbstring(a,b)
+       - 从a位置开始，到b位置（不包含b）
+       - 省略第二个参数，返回的字串会一直到字符串的结尾
+       - a可以大于b，数字顺序自动调整为小的数字在前
+    3. substr(a,length)
+       - 截取字符串
+       - a是必须有的，代表截取的起始位置，当它为负数时，与字符串长度相加，获取的就是值就是起始位置（倒数位置）
+       - length代表截取的字符总数，当第二个参数为负数时，返回空字符串；length可以省略，表示字符串到结尾
+    4. slice(a,b)
+       - a位置开始，到b位置（不包括b）
+       - a可以为负数，可以倒数选择
+       - a必须小于b
+    5. toUpperCase()/toLowerCase()
+        - 变为大写/变为小写
+    6. indexOf(str)
+       - 返回某个指定字符串首次出现的位置
+       - 检索的字符串没有出现，返回-1
+
+##### 2.3 布尔类型
+
+- 值：true和false；表示真、假
+
+   ```JavaScript
+        typeof true; //boolean
+        typeof false; //boolean
+
+        typeof 'true'; // string
+   ```
+
+##### 2.4 undefined类型
+
+```JavaScript
+    typeof undefined; //undefined
+    typeof 'undefined'; //string
+```
+
+1. 没有被赋值的变量默认值是undefined，undefined的类型为undefined
+
+2. undefined既是值又是类型，这种类型只有undefined一个值
+
+3. 变量声明提升
+
+    ```JavaScript
+        console.log(a); //undefined
+        console.log(typeof a); //undefined
+        var a = 10;
+    ```
+
+##### 2.5 null
+
+1. null表示"空"，即"空对象"
+
+2. 当需要将对象销毁、数组销毁或者删除事件监听时，通常将它们设置为null
+
+3. typeof检测null的结果时object\
+
+   ```JavaScript
+        typeof null; //object
+   ```
+
+    - 类型和typeof检测结果并不总是一一对应；需要可以记忆
+
+##### 2.5 undefined和null的异同点
+
+1. undefined，简单数据类型；未赋值的变量默认值为undefined，类型检测结果为undefined类型
+2. null，简单数据类型；表示空对象，在对象销毁、数组销毁、删除事件监听时使用，类型检测结果为object类型
+
+#### 3. 数据类型的转换
+
+##### 3.1 数据类型的转换
+
+###### 1. 其他值 -> 数字
+
+1. Number()函数
+
+    ```JavaScript
+    // 纯数字字符串变为数字，不是纯数字的字符串转为NaN
+        Number('123'); //123
+        Number('123.4'); //123.4
+        Number('123年'); // NaN
+        Number('2e3'); //2000
+        Number(''); // 0
+
+        Number(true); // 1
+        Number(false); // 0
+
+        Number(undefined); // NaN
+        Number(null); // 0
+    ```
+
+2. parseInt()函数: 将字符串转为整数
+
+    ```JavaScript
+        parseInt(3); // 3
+        parseInt(3.99); // 3
+        parseInt('3.99'); // 3
+        parseInt('200px'); // 200
+        parseInt('圆周率3.14'); // NaN
+    ```
+
+3. parseFloat()函数: 将字符串转为浮点数
+
+    ```JavaScript
+        parseFloat('3.14'); // 3.14
+        parseFloat('3.14是圆周率'); //3.14
+        parseFloat('圆周率是3.14'); // NaN
+    ```
+
+###### 2. 其他值 -> 字符串
+
+1. String()函数
+
+    ```JavaScript
+        String(123); // '123'
+        String(123.4); // '123.4'
+        String(2e3); // '2000'
+        String(NaN); // 'NaN'
+        String(Infinity); // 'Infinity'
+        String(0xf); // '15'
+
+        String(true); // 'true'
+        String(false); // 'false'
+
+        String(undefined); // 'undefined'
+        String(null); // 'null'
+    ```
+
+2. toString()方法：打点调用（常用）
+
+    ```JavaScript
+        6.toString(); // 报错
+        (6).toString(); // 6
+    ```
+
+###### 3. 其他值 -> 布尔值
+
+1. Boolean()函数
+
+    ```JavaScript
+        Boolean(0); //false
+        Boolean(NaN); //false
+        <!-- 其他任何数字都是true -->
+        Boolean(Infinity); //true
+        Boolean(-Infinity); //true
+
+        Boolean(''); //false
+        <!-- 其他任何字符串都是true -->
+        Boolean('false'); //true
+
+        Boolean(undefined); //false
+        Boolean(null); //false
+    ```
+
+##### 3.2 小案例：小小加法计算器
+
+- 用户输入 -> 计算机处理 -> 显示结果
+
+#### 4. 复杂数据类型
+
+- 复杂数据类型都是“引用类型”
+
+#### 5. 问题
+
+1. parseInt('3.6' + '5.1');
+   - 字符串连接parseInt('3.65.1') 
+   - 正确结果为3
+
+2. Boolean('false');
+   - 除空字符外所有转换为Boolean的结果都为true
+
+3. 0/0
+   - NaN
+
+4. 4/0
+   - Infinity
+
+5. 请说出substring()、substr()、slice()的区别
+
+6. 'abcde'.slice(3,2);
+   - 结果为''空字符串
+   - 第一个数大于第二个数，不合法
+
 ### 第3章 表达式与操作符
