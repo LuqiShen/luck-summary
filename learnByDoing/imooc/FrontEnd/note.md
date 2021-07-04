@@ -2949,3 +2949,330 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
    - 第一个数大于第二个数，不合法
 
 ### 第3章 表达式与操作符
+
+#### 1. 表达式和运算符
+
+#### 2. JS基本表达式
+
+##### 2.1 算术表达式
+
+| 意义 | 运算符 |
+| :----: | :----: |
+| 加 | + |
+| 减 | - |
+| 乘 | * |
+| 除 | / |
+| 取余 | % |
+
+1. 优先级：乘除 > 加减；小括号可以改变优先级
+
+2. 加号+ ：两边操作符则为相加；否则为连字符
+
+3. 取余运算：a%b表示求a除以b的余数
+
+4. 隐式类型转换
+   1. 如果参与数学运算的某操作数不是数字类型，JS会自动将此操作数转为数字类型
+   2. 隐式转换的本质是内部调用Number()函数
+
+5. 几个需要注意的例子
+
+   ```JavaScript
+        3 * '2天' // NaN
+        3 + '2天' // '32天'
+        3 + undefined // NaN
+        3 + null // 3
+        3 + '' // 0
+        3 + ' ' // 0
+   ```
+
+6. IEEE754
+   1. JS中，有些小数的运算“丢失精度”，因为使用了IEEE754二进制浮点数算术标准
+   2. 解决办法：在进行小数运算时，打点调用toFixed()方法，保留指定的小数位
+
+    ```JavaScript
+        0.1 + 0.2 // 0.30000000000000004
+        (0.1 + 0.2).toFixed(2); // 0.30
+    ```
+
+7. Math对象：幂计算、根号计算、向上取整、向下取整
+
+    ```JavaScript
+        Math.pow(2,3); // 8
+        Math.pow(3,2); // 9
+
+        Math.sqrt(81); // 9
+        Math.sqrt(-81) // NaN
+
+        Math.ceil(2.4); //3
+        Math.floor(2.4); //2
+
+        Math.ceil(-2.4); // -2
+        Math.floor(-2.4); // -3
+
+        Math.ceil(2); // 2
+        Math.floor(2); //2
+    ```
+
+##### 2.2 关系表达式
+
+| 意义 | 运算符 |
+| :----: | :----: |
+| 大于 | > |
+| 小于 | < |
+| 大于或等于 | >= |
+| 小于或等于 | <= |
+| 等于 | == |
+| 不等于| != |
+| 全等于 | ===|
+| 不全等于 | !== |
+
+1. 大于和小于、大于等于、小于等于：意义与数学意义相同
+
+    ```JavaScript
+        8 <= 8 //true
+        8 >= 8 //true
+    ```
+
+2. 判断是否相等
+    - = 表示赋值；==表示判断相等
+
+    ```JavaScript
+        3 == 3  //true
+        3 === 3  // true
+        3 = 3  //错误
+    ```
+
+3. 相等和全等
+    - 相等仅比较值相同(会进行隐式转换)
+    - 全等比较值和类型
+
+    ```JavaScript
+        3 == '3' // true
+        3 === '3' //false
+
+        1 == true //true
+        1 == true //false
+
+        0 == false //true
+        0 === false //false
+
+        0 == undefined // false
+        0 === undefined // false
+
+        undefined == null //true
+        undefined === null //false
+    ```
+
+4. NaN
+   - NaN不自等
+   - isNaN()函数判断是否为NaN：只要传入的变量Number转换的结果为NaN，则isNaN为true
+
+    ```JavaScript
+        NaN == NaN //false
+        NaN === NaN //false
+
+        isNaN(undefined) //true
+        isNaN('3天') //true
+        isNaN(undefined) //false
+
+        NaN == undefined //false
+    ```
+
+5. 不相等和不全等
+
+    ```JavaScript
+        5 != 6 //true
+        5 !== 6 //true
+
+        5 != '5' //false
+        5 !== '5' //true
+    ```
+
+6. 没有连比
+
+   ```JavaScript
+        3 <= a <= 15; // 先计算3 <= a为true， true <= 15为true，结果为true
+        <!-- 这样的写法是错误的 -->
+   ```
+
+##### 2.3 逻辑表达式
+
+| 意义 | 运算符 |
+| :----: | :----: |
+| 非 | ！ |
+| 与 | && |
+| 或 | || |
+
+1. 非运算
+   1. 单目运算符，一个操作数
+   2. 结果是布尔值
+
+    ```JavaScript
+        !true //false
+        !false //true
+        !0 //true
+        !undefined //true
+        !'' //true
+        !'imooc' //false
+
+        <!-- 双叹号，进行布尔值转换，类似于Boolean() -->
+        !!true //true
+        !!0 //false
+        !!'' //false
+        !!'imooc' //true
+    ```
+
+2. 与运算:都真才真
+
+    ```JavaScript
+        true && true //true
+        true && false //false
+        false && true //false
+        false && false //false
+    ```
+
+3. 或运算：有真就真
+
+    ```JavaScript
+        true || true //true
+        true || false //true
+        false || true //true
+        false || false //false
+    ```
+
+4. 短路计算
+   1. a&&b运算中：a真，表达式值为b；a假，表达式值为a
+   2. a||b运算中：a真，表达式值为a；a假，表达式为b
+
+    ```JavaScript
+        3 && 6 //6
+        undefined && 15 //undefined
+        15 & undefined // undefined
+        null && 2 // null
+        '' && 16 // ''
+        NaN && undefined //NaN
+
+        3 || 6 // 3
+        0 || 6 //6
+        null || undefined //undefined
+        'a' || 'b' // a
+        NaN || null // null
+    ```
+
+5. 逻辑运算的顺序：非与或
+
+    ```JavaScript
+        !true || true //true
+        3 && 4 || 5 && 6 // 4
+    ```
+
+##### 2.4 赋值表达式
+
+| 意义 | 运算符 |
+| :----: | :----: |
+| 赋值 | = |
+| 快捷赋值 | += -= *= /= %=|
+| 自增运算 | ++ |
+| 自减运算 | -- |
+
+1. 赋值运算产生值，等号后边的值将作为“赋值运算的值”
+    - 可以连续使用赋值运算符
+
+    ```JavaScript
+        var a;
+        console.log(a = 4); //4
+
+        var a,b,c;
+        a = b = c = 15; //先赋值15给c，再从右向左赋值
+    ```
+
+2. 快捷赋值运算符：在原数值基础上进行进一步计算
+
+3. 自增自减运算符：在自身基础上加一或减一
+   - a++先用再加
+   - ++a先加再用
+
+    ```JavaScript
+        var a = 3;
+        var b = a++; //b = 3, a = 4
+
+        var a = 3;
+        var b = ++a; //b = 4, a = 4
+
+        var num1 = 10, num2 = 3;
+        var num3 = num1 + num2++;
+        // num1 = 10, num2 = 4, num3 = 13
+        // ++在后先运算
+
+        var a = 3;
+        var b = 4;
+        alert(a++ + b++ + ++a + ++b); // 3 + 4 + 5 + 6 = 18
+    ```
+
+##### 2.5 综合表达式
+
+1. 运算顺序：非 -> 数学运算 -> 关系运算 -> 与或
+
+    ```JavaScript
+        !13 < 5 - 3; //true
+        !13 < 5 - 5; //false
+    ```
+
+2. 变量的范围表示
+
+    ```JavaScript
+        a >= 5 && a <= 12
+    ```
+
+3. 小案例：闰年判断
+   - 闰年的计算方法
+      1. 能被4整除且不能被100整除
+      2. 能被100整除也能被400整除
+
+```JavaScript
+    var year = Number(prompt('请输入年份判断是否是闰年：'));
+
+    alert(year % 4 == 0 && year % 100 != 0 || year % 100 == 0 && year % 400 == 0)
+```
+
+## 第6周
+
+### 第4章 流程控制语句
+
+#### 1. 条件语句
+
+##### 1.1 if语句的基本使用
+
+##### 1.2 if elseif 多条件分支
+
+##### 1.3 if语句算法题
+
+##### 1.4 switch语句
+
+##### 1.5 三元运算符
+
+#### 2. 循环语句
+
+##### 2.1 for循环语句
+
+##### 2.2 for循环算法题
+
+##### 2.3 while循环语句
+
+##### 2.4 break和continue
+
+##### 2.5 do while语句
+
+##### 2.6 while语句算法题
+
+#### 3. 初识算法
+
+##### 3.1什么是算法
+
+##### 3.2累加器和累乘器
+
+##### 3.3 穷举法
+
+##### 3.4 综合算法题目
+
+### 第5章 数组
