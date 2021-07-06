@@ -3101,7 +3101,7 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 | :----: | :----: |
 | 非 | ！ |
 | 与 | && |
-| 或 | || |
+| 或 | \|\| |
 
 1. 非运算
    1. 单目运算符，一个操作数
@@ -3243,36 +3243,623 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 1.1 if语句的基本使用
 
-##### 1.2 if elseif 多条件分支
+```JavaScript
+    if(条件) {
+        // 表达式为真，则执行这里
+    } else {
+        // 否则执行这里
+    }
+    
+    // 省略else的语句体
+    if(条件) {
+
+    }
+
+    // 单行if
+    if(条件) 执行;
+```
+
+```flow
+    st=>start
+    cond=>condition: if条件（ture or false?）
+    op1=>operation: 第一种处理
+    op2=>operation: 第二种处理
+    st->cond
+    cond(true)->op1
+    cond(false)->op2
+```
+
+```JavaScript
+    var a = Number(prompt('请输入一个整数：'));
+    
+    // 第一个if语句体
+    if(a > 5) {
+        alert('这个数字大于5');
+    }
+    
+    // 第二个if语句体
+    if(a % 2 == 0){
+        alert('这个数字是偶数');
+    }
+
+    alert('再见'); // 一定执行
+```
+
+- else可以省略
+
+- 看清哪些语句是if语句体中的语句
+
+##### 1.2 if else if 多条件分支
+
+```JavaScript
+    if (条件1) {
+        // 条件1为真
+        // 操作1
+    } else if (条件2) {
+        // 条件1为假且条件2为真
+        // 操作2
+    } else {
+        // 条件1为假且条件2为假
+        // 操作3
+    }
+```
+
+- 如果……否则如果……否则：else if()条件分支中“暗含不符合之前的所有条件”的意思
+
+```JavaScript
+    var str = "IMOOC521";
+    var num = parseInt(str); // NaN
+    if(num == NaN) {
+        // NaN不自等，条件不满足
+        alert(NaN);
+    } else if (num == 521) {
+        alert(521);
+    } else if (typeof num == "number") {
+        // NaN本身是Number类型
+        alert("number");
+    } else {
+        alert("str");
+    }   
+
+    // 运行结果 "number"
+```
+
+- 题目
+  - 第一步：页面弹出输入框，需要用户输入自己的手机号码
+  - 第二步：对用户的手机号码进行判断，首先判断用户输入的号码是否是11位
+  - 第三步：确定用户输入的号码是11位后，在此进行判断，用户输入的11位号码是否是纯数字
+  - 第四步：输入的号码无误，弹出“号码输入正确”
+
+```JavaScript
+    var num = prompt('请输入您的手机号：');
+    if (num.length != 11) {
+        alert('请输入11位手机号码');
+    } else {
+        // 注意嵌套条件
+        if (!isNaN(num)) {
+            alert('号码输入正确');
+        } else {
+            alert('输入的手机号必须是11位数字');
+        }
+    }
+```
 
 ##### 1.3 if语句算法题
 
+1. 判断水仙花数
+   - 水仙花数是这样一个三位数：它的每个数位的数字立方和等于它本身；例如153
+   - 要求用户输入一个数字n，判断n是否是水仙花数
+
+    ```JavaScript
+    /*   
+        1. 用户输入数字n
+        2. 将n拆位：
+           - 数学方法
+                1. 百位原数字除以100取整
+                2. 十位原数字除以10再与10求模
+                3. 个位与10求模
+           - 字符串方法
+                1. 原数变为字符串
+                2. charAt()方法得到每个数位的值 
+    */
+    <script>
+        // 请用户输入一个三位数
+        var n = Number(prompt('请输入一个三位数:'));
+
+        // 对用户输入的数值，进行合法性的验证
+        if(!isNaN(n) && n >= 0 && n <= 999) {
+            // 当用户输入的数字合法
+            // 数学拆位
+            // 百位
+            var a = Math.floor(n / 100);
+            // 十位
+            var b = Math.floor(n / 10) % 10;
+            // 个位
+            var c = n % 10;
+           
+            // 水仙花数判断
+            if(Math.pow(a,3) + Math.pow(b,3) + Math.pow(c,3) == n) {
+                alert(n + '是水仙花数');
+            } else {
+                alert(n + '不是水仙花数');
+            }
+        } else {
+            alert('您的输入不合法');
+        }
+    </script>
+
+    <script>
+        // 请用户输入一个三位数
+        var n = Number(prompt('请输入一个三位数:'));
+
+        // 对用户输入的数值，进行合法性的验证
+        if(!isNaN(n) && n >= 0 && n <= 999) {
+            // 当用户输入的数字合法
+            // 字符串方法
+            var n_str = n.toString();
+            var a = Number(n_str.charAt(0));
+            var b = Number(n_str.charAt(1));
+            var c = Number(n_str.charAt(2));
+
+            if(Math.pow(a,3) + Math.pow(b,3) + Math.pow(c,3) == n) {
+                alert(n + '是水仙花数');
+            } else {
+                alert(n + '不是水仙花数');
+            }
+        } else {
+            alert('您的输入不合法');
+        }
+    </script>
+    ```
+
 ##### 1.4 switch语句
 
+- 当一个变量被分类讨论
+
+1. 例子：输出一个月有多少天
+
+    ```JavaScript
+        switch(month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                alert(month + '月有31天');
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                alert(month + '月有30天');
+                break;
+            case 2:
+                alert(month + '月有28天或29天');
+                break;
+            default:
+                alert('请输入正确的月份');
+        }
+    ```
+
+    - 被讨论的对象一般是一个变量，或是一个表达式求值后的结果
+    - case语句：
+      - case表示情况，后边直接跟一个值；
+      - 被讨论的对象会逐句与case后的该值进行全等比较，如果相同，则执行case：后的语句；
+      - default表示默认情况
+      - 多条case可以共用一个语句体
+    - break语句：
+      - break表示跳出switch语句体
+      - 不书写break，后面所有的case将都被视为匹配，直到遇见break
+
+    ```JavaScript
+        var a = 10;
+        switch(a) {
+            case 10:
+                console.log('A');
+            case 4:
+                console.log('B');
+            case 88:
+                console.log('C');
+                break;
+            case 2:
+                console.log('D');
+        }
+
+        //console输出A,B,C
+    ```
+
 ##### 1.5 三元运算符
+
+- 条件表达式 ? 表达式1 : 表达式2
+  - 条件为真，执行表达式1
+  - 条件为假，执行表达式2
+
+```JavaScript
+    var age = 24;
+    var type = age>=18 ? '成年人' : '未成年人';
+    alert(type); // 成年人
+```
 
 #### 2. 循环语句
 
 ##### 2.1 for循环语句
 
+```JavaScript
+    for(var i = 1; i <= 10； i++) {
+        // 需要循环的语句
+    }
+```
+
+1. 括号里有三个表达式：
+   1. 循环变量
+   2. 循环条件（为真，进行循环）
+   3. 更新循环变量
+
+2. 准确遍历for循环
+
+    ```JavaScript
+        for(var i = 1; i < 10; i++){
+        }
+        console.log(i);  // 10
+
+        for (var i = 1; i < 10; --i) {
+            console.log(i); // 死循环
+        }
+
+        for(var i = 10; i < 4; i++){
+            console.log(i); //没有输出
+        }
+    ```
+
+3. 循环里一定要定义循环的条件，不然控制台会报错，代码不会向下执行，页面也不会有任何显示。
+
 ##### 2.2 for循环算法题
+
+1. 计算1+2+3+……+99+100的和、
+
+    ```JavaScript
+        // 循环开始时，定义累加器sum，初始化为0
+        for(var i = 1, sum = 0; i <= 100; i++){
+            sum += i;
+        }
+    ```
+
+2. 1~100中哪个数字除以3余1，除以4余2，除以5余3
+
+    ```JavaScript
+        // 穷举法
+        for(var i = 1; i <= 100; i++){
+            if(i % 3 == 1 && i % 4 == 2 && i % 5 == 3) {
+                console.log(i);
+            }
+        }
+    ```
 
 ##### 2.3 while循环语句
 
+1. while循环“不定范围”
+
+    ```JavaScript
+        while(测试条件) {
+
+        }
+
+    ```
+
+    - 在while循环外定义好循环变量
+    - 循环体内的语句必须使测试条件趋向不成立
+
+2. while循环的使用
+
+    1. 寻找最小的满足n*n > 456789的整数n
+
+        ```JavaScript
+            var i = 1;
+            while (i*i <= 456789) {
+                i++;
+            }
+            console.log(i);
+        ```
+
+    2. 小兔子拔萝卜，第一天拔1个，第二天拔2个，第三天拔3个，以此类推。问小兔子多少天能把500个萝卜拔光？
+
+        ```JavaScript
+            var i = 1, sum = 0;
+            while(sum < 500) {
+                sum += i;
+                i++;
+            }
+            // 控制条件的变量和循环变量不是同一个变量的时候有可能会产生这样的错误
+            alert(i); // 33 错误，因为多执行了一次i++，称为“出一错误”
+            alert(i-1); //32 正确
+        ```
+
+3. 例子
+
+    ```JavaScript
+        var i = 1;
+        while(i<10) {
+            document.write(i);
+        }
+        // 死循环
+    ```
+
+    ```JavaScript
+        // 猜数字，答案是5
+        var input = Number(prompt('请输入1-10之内的数字：'));
+        while(input != 5){
+           if(input < 5) {
+               alert('猜小了');
+               input = Number(prompt('请输入1-10之内的数字：'));
+           } else if (input > 5) {
+               alert('猜大了');
+               input = Number(prompt('请输入1-10之内的数字：'));
+           }
+       }
+       alert('猜对了！')
+    ```
+
 ##### 2.4 break和continue
+
+###### 2.4.1 break
+
+- break表示立即终止循环，它只能用在循环语句中
+
+    ```JavaScript
+        while(true) {
+            if(条件){
+                break;
+            }
+        }
+    ```
+
+###### 2.5.1 continue
+
+- continue用于跳过循环中的一个迭代，并继续执行循环中的下一个迭代
+
+    ```JavaScript
+        for(var i = 0; i < 5; i++) {
+            if(i == 3){
+                continue;
+            }
+            console.log(i); //0,1,2,4
+        }
+    ```
 
 ##### 2.5 do while语句
 
+- 后测试循环语句，循环体一定会至少执行一次
+
+```JavaScript
+    do {
+        循环体
+    } while(循环执行条件)
+```
+
+- 随机数函数：Math.random()得到0~1之间的小数
+  - 让小数扩大：Math.random() * 10
+  - 整数：parseInt(Math.random() * 10)
+  - 得到[a,b]区间的整数：parseInt(Math.random()*(b-a+1))+a
+
+- 例题：请编写程序，随机生成两个变量dx和dy，它们均在[-4，4]区间随机取值，但要求dx和dy不能同时为0
+
+    ```JavaScript
+        do {
+            var dx = parseInt(Math.random() * 9) - 4;
+            var dy = parseInt(Math.random() * 9) - 4;
+        } while ( dx == 0 && dy == 0)
+        // dx和dy都为0，则进循环体
+        document.write(dx + ' ' + dy);
+
+        //使用while循环，篇幅增大
+        var dx = parseInt(Math.random() * 9) - 4;
+        var dy = parseInt(Math.random() * 9) - 4;
+        while(dx == 0 && dy == 0) {
+            var dx = parseInt(Math.random() * 9) - 4;
+            var dy = parseInt(Math.random() * 9) - 4;
+        }
+    ```
+
 ##### 2.6 while语句算法题
+
+- 例题：随机生成一个2到99的数字，让用户猜测这个数字是几，用户输入自己的猜测之后，提示“大了”或“小了”，猜对了则输出“猜对了”并退出
+
+    ```JavaScript
+        // 随机数字2~99
+        var answer = parseInt(Math.random() * 98) + 2;
+        var min = 1,
+            max = 100;
+        // 死循环
+        while (true) {
+            var userAnswer = Number(prompt('请输入猜测的数字' + min + '~' + max));
+            // 验证用户输入的数字是否在区间内
+            if (userAnswer <= min || userAnswer >= max) {
+                alert('输入的数字不在范围内');
+                continue;
+            }
+
+            if (userAnswer > answer) {
+                alert('猜大了');
+                max = userAnswer;
+            } else if (userAnswer < answer) {
+                alert('猜小了');
+                min = userAnswer;
+            } else {
+                alert('猜对了');
+                break;
+            }
+        }
+    ```
+
+- 三种循环的区别：
+  - for循环：判断条件，执行代码块，循环次数是固定的
+  - while循环：判断条件，执行代码块，循环次数不是固定的
+  - do while循环：不管条件是否符合，先运行一次代码，然后再判断条件
 
 #### 3. 初识算法
 
 ##### 3.1什么是算法
 
+- 解题方案的准确而完整的描述，能够对一定规范的输入，在有限时间内获得所要求的输出
+
+- 把问题拆解为一步一步的步骤
+
+- 计算机的流程控制语句：
+  - 顺序执行
+  - 选择语句
+  - 循环语句
+
+- 优秀算法的要求：
+  - 正确性
+  - 健壮性
+  - 可读性
+
+- 伪代码
+
 ##### 3.2累加器和累乘器
+
+1. 由用户输入数字n，请计算下面算式的值
+   1/2 + 2/3 + 3/4 + 4/5 + 5/6 + …… + n+1/n
+
+   ```JavaScript
+        var n = Number(prompt('请输入数字n，n>=2'));
+
+        // 累加器
+        var sum = 0;
+        // 遍历分母，分母为n+1
+        for (let i = 2; i <= n; i++) {
+            sum += (i+1)/i;
+        }
+
+        alert(sum.toFixed(2));
+   ```
+
+2. 由用户输入数字n，请计算n的阶乘
+
+    ```JavaScript
+        var n = Number(prompt('请输入数字n'));
+        
+        // 累乘器，注意从1开始
+        var result = 1;
+
+        // 倒着遍历
+        for(var i = n; i >= 1 ; --i) {
+            result *= i;
+        }
+
+        alert(result);
+    ```
+
+3. 圆周率Π可以由下面的莱布尼兹级数公式计算，由用户输入n，计算圆周率
+    Π/2 = 1 + 1/3 + 1 * 2 / 3 * 5 + 1 * 2 * 3 / 3 * 5 * 7 + …… + 1 * 2 * …… * n / 3 * 5 * …… * （2n+1）
+
+    <!-- 后一项比前一项多乘了一项 -->
+
+    ```JavaScript
+        var n = Number(prompt('请输入数字n'));
+        
+        // 累加器，最后的答案
+        var sum = 0;
+        // 累乘器，制作出来每一项，制作出来这个项，往累加器中累加
+        var item = 1;
+        // 遍历
+        for (var i = 1; i <= n; i++) {
+            // 制作出来这一项，要使用累乘器，构建车厢
+            item *=  i / (2 * i + 1);
+            console.log(item);
+            // 把item往累加器中累加
+            sum += item;
+        }
+
+        alert((sum + 1) * 2 );
+    ```
 
 ##### 3.3 穷举法
 
+- 让计算机发挥计算机的计算优势；在确定的大致范围内，对所有情况逐一验证
+
+1. 用户输入一个数字，在控制台显示这个数字的全部约数
+
+    ```JavaScript
+        var n = Number(prompt('请输入数字n'));
+        
+        for(var i = 1; i <= n; i++) {
+            if(n%i == 0){
+                console.log(i);
+            }
+        }
+    ```
+
+2. 寻找全部的水仙花数
+
+    ```JavaScript
+        for(var i = 100; i <= 999; i++){
+            // 拆数位
+            var i_str = i.toString();
+            // a,b,c 百位 十位 个位
+            var a = i_str.charAt(0);
+            var b = i_str.charAt(1);
+            var c = i_str.charAt(2);
+
+            if(Math.pow(a,3) + Math.pow(b,3) + Math.pow(c,3) == i){
+                console.log(i);
+            }
+        }
+    ```
+
 ##### 3.4 综合算法题目
+
+- 循环的嵌套的特点如下：
+
+    （1）循环与循环嵌套时，当外层循环为假时内层不再执行。
+
+    （2）先执行外层循环再执行内层循环，直到内层循环条件为假时再返回外层去执行。
+
+    ```JavaScript
+        for(var i = 0; i < 3; i++) {
+            for(var j = 0; j < 3; j++){
+                console.log(i,j);
+            }
+        }
+    ```
+
+1. 请寻找1~100的所有质数
+
+    ```JavaScript
+        outer:for (var i = 2; i <= 100; i++) {
+            for(var j = 2; j < i; j++) {
+                if(i % j == 0){
+                    // 说明i不是质数
+                    // continue表示放弃这个数字，开始迭代下一个数字，continue负责的是它所在的最内层的for循环
+                    // 要给for循环加上label
+                    // continue outer 表示立即开始迭代外层i的循环，而不是内层j的循环
+                    continue outer;
+                }
+                console.log(i);
+            }
+    ```
+
+2. 鸡兔同笼：35个头，94只脚，问有几只兔子，几只小鸡
+
+    ```JavaScript
+        // 小鸡有a只，小兔有b只
+        for(var a = 0; a <= 35; a++){
+            for (var b = 0; b <= 35; b++) {
+                if(a+b == 35 && 2*a + 4*b == 94){
+                    console.log(a,b);
+                }
+            }
+        }
+
+        // 小鸡有a只，小兔有35-a只
+        for (var a = 0; a < 35; a++) {
+            var b = 35 -a ;
+            if(2*a + 4*b == 94){
+                console.log('小鸡有' + a + '只，小兔有' + b + '只');
+            }
+        }
+    ```
 
 ### 第5章 数组
