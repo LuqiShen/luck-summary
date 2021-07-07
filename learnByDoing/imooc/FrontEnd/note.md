@@ -3863,3 +3863,305 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
     ```
 
 ### 第5章 数组
+
+#### 1. 数组的定义和基本使用
+
+##### 1.1 数组基础
+
+1. Array: 存储一组相关的值
+
+2. 定义数组
+
+    ```JavaScript
+        // 方括号定义，常用
+        var arr = [0,1,2,3,4,5,6,7,8,9];
+        var arr = []; //建立空数组
+        // 项
+
+        var arr = new Array('A','B','C','D');
+
+        var arr = new Array(4);
+        // 每一项都是undefined
+    ```
+
+3. 访问数组：下标访问，下标从0开始
+   - 下标越界：访问数组中不存在的项会返回undefined，不报错
+
+    ```JavaScript
+        var arr = ['a','b','c'];
+        console.log(arr[0]); // 'a'
+        console.log(arr[-1]); // undefined，不表示倒数第一项
+    ```
+
+4. 数组长度：length属性
+   - 访问数组最后一项：arr[arr.length - 1]
+   - 去掉数组最后一项：arr.length -= 1;
+
+    ```JavaScript
+        var arr = [0,1,2,3];
+        console.log(arr.length); //4
+        console.log(arr[arr.length-1]); //访问数组的最后一项
+    ```
+
+5. 更改数组项
+   - 下标访问并更新
+   - 如果更改的数组项超过了length-1，则会创造这项
+
+    ```JavaScript
+        var arr = [0,1,2,3];
+        arr[1]++;
+
+        var arr = [0,1,2];
+        arr[5] = 5;
+        console.log(arr); // 0,1,2,empty,empty,5
+        console.log(arr.length); // 6
+    ```
+
+6. 数组遍历
+
+    ```JavaScript
+        var arr = [0,1,2,3,,5,,]
+        for(var i = 0; i < arr.length; i++){
+            console.log(arr[i]); //0,1,2,3,undefined,5,undefined(最后一个逗号忽略)
+        }
+    ```
+
+##### 1.2 数组的类型检测
+
+- 数组用typeof 检测结果是object
+
+    ```JavaScript
+        typeof [1,2,3]; //'object'
+    ```
+
+- Array.isArray()方法可以用来检测数组
+  
+    ```JavaScript
+        //兼容到IE8
+        Array.isArray([1,2,3]); //true
+        Array.isArray([]); // true
+    ```
+
+- “鸭式辨型”
+
+#### 2. 数组的常用方法
+
+##### 2.1 数组的头尾操作
+
+| 方法 | 功能 |
+| :----: | :----: |
+| push() | 在数组末尾推入新项 |
+| pop() | 删除数组中的最后一项 |
+| unshift() | 在数组头部插入新项 |
+| shift() | 删除数组中下表为0的项|
+
+1. .push()
+   1. 推入多项，逗号隔开
+   2. 调用方法后，数组立即改变，不需要重新赋值
+   3. 把新的参数添加到数组的尾部，返回值是数组的新长度
+
+    ```JavaScript
+        var arr = [1,2,3,4,5];
+        arr.push(6);
+
+        arr = arr.push(7); //报错
+    ```
+
+2. .pop()
+   1. 删除并返回数组的最后一项
+   2. 没有参数
+
+    ```JavaScript
+        var arr = [1,2,3,4,5];
+        arr.pop(); // arr - [1,2,3,4]
+
+        var item = arr.pop(); // item = 55
+    ```
+
+3. .unshift()
+   1. 插入多项，逗号隔开
+   2. 调用方法后，数组立即改变，不需要重新赋值
+   3. 新的参数添加到数组的最前面，返回值是数组的新长度
+
+4. .shift()
+   1. 删除并返回数组的第一项
+   2. 没有参数
+
+5. 多功能方法：.splice()方法
+   1. 替换数组中的指定项.splice(index,count,c,d,e,……)：从下标为index的项开始，选择count个项，替换为c,d,e,…
+   2. 添加指定项（在index前）.splice(index,0,c,d,e)
+   3. 删除指定项.splice(index,count)
+   4. 以数组形势返回被删除的项
+
+    ```JavaScript
+        var arr = [1,2,3,4,5];   
+        // 从下标为3的位置开始(包括下标为3的位置)，选择2项，替换为33，44，55，66
+        // 1,2,3,33,44,55,66
+        var items = arr.splice(3,2,33,44,55,66);    // [4,5]
+
+        var arr1 = [1,2,3];
+        // 插入
+        var items1 = arr1.splice(1,0,33,44,55); 
+        // [1,33,44,55,2,3]
+        // items1 []
+
+        var arr2 = [3,4,5];
+        var items2 = arr2.splice(1,2); // [3]
+        // items1 [4,5]
+    ```
+
+6. .slice(a,b)
+   1. 得到子数组：从下标为a的项开始，到下标为b（但不包括b）；b省略，则为截到最后一项
+   2. 不会更改原数组
+   3. 负数表示倒数项
+
+    ```JavaScript
+        var arr = ['A','B','C','D','E','F'];
+        var child_arr1 = arr.slice(2,5); 
+        var child_arr2 = arr.slice(2); 
+        var child_arr3 = arr.slice(2,-1); 
+        console.log(arr); // ['A','B','C','D','E','F']
+        console.log(child_arr1); // ['C','D','E']
+        console.log(child_arr2); // ['C','D','E','F']
+        console.log(child_arr3); // ['C','D','E']
+    ```
+
+7. .join()和.split()
+   1. 数组的方法：.join(连接符)数组转为字符串
+      1. 空参数等同于用','连接
+   2. 字符串的方法：.split()字符串转为数组
+
+    ```JavaScript
+        var arr = [1,2,3,4,5];
+        arr.join(); // "1,2,3,4,5"
+        arr.toString(); // "1,2,3,4,5"
+        arr.join(''); // "12345"
+
+        var str = "abcdef";
+        str.split(); //["abcdef"]
+        str.split(''); // ["a","b","c","d","e","f"]
+
+        var str = "a-b-c-d-e-f";
+        str.split(''); // ["a","-","b","-","c","-","d","-","e","-","f"]
+        str.split('-'); // ["a","b","c","d","e","f"]
+    ```
+
+8. concat()
+   1. 连接多个数组
+   2. concat方法不会改变原数组
+
+9. reverse()
+   1. 顺序置反
+   2. 立即改变原数组
+   3. 字符串置反：str.split("").reverse().join("");
+
+10. indexOf()
+    1. indexOf()有两个参数，第一个参数是要查找的项，第二个是查找项的起点位置的索引。如果查找到该项，则返回它从查找位置起，首次出现的位置。如果没有查找到，则返回-1。
+    2. 如果元素不存在则返回-1
+
+11. includes()
+    1. 判断一个数组是否包含一个指定的值
+    2. 返回布尔值
+
+12. 数组排序：sort()
+
+#### 3. 数组算法
+
+##### 3.1 遍历
+
+```JavaScript
+    var arr = [1,2,3,4,5];
+    var sum = 0,
+        max = arr[0],
+        min = arr[0];
+    for(var i = 0; i < arr.length; i++){
+        if(arr[i] > max){
+            max = arr[i];
+        } else if(arr[i] < min) {
+            min = arr[i];
+        }
+    }
+```
+
+1. 数组求和：sum = 0初始化
+
+2. 数组最大项：max = arr[0]初始化
+
+3. 数组最小项：min = arr[0]初始化
+
+4. 例子
+
+    ```JavaScript
+        // 移除数组arr中所有为“无效”的元素，直接在原数组上进行操作。
+
+        var arr=["有效","无效","有效","无效","无效","有效"];
+
+        for(var i = 0; i < arr.length; i++){
+            if(arr[i] == '无效') {
+                arr.splice(i,1);
+                //注意删除元素之后，后面元素的索引会改变。所以需要把索引减去1。例如第二次循环时，删掉了索引为1的元素"无效"，由于原数组改变。索引为2的元素就会变成索引为1的元素，如果索引不减去1，则后面循环拿到的元素就错位了
+                i -= 1;
+            }
+        }
+
+        document.write(arr);
+    ```
+
+##### 3.2 数组去重和随机样本
+
+1. 数组去重：去掉数组中的重复项
+   - 思路：创建一个空的结果数组，遍历原数组，把不在结果数组中的项推入结果数组
+
+    ```JavaScript
+        var arr = [1,1,1,2,2,3,4,1,];
+
+        //结果数组
+        var result = [];
+
+        //遍历原数组
+        for(var i = 0; i < arr.length; i++){
+            //判断遍历到的这项是否在结果数组中,includes方法
+            if(!result.includes(arr[i])){
+                result.push(arr[i]);
+            }
+        }
+
+        document.write(result);
+    ```
+
+2. 随机样本
+   - 请随机从原数组中取3项
+   - 思路：创建一个空结果数组，遍历原数组，随机选择一项，推入结果数组，并且将这项删除
+
+    ```JavaScript
+        var arr = [3,6,9,10,5,8,7]; //默认没有重复项
+
+        //结果数组
+        var result = [];
+        
+        //遍历原数组
+        for(var i = 0; i < 3; i++) {
+            // 随机选择一项的下标，数组的下标0~arr.length-1;
+            // random公式
+            var n = parseInt(Math.random()*arr.length);
+            // 把这项推入结果数组
+            result.push(arr[n]);
+            // 删除这项，防止重复被随机到
+            arr.splice(n,1);
+        }
+        console.log(result);
+    ```
+
+##### 3.3 冒泡排序
+
+- 排序算法
+
+- 核心思路：一次一次进行多次项的两两比较
+
+##### 3.4 二维数组
+
+#### 4. 引用类型
+
+##### 4.1 引用类型基础
+
+##### 4.2 深克隆和浅克隆
