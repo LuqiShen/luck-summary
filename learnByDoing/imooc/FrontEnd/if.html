@@ -10,21 +10,31 @@
 
 <body>
     <script>
-        var arr = ["赵", "钱", "孙", "李"]
-        var result = arr[1];
-        console.log(result);
+        // 编写一个函数，返回斐波那契数列
+        var arr1 = [33, 44, 55, 66, [77, 88, [0, 1, 2]],
+            [99, 22, 11]
+        ];
 
-        var arr = ["赵", "钱", "孙", "李"]
-        var result = arr.splice(1,1);
-        console.log(result);
+        // 函数，递归
+        function deepClone(arr) {
+            // 结果数组
+            var res = [];
+            for (var i = 0; i < arr.length; i++) {
+                // 类型判断，如果是数组
+                if (Array.isArray(arr[i])) {
+                    // 递归
+                    res.push(deepClone(arr[i]));
+                } else {
+                    // 递归的出口，基本类型值直接推入数组中
+                    res.push(arr[i]);
+                }
+            }
+            // 返回结果数组
+            return res;
+        }
 
-        var arr = ["赵", "钱", "孙", "李"]
-        var result = arr.slice(1,2);
-        console.log(result);
-
-        var arr = ["赵", "钱", "孙", "李"]
-        var result = arr.slice(-3,-2);
-        console.log(result);
+        var arr2 = deepClone(arr1);
+        console.log(arr2);
     </script>
 </body>
 

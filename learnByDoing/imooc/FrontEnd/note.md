@@ -4157,11 +4157,501 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 - 排序算法
 
 - 核心思路：一次一次进行多次项的两两比较
+  - n个数字，需比较n-1次，比较次数为n*(n-1)/2
+
+    ```JavaScript
+        // 冒泡排序
+        var arr = [6,2,9,3,8,1];
+
+        // 一趟一趟比较，趟数序号为i
+        for(var i = 1; i < arr.length; i++){
+            // 内层循环负责两两比较
+            for(var j = arr.length - 1; j >= i; j--){
+                // 判断项的大小
+                if(arr[j] < arr[j-1]){
+                    var temp = arr[j];
+                    arr[j] = arr[j-1];
+                    arr[j-1] = temp;
+                }
+            }
+        }
+
+        console.log(arr);
+    ```
 
 ##### 3.4 二维数组
+
+- 以数组作为数组元素，“数组的数组”
+
+    ```JavaScript
+        var matrix = [
+            [11,22,33],
+            [22,33,44],
+            [33,44,55],
+            [44,55,66]
+            ];
+
+        console.log(matrix.length); //4
+
+        //遍历二维数组中的每个项
+        for(var i = 0; i < 4; i++){
+            for(var j = 0; j < 3; j++){
+                console.log(martirx[i][j]);
+            }
+        }
+
+
+    ```
 
 #### 4. 引用类型
 
 ##### 4.1 引用类型基础
 
+```JavaScript
+    var a = 3;
+    var b = a;
+    a++;
+    console.log(a); //4
+    console.log(b); //3
+
+    var arr1 = [1,2,3,4];
+    var arr2 = arr1;
+    arr1.push(5);
+    console.log(arr1); //[1,2,3,4,5]
+    console.log(arr2); //[1,2,3,4,5]
+
+    3 == 3; //true
+    null == null; //true
+    undefined == undefined; //true
+    4 == [4]; //true,[4]转化为数值类型
+    4 === [4]; //false
+    [1,2,3] == [1,2,3]; //false
+    [] == [] //false
+
+    var arr = [1,2,3];
+    var anotherarr = arr;
+    anotherarr == arr; //true
+```
+
+1. 基本类型: number、boolean、string、undefined、null
+   - 克隆时会在新地址创建新副本，两个变量指向不同的地址
+   - 判断相等时：判断值是否相等
+
+2. 引用类型：array、object、function、regexp……
+    - 堆内存，两个变量指向同一个地址
+    - 判断相等时：判断址是否相等
+
+3. 内存和硬盘
+   - 内存：运行程序
+   - 硬盘：保存文件
+
+4. 例题:现在有两个变量，分别是a = {name: 'xm'}, b = [4]，我们不用第三个变量来调换a和b的值。
+
+    ```JavaScript
+        var a = {name: 'xm'}, b = [4];
+        /*此处添加代码*/
+        var a = [a,b];
+        var b = a[0];
+        var a = a[1];
+        console.log(a,b);
+    ```
+
 ##### 4.2 深克隆和浅克隆
+
+- 浅克隆：只克隆数组的第一层，如果是多维数组，或者数组中的项是其他引用类型值，则不克隆其他层
+
+    ```JavaScript
+        var arr1 = [1,2,3,4,[1,2,3,4]];
+        // 结果数组
+        var result = [];
+
+        // 遍历原数组，把遍历到的每一项推入到原数组中
+        for(var i = 0; i < arr1.length; i++){
+            result.push(arr1[i]);
+        }
+
+        console.log(result);
+        console.log(result == arr1); // false，值相同但内存地址不同，表示克隆出的新数组和原数组不是内存中的同一个对象
+        console.log(result[4] == arr1[4]) // true
+    ```
+
+- 深克隆：克隆数组的所有层，要使用递归
+
+## 第7周 JS函数与DOM
+
+### 第6章 函数
+
+#### 1. 函数的基本使用
+
+##### 1.1 什么是函数
+
+- 语句的封装，方便复用
+
+- 一次定义，多次调用
+
+- 简化代码
+
+##### 1.2 函数的定义和调用
+
+- 先定义再使用
+
+- function关键字定义
+
+```JavaScript
+    function fun(){
+        // 函数体
+    }
+    fun(); // 调用函数
+
+    // 函数表达式
+    // 把匿名函数赋值给一个变量
+    var fun = function(){
+        //函数体
+    }
+```
+
+- 调用函数：执行
+  - 函数名后面书写圆括号
+
+- 语句的执行顺序
+
+    ```JavaScript
+        function fun(){
+            console.log('A');
+            console.log('B');
+            console.log('C');
+        }
+
+        console.log(1);
+        console.log(2);
+        console.log(3);
+        fun();  // 调用权移交给函数
+        console.log(4);
+        console.log(5);
+        console.log(6);
+
+        // 1,2,3,'A','B','C',4,5,6
+    ```
+
+- 函数声明提升
+  - 注意：函数表达式不能提升
+  - 函数优先提升
+
+    ```JavaScript
+        // 函数声明提升
+        fun(); // '函数被执行'
+
+        function fun(){
+            alert('函数被执行');
+        }
+
+        // 函数表达式不能提升
+        fun2(); // 错误
+        // 本质上定义了一个变量
+        // fun2被提升，值为undefined
+        var fun2 = function(){
+            alert('函数被执行');
+        }
+
+        // 函数优先提升，再提升变量
+        // function fun3();
+        // var fun3; 只提升定义，不提升值，无法覆盖function fun3
+        fun3();  // 弹出B
+        
+        var fun3 = function(){
+            // 顺序执行的时候fun3被此函数重新赋值
+            alert('A');
+        }
+
+        function fun3(){
+            // 预解析阶段被提升
+            alert('B');
+        }
+
+        fun3(); // 弹出A
+
+
+        // 预解析
+        // fn函数在预解析时，已经提前进行了该函数的声明
+        document.write(fn); // function fn() {}
+        function fn(){}
+
+        // 预解析
+        // 变量预解析时，会提前声明（定义）并赋值为undefined，要注意赋值语句不会预解析。
+        // var fn=function(){}是定义了一个变量，变量值为函数。所以fn遵循的是变量预解析。也就相当于如下：
+        // var fn=undefined;
+        // document.write(fn);
+        // fn=function(){};
+        // 所以上面代码输出的结果为undefined
+        document.write(fn2);
+        var fn2 = function(){};
+
+        // 例题
+        console.log(a);
+        var a = 1;
+        console.log(a);
+        function a(){
+            console.log(2);
+        }
+        console.log(a);
+        var a = 3;
+        console.log(a);
+        function a(){
+            console.log(4);
+        }
+        console.log(a);
+        a();
+
+        // 解题
+        function a(){
+            console.log(2);
+        }
+        function a(){
+            console.log(4);
+        }
+        var a;
+        console.log(a); // function a(){console.log(4);}
+        a = 1;
+        console.log(a); // 1
+        console.log(a); // 1
+        a = 3;
+        console.log(a); // 3
+        console.log(a); // 3
+        a(); // 报错
+    ```
+
+##### 1.3 函数的参数和返回值
+
+###### 1.3.1 函数的参数
+
+1. 参数：函数内的待定值
+   - 调用函数时，必须传入参数的具体值，形实结合
+   - 多个参数，逗号隔开
+
+2. 形参和实参个数不同的情况
+   1. 形参 < 实参：有实参没有被接收
+   2. 形参 > 实参：没有收到实参的形参为undefined
+
+3. arguments
+   1. 表示函数接收到的实参列表
+   2. 类数组对象
+         1. 所有属性均为从0开始的自然数序列
+         2. 有length属性
+         3. [下标]访问
+         4. 不能调用数组的方法
+         5. 不管用户传入多少个实参，都可以使用arguments对它们进行访问和操作
+
+###### 1.3.2 函数的返回值
+
+1. return关键字表示“函数的返回值”
+   - 返回值可以被变量接收
+   - 调用一个有返回值的函数，可以被当作一个普通值，从而可以出现在任何可以书写的地方
+   - 遇见return，即退出函数
+   - 如果return后面没有返回值，默认返回undefined，且执行完return语句，后面的语句不会执行了。
+
+    ```JavaScript
+        function sum(a,b){
+            return a + b;
+        }
+
+        var result = sum(3,4) * sum(2,6); // 84
+        var result2 = sum(3, sum(4,5)); // 12
+    ```
+
+#### 2. 函数算法题
+
+##### 2.1 寻找喇叭花数
+
+- 喇叭花数是这样的三位数，其中每一位数字的阶乘之和恰好等于它本身，即abc = a! + b! +c!，其中abc表示一个三位数。寻找所有的喇叭花数。
+
+    ```JavaScript
+        // 思路将阶乘封装为函数
+        // 封装阶乘函数
+        function factorial(n) {
+            // 累乘器
+            var result = 1;
+            for (var i = 1; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+
+        // 穷举法，从100到999寻找喇叭花数
+        for (var i = 100; i <= 999; i++) {
+            var i_str = i.toString();
+
+            var a = Number(i_str[0]);
+            var b = Number(i_str[1]);
+            var c = Number(i_str[2]);
+            if (factorial(a) + factorial(b) + factorial(c) == i) {
+                console.log(i);
+            }
+        }
+    ```
+
+##### 2.2 JavaScript内置的sort()方法
+
+- 数组排序sort()
+  - 参数为函数
+  - 这个函数中的a,b分别表示数组中靠前和靠后的项，如果需要将它们交换位置，则返回任意正数；否则就返回负数
+
+    ```JavaScript
+        var arr = [33,22,55,11];
+        arr.sort(function(a,b){
+            if(a > b){
+                return 1; //交换，从小到大的排序
+            } else {
+                return -1;
+            }
+        });
+
+        var arr1 = [33,22,55,11];
+        arr1.sort(function(a,b){
+            return a - b; //从小到大
+        });
+
+
+        var arr2 = [33,22,55,11];
+        arr2.sort(function(a,b){
+            return b - a; //从大到小
+        });
+    ```
+
+#### 3. 递归
+
+##### 3.1 什么是递归
+
+- 函数的内部语句调用函数自身，从而发起对函数的迭代；函数自己调用自己
+
+- 要素
+  - 边界条件：确定递归到何时终止，递归出口
+  - 递归模式：大的问题分解为小的问题，递归体
+
+    ```JavaScript
+        // 递归
+        function factorial(n){
+            if(n == 1) return 1;
+            return n * factorial(n-1);
+        }
+    ```
+
+##### 3.2 递归的常见算法
+
+- 斐波那契数列：1,1,2,3,5,8,13,21;从下标为2的项开始，每项等于前两项的和
+
+    ```JavaScript
+        function fib(n) {
+            if (n == 0 || n == 1) return 1;
+            return fib(n - 1) + fib(n - 2);
+        }
+    ```
+
+##### 3.3 深克隆
+
+```JavaScript
+    var arr1 = [33, 44, 55, 66, [77, 88, [0, 1, 2]],[99, 22, 11]];
+
+    // 函数，递归
+    function deepClone(arr) {
+        // 结果数组，每一层都有一个结果数组
+        var res = [];
+        for (var i = 0; i < arr.length; i++) {
+            // 类型判断，如果是数组
+            if (Array.isArray(arr[i])) {
+                // 递归
+                res.push(deepClone(arr[i]));
+            } else {
+                // 递归的出口，基本类型值直接推入数组中
+                res.push(arr[i]);
+            }
+        }
+        // 返回结果数组
+        return res;
+    }
+
+    var arr2 = deepClone(arr1);
+    console.log(arr2);
+```
+
+#### 4. 作用域和闭包
+
+##### 4.1 全局变量和局部变量
+
+1. 局部变量：
+    - JavaScript是函数级作用域的编程语言：变量只在其定义时所在的function内部有意义
+
+2. 全局变量
+    - 没有定义在任何函数的内部的变量，它在任何函数内都可以被访问和更改
+
+    ```JavaScript
+        function fun(){
+            var a = 10;
+        }
+        fun();
+        console.log(a); //引用错误
+
+        var b = 5;
+        function fun2(){
+            b++;
+        }
+        fun2();
+        console.log(b); //6
+    ```
+
+3. 遮蔽效应
+   - 如果函数中也定义了和全局同名的变量，则函数内的变量会将全局的变量“遮蔽”
+
+    ```JavaScript
+        var a = 10;
+        function fun(){
+            var a = 5;
+            a++;
+            console.log(a); // 输出6
+        }
+
+        fun();
+        console.log(a); // 输出10
+    ```
+
+4. 注意考虑变量声明提升
+
+    ```JavaScript
+        var a = 10;
+        function fun(){
+            a++;
+            var a = 5;
+            console.log(a); //6
+        }
+        fun();
+        console.log(a); //10
+
+        var a = 10;
+        function fun(){
+            var a;  // undefined
+            a++;    // NaN
+            a = 5;  // 5
+            console.log(a); // 5
+        }
+        fun();
+        console.log(a); //10
+    ```
+
+5. 形参也是局部变量
+
+    ```JavaScript
+        var a = 10;
+        function fun(a) {
+            a++;    // 形参a，也是函数内部的局部变量
+            console.log(a); // 7++ , 输出8
+        }
+        fun(7);
+        console.log(a); // 输出10
+    ```
+
+##### 4.2 闭包
+
+#### 5. 立即执行函数
+
+##### 5.1 立即执行函数IIFE
+
+### 第7章 DOM
