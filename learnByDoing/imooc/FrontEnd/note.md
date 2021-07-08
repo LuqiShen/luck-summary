@@ -4719,8 +4719,169 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 4.2 闭包
 
+```JavaScript
+    function fun(){
+        var name = "慕课网";
+        
+        function innerFun(){
+            alert(name);
+        }
+
+        return innerFun;
+    }
+    var inn = fun(); //inn = innerfun; 内部函数移动到外部执行
+    inn() // innerFun(), 弹出慕课网
+```
+
+1. 闭包closure:闭包是函数本身和该函数声明时所处的环境状态
+    - 函数能够“记忆”其定义时所处的环境
+    - 闭包实用：它允许我们将数据与操作该数据的函数关联起来
+    - 记忆性、模拟私有变量
+      - 记忆性：闭包产生时，函数所处的环境会始终保存在内存中，不会在外层函数调用后被自动清除
+      - 模拟私有变量
+
+    ```JavaScript
+        // 闭包记忆性案例
+        // 创建体温检测函数checkTemp(n)，可以检查体温n是否正常，函数会返回布尔值；A小区体温合格线为37.1℃，B小区合格线为37.3℃
+
+        function createCheckTemp(standardTemp) {
+            return function checkTemp(n) {
+                if (n <= standardTemp) {
+                    alert('你的体温正常');
+                } else {
+                    alert('你的体温不正常');
+                }
+            }
+        }
+
+        // 创建一个checkTemp函数，标准线为37.1被记忆
+        var checkTemp_A = createCheckTemp(37.1);
+        checkTemp_A(37.2);
+        checkTemp_A(37.0);
+
+        // 创建一个checkTemp函数，标准线为37.3被记忆
+        var checkTemp_B = createCheckTemp(37.3);
+        checkTemp_B(37.2);
+        checkTemp_B(37.0);
+    ```
+
+    ```JavaScript
+        // 闭包模拟私有变量案例
+        // 定义一个变量a，要求是能保证这个a只能被进行指定操作（如加一、乘二），而不能进行其他操作（让a变得安全）
+        // 封装一个函数，这个函数的功能是私有化变量
+        function fun() {
+            // 定义一个局部变量a
+            var a = 0;
+
+            return {
+                getA: function () {
+                    return a;
+                },
+                add: function () {
+                    a++;
+                },
+                pow: function () {
+                    a *= 2;
+                }
+            };
+        }
+
+        var obj = fun();
+        // 如果想在fun函数外使用变量a，唯一的方法就是调用getA()方法
+        console.log(obj.getA());
+        obj.add();
+        console.log(obj.getA());
+        obj.pow();
+    ```
+
+2. 观察闭包
+   1. 每次创建函数都会创建闭包
+   2. 闭包往往需要函数“换一个地方”执行
+
+3. 不要滥用闭包，可能会造成内存泄漏
+
+```JavaScript
+    function addCount(){
+        var count = 0;
+        return function (){
+            count = count + 1;
+            console.log(count);
+        }
+    }
+
+    var fun1 = addCount();
+    var fun2 = addCount();
+    fun1();     // 1
+    fun2();     // 1
+    fun2();     // 2
+    fun1();     // 2
+    fun1 == fun2; //false
+```
+
 #### 5. 立即执行函数
 
 ##### 5.1 立即执行函数IIFE
+
+1. IIFE(Immediately Invoked Function Expression): 立即调用函数表达式；一旦被定义，就立即被调用
+
+    ```JavaScript
+        function(){
+            statements;
+        }(); //错误
+
+        (function (){
+            statements;
+        })();
+        // 包裹function的括号将函数变为表达式
+        // 最后一对圆括号是调用函数
+
+        +function(){
+            statements;
+        }();
+
+        - function(){
+            statements;
+        }();
+    ```
+
+2. 作用
+   1. 为变量赋值：复杂的变量赋值，使用IIFE使语法更紧凑
+   2. 将全局变量变为局部变量
+
+    ```JavaScript
+        var age = 12;
+        var sex = '男';
+        var title = (function (){
+            if(age < 18){
+                return '小朋友';
+            } else {
+                if(sex == '男') {
+                    return '先生';
+                } else {
+                    return '女士';
+                }
+            }
+        })();
+    ```
+
+    ```JavaScript
+        var arr = [];
+        for(var i = 0; i < 5; i++){
+            arr.push(function () {
+                alert(i); // i是全局变量，所有函数共享内存中的同一个i
+            });
+        }
+        arr[2](); // 5
+
+        var arr = [];
+        for(var i = 0; i < 5; i++){
+            (function(i){   // 这个i是形参
+                arr.push(function () {
+                    alert(i); // 这是一个闭包，为的是利用闭包的记忆性记住每一次遍历的i的值
+                });
+            })(i); //立即执行的函数需要一个实参i，这个i是for循环中的i
+        }
+        arr[2](); // 5
+    ```
 
 ### 第7章 DOM
