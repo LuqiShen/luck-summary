@@ -4648,6 +4648,75 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
         console.log(a); // 输出10
     ```
 
+6. 函数的嵌套
+   - 函数内部也可以定义一个函数，称为局部函数
+
+    ```JavaScript
+        function fun(){
+            function inner(){
+                console.log('你好');
+            }
+            inner();
+        }
+        fun();
+    ```
+
+7. 作用域链
+   - 在函数嵌套中，变量会从内到外逐层寻找它的定义
+
+    ```JavaScript
+        var a = 10;
+        var b = 20;
+        function fun(){
+            var c = 30;
+            function inner(){
+                var a = 40;
+                var d = 50;
+                console.log(a,b,c,d); // 40,20,30,50
+            }
+            inner();
+        }
+        fun();
+    ```
+
+8. 不用关键字var声明将定义全局变量
+
+    ```JavaScript
+        function fun(){
+            a = 3;
+        }
+        fun();
+        console.log(a); //3
+    ```
+
+    ```JavaScript
+        var a = 1;
+        var b = 2;
+        function fun(){
+            c = 3;
+            var b = 4;
+            b++;
+            console.log(b);
+            c++;
+        }
+
+        fun(); // b 5
+        
+        console.log(b); //2
+        // 在函数的外部可以访问变量c
+        console.log(c); //4 
+    ```
+
+    ```JavaScript
+        var a = 23;
+        function fn(a){
+            document.write(a);
+            a = 34;
+        }
+        fn(); // undefined
+        document.write(a); //23
+    ```
+
 ##### 4.2 闭包
 
 #### 5. 立即执行函数
