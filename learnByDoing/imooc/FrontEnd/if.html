@@ -1,17 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
-<head>
+<head lang="en">
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BOM特效-返回顶部</title>
+    <style>
+        body {
+            height: 5000px;
+            background-image: linear-gradient(to bottom, red, yellow, green);
+        }
+
+        .backtotop {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, .6);
+            position: fixed;
+            bottom: 100px;
+            right: 80;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
-    <script>
-        var arr = [1, 2, 3];
-        var arr1 = [4,5,6];
+    <div class="backtotop" id="backtotopBtn">返回顶部</div>
+    <script type="text/javascript">
+        var backtotopBtn = document.getElementById('backtotopBtn');
+        var timer;
+        backtotopBtn.onclick = function () {
+            // 设表先关
+            clearInterval(timer);
+            // 设置定时器
+            timer = setInterval(function () {
+                document.body.scrollTop -= 200;
+                if (document.body.scrollTop <= 0) {
+                    clearInterval(timer);
+                    console.log('清除定时器');
+                }
+            }, 20);
+        };
     </script>
 </body>
 

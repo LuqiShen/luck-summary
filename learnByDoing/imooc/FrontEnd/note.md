@@ -4886,4 +4886,195 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ### 第7章 DOM
 
-#### 
+### 第8章 BOM
+
+#### 1. BOM常用对象
+
+- BOM（Browser Object Model, 浏览器对象模型）：JS与浏览器窗口交互的接口0
+
+##### 1.1 Window对象
+
+1. window对象：当前JS脚本运行所处的窗口，而这个窗口中包含DOM结构，window.document属性就是document对象
+
+2. 在有标签页功能的浏览器中，每个标签都拥有自己的window对象；也就是说，同一个窗口的标签页之间不会共享一个window对象
+
+3. 全局变量是window的属性
+   - 多个js文件之间是共享全局作用域的
+
+    ```JavaScript
+        var a = 10;
+        console.log(window.a == a); //true
+    ```
+
+4. 内置函数普遍是window的方法
+
+    ```JavaScript
+        console.log(window.hasOwnProperty('setInterval')); // true
+    ```
+
+5. 窗口尺寸相关属性
+
+    | 属性 | 意义 |
+    | :----: | :----: |
+    | innerHeight | 浏览器窗口的内容区域的高度，包含水平滚动条（如果有）|
+    | innderWidth | 浏览器窗口的内容区域的宽度，包含垂直滚动条（如果有）|
+    | outerHeight | 浏览器窗口的外部高度 |
+    | outerWidth | 浏览器窗口的外部宽度 |
+
+    - 获得不包含滚动条的窗口宽度，要用document.documentElement.clientWidth
+
+6. resize事件
+   - 在窗口大小改变之后，就会触发resize事件，可以使用window.onresize或者window.addEventListener('resize')来绑定事件处理函数
+
+7. 已卷动高度
+   1. window.scrollY表示窗口的卷动高度
+   2. document.documentElement.scrollTop属性也表示窗口卷动高度
+   3. window.scrollY是只读的；document.documentElement.scrollTop不是只读的，可以被改变，例如可以实现返回顶部的效果
+
+    ```JavaScript
+        // 保证兼容性
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    ```
+
+8. scroll事件
+   - 在窗口被卷动后，就会触发scroll事件，可以使用window.onscroll或者window.addEventListener('scroll')来帮顶事件处理函数
+
+##### 1.2 Navigator对象
+
+1. window.navigator属性可以检索navigator对象，它内部含有用户此次活动的浏览器的相关属性和标识
+
+    | 属性 | 意义 |
+    | :----: | :----: |
+    | appName | 浏览器官方名称 |
+    | appVersion | 浏览器版本 |
+    | userAgent | 浏览器的用户代理（含有内核信息和封装壳信息）|
+    | platform | 用户操作系|
+
+2. 判断用户是什么浏览器
+
+    ```HTML
+    <html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>userAgent</title>
+    </head>
+    <body>
+       <input type="button" value="点击获取浏览器信息" id="browser">
+       <script type="text/javascript">
+           //补充代码
+           function getBroswerInfomation(){
+               var userAgent = navigator.userAgent;
+               if(userAgent.includes("MSIE")){
+                   alert("IE浏览器");
+               }else if(userAgent.includes("FireFox")){
+                   alert("火狐浏览器");
+               }else if(userAgent.includes("Chrome")){
+                   alert("谷歌浏览器");
+               }
+           }
+           
+           var btn = document.getElementById('browser');
+           btn.onclick = getBroswerInfomation;
+       </script>
+    </body>
+    </html>
+    ```
+
+##### 1.3 History对象
+
+1. window.history对象提供了“操作浏览器会话历史”的接口
+
+2. 常用操作
+
+    ```JavaScript
+        history.back();  // 等同于点击浏览器的回退按钮
+        history.go(-1); // 等同于history.back();
+        
+        <a href="javascript:history.back();">回退</a>
+    ```
+
+##### 1.4 Location对象
+
+1. window.location标识当前所在网址，可以通过给这个属性赋值命令浏览器进行页面跳转
+
+    ```JavaScript
+        window.location = 'http://www.imooc.com';    
+    ```
+
+2. 重新加载当前页面
+
+    ```JavaScript
+        window.location.reload(true);
+    ```
+
+3. get请求查询参数
+
+    ```JavaScript
+        console.log(window.location.search);
+    ```
+
+#### 2. BOM特效开发
+
+##### 2.1 返回顶部
+
+- 原理：改变document.documentElement.scrollTop属性，通过定时器逐步改变此值，则将用动画的形式返回顶部
+
+- 兼容问题
+  - document.body：返回html dom中的body节点 即<body>
+  - document.documentElement：返回html dom中的root 节点 即<html>
+  - 涉及到浏览器机制，chrome、firefox和ie之前有区别；
+    - 如果页面中存在DTD，那么就可以使用document.documentElement来获取某些值；
+    - 如果不存在DTD，就不能通过document.documentElement来获取了，就通过document.body来获取某些值了
+
+    ```HTML
+        <html>
+
+        <head lang="en">
+            <meta charset="UTF-8">
+            <title>BOM特效-返回顶部</title>
+            <style>
+                body {
+                    height: 5000px;
+                    background-image: linear-gradient(to bottom, red, yellow, green);
+                }
+
+                .backtotop {
+                    width: 60px;
+                    height: 60px;
+                    background-color: rgba(255, 255, 255, .6);
+                    position: fixed;
+                    bottom: 100px;
+                    right: 80;
+                    cursor: pointer;
+                }
+            </style>
+        </head>
+
+        <body>
+            <div class="backtotop" id="backtotopBtn">返回顶部</div>
+            <script type="text/javascript">
+                var backtotopBtn = document.getElementById('backtotopBtn');
+                var timer;
+                backtotopBtn.onclick = function () {
+                    // 设表先关
+                    clearInterval(timer);
+                    // 设置定时器
+                    timer = setInterval(function () {
+                        document.body.scrollTop -= 200;
+                        if (document.body.scrollTop <= 0) {
+                            clearInterval(timer);
+                        }
+                    }, 20);
+                };
+            </script>
+        </body>
+
+        </html>
+    ```
+
+##### 2.2 楼层导航
+
+- offsetTop属性，表示此元素到定位祖先元素的垂直距离
+  - 定位祖先：在祖先中，离自己最近的且拥有定位属性的元素
+
+- 函数节流
