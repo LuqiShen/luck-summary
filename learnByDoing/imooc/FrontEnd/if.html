@@ -1,44 +1,38 @@
-<html>
-
-<head lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>BOM特效-返回顶部</title>
-    <style>
-        body {
-            height: 5000px;
-            background-image: linear-gradient(to bottom, red, yellow, green);
-        }
-
-        .backtotop {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, .6);
-            position: fixed;
-            bottom: 100px;
-            right: 80;
-            cursor: pointer;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-
 <body>
-    <div class="backtotop" id="backtotopBtn">返回顶部</div>
-    <script type="text/javascript">
-        var backtotopBtn = document.getElementById('backtotopBtn');
-        var timer;
-        backtotopBtn.onclick = function () {
-            // 设表先关
-            clearInterval(timer);
-            // 设置定时器
-            timer = setInterval(function () {
-                document.body.scrollTop -= 200;
-                if (document.body.scrollTop <= 0) {
-                    clearInterval(timer);
-                    console.log('清除定时器');
-                }
-            }, 20);
-        };
+    <ul id="list">
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+    </ul>
+    <script>
+            var a = 10;
+            function fun(){
+            a++;
+            var a = 5;
+            console.log(a); //5
+            }
+            fun();
+            console.log(a); //10
+
+            var a = 10;
+            function fun(){
+            var a; // undefined
+            a++; // NaN
+            a = 5; // 5
+            console.log(a); // 5
+            }
+            fun();
+            console.log(a); //10
     </script>
 </body>
-
 </html>

@@ -4894,15 +4894,7 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 ##### 2.1 访问元素节点
 
-1. document.getElementById()
-   - 页面上有相同id的元素，则只能得到第一个
-   - 不管元素藏的位置有多深，都能够通过id寻找到
-
-    ```JavaScript
-        var box = document.getElementById('')
-    ```
-
-2. 延迟运行：JS代码要写到HTML节点的后面
+- 延迟运行：JS代码要写到HTML节点的后面
 
     ```JavaScript
         // 给window对象添加onload事件监听，onload表示页面都加载完毕
@@ -4910,7 +4902,99 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
         // 使页面加载完毕后，再执行指定代码
     ```
 
+| 方法 | 功能 | 兼容性 |
+| :----: | :----: | :----: |
+|document.getElementById()| 通过id得到元素（唯一、第一个）| IE6 |
+|document.getElementsByTagName()| 通过标签名得到元素数组 | IE6 |
+|document.getElementsByClassName()| 通过类名得到元素数组 | IE9 |
+|document.querySelector()| 通过css选择器或标签名得到元素（唯一、第一个）| IE8部分兼容，IE9完全兼容|
+|document.querySelectorAll()| 通过css选择器或标签名得到元素数组 | IE8部分兼容，IE9完全兼容|
+
+```HTML
+querySelectorAll()获取的元素个数不可以改变，返回结果为NodeList数组
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="list">
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+    </ul>
+    <script>
+        // 获取ul元素
+        var listEle = document.getElementById("list")
+        // 通过querySelectorAll方法获取元素
+        var lis = document.querySelectorAll("li")
+        // 没有利用循环生成li之前打印lis，NodeList[5]
+        console.log(lis)
+        // 通过循环，生成5个li标签，类名为liEle，内容为new li，生成之后，放在ul里面
+        for (var i = 0; i < 5; i++) {
+            var newli = document.createElement("li");
+            newli.className = "liEle"
+            newli.innerHTML = "new li"
+            listEle.appendChild(newli)
+        }
+        // 利用循环生成li之后打印lis，NodeList[5]
+        console.log(lis)
+    </script>
+</body>
+</html>
+
+getElementByClassName()和getElementByTagName()方法可以动态获取元素，页面中添加删除元素时，获取的元素个数可以改变，返回结果为HTMLCollection数组
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="list">
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+        <li class="liEle">oldli</li>
+    </ul>
+    <script>
+        // 获取ul元素
+        var listEle = document.getElementById("list")
+        // 通过getElementsByTagName方法获取元素
+        var lis = document.getElementsByTagName("li")
+        // 没有利用循环生成li之前打印lis, HTMLCollection[5]
+        console.log(lis)
+        // 通过循环，生成5个li标签，类名为liEle，内容为new li，生成之后，放在ul里面
+        for (var i = 0; i < 5; i++) {
+            var newli = document.createElement("li");
+            newli.className = "liEle"
+            newli.innerHTML = "new li"
+            listEle.appendChild(newli)
+        }
+        // 利用循环生成li之后打印lis, HTMLCollection[10]
+        console.log(lis)
+    </script>
+</body>
+</html>
+```
+
 ##### 2.2 节点的关系
+
+- 注意：文本节点也属于节点
+  - 空白文本节点，也属于节点；在IE8以前不是
+  - 排除文本节点的干扰：只考虑元素节点（IE9开始）
+
+- 常见的节点关系函数
+
+
 
 #### 3. 节点操作
 
@@ -5069,8 +5153,7 @@ font: italic bold 20px/1.5 Arail, "微软雅黑";
 
 - 原理：改变document.documentElement.scrollTop属性，通过定时器逐步改变此值，则将用动画的形式返回顶部
 
-- 兼容问题
-  - document.body：返回html dom中的body节点 即<body>
+- 兼容问题vv  - document.body：返回html dom中的body节点 即<body>
   - document.documentElement：返回html dom中的root 节点 即<html>
   - 涉及到浏览器机制，chrome、firefox和ie之前有区别；
     - 如果页面中存在DTD，那么就可以使用document.documentElement来获取某些值；
