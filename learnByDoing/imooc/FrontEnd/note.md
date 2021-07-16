@@ -4988,15 +4988,126 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ##### 2.2 节点的关系
 
+| 关系 | 考虑所有节点 | 只考虑元素节点（IE9开始支持） |
+| :----: | :----: | :----: |
+| 子节点 | childNodes | children |
+| 父节点 | parentNode | 同 |
+| 第一个子节点 | firstChild | firstElementChild |
+| 最后一个子节点 | lastChild | lastElementChild |
+| 前一个兄弟节点 | previousSibling | previousElementSibling |
+| 后一个兄弟节点 | nextSibling | nextElementSibling|
+
 - 注意：文本节点也属于节点
   - 空白文本节点，也属于节点；在IE8以前不是
   - 排除文本节点的干扰：只考虑元素节点（IE9开始）
 
 - 常见的节点关系函数
 
+    ```JavaScript
+        // 封装一个函数，这个函数可以返回元素的所有子元素节点（兼容到IE6）
+        function getChildren(node) {
+            // 结果数组
+            var children = [];
+            // 遍历node这个节点的所有子节点，判断每一个子节点的nodeType属性是不是1
+            // 如果是1，就推入结果数组
+            for (var i = 0; i < node.childNodes.length; i++) {
+                if (node.childNodes[i].nodeType == 1) {
+                    children.push(node.childNodes[i]);
+                }
+            }
+            return children;
+        }
 
+        // 封装一个函数，这个函数可以返回元素的前一个元素兄弟节点（兼容到IE6）
+        function getElementPrevSibling(node) {
+            var o = node;
+            // 使用while语句
+            while (o.previousSibling != null) {
+                if (o.previousSibling.nodeType == 1) {
+                    // 循环结束，返回元素兄弟节点
+                    return o.previousSibling;
+                }
+                // 让o成为它的前一个节点，再循环
+                o = o.previousSibling;
+            }
+            // 没有节点，返回null
+            return null;
+        }
+
+        // 封装一个函数，这个函数可以返回元素的所有元素兄弟节点（兼容到IE6）
+        function getAllElementSibling(node) {
+            // 前面的元素兄弟节点
+            var prevs = [];
+            // 后面的元素兄弟节点
+            var nexts = [];
+
+            // 声明标记o，记录node的位置，遍历node之前的节点，将元素节点逐一插入数组prevs
+            var o = node;
+            while (o.previousSibling != null) {
+                if(o.previousSibling.nodeType == 1){
+                    prevs.unshift(o.previousSibling);
+                }
+                o = o.previousSibling;
+            }
+
+            // 声明标记o，记录node的位置，遍历node之后的节点，将元素节点逐一推入数组nexts
+            var o = node;
+            while (o.nextSibling != null) {
+                if(o.nextSibling.nodeType == 1){
+                    nexts.push(o.nextSibling);
+                }
+                o = o.nextSibling;
+            }
+
+            return prevs.concat(nexts);
+        }
+    ```
 
 #### 3. 节点操作
+
+1. 改变元素节点中的内容可以使用两个相关属性：
+   1. innerHTML：用来获取元素的开始标签和结束标签之间的所有内容
+      - 可以重新设置文本
+      - 可以重新设置HTML
+   2. innerText：来获取元素的开始标签和结束标签之间的文本，不包括标签
+      - 仅能重新设置文本
+
+2. 改变元素CSS样式
+   1. 调用style属性，css属性要写成“驼峰”形式
+   2. class属性负责书写css，id负责由书写js
+
+    ```JavaScript
+        oBox.style.backgroundColor = "red";
+        oBox.style.backgroundImage = "url(images/1.jpg)";
+        oBox.style.fontSize = "32px";
+    ```
+
+3. 改变元素节点的HTML属性
+   1. 标准W3C属性，如src、href等等，只需要直接打点进行调用
+   2. 不符合W3C标准的属性，要使用setAttribute()和getAttribute()来设置、读取
+   3. className属性设置或返回元素的class属性值；追加class的时候需要把原本的类名加上
+
+    ```JavaScript
+        oImg.src = "images/2.jpg";
+
+        <div id="box"></div>
+        var oBox = document.getElementById('box');
+        oBox.setAttribute('data-n',10);
+        var n = oBox.getAttribute('data-n');
+        alert(n); // 10
+
+        function addClass(element, value) {
+            var newClassName = "";
+            if (!element.className) {
+                element.className = value;
+            } else {
+                newClassName = element.className;
+                newClassName += " "; //这句代码将追加的类名分开
+                newClassName += value;
+                element.className = newClassName;
+            }      
+        }
+    ```
 
 #### 4. 节点的创建、移除和克隆
 
