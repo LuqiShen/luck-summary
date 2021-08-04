@@ -15,7 +15,7 @@
 ## 第四章 案例研究：JavaScript图片库
 
 ##### 概要
-
+z
         · 事件处理函数：在本案例中用于继承JavaScript代码和网页
         · DOM新属性：
                 childNodes

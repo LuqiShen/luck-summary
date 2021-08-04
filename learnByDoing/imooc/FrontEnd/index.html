@@ -1,15 +1,36 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>document</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    </style>
 </head>
 
 <body>
-    <div id="box"><span>DOM</span></div>
+    <button id="btn">添加一个li元素</button>
+    <ul id="list">
+        <li>默认项</li>
+        <li>默认项</li>
+        <li>默认项</li>
+    </ul>
+
     <script>
-        var oBox = document.getElementById('box');
-        console.log(oBox.innerText);
+        var oList = document.getElementById('list'),
+            oBtn = document.getElementById('btn');
+
+        oBtn.onclick = function () {
+            var oLi = document.createElement('li');
+            oLi.innerText = '我是新来的';
+            oList.appendChild(oLi);
+        }
+        oList.onclick = function (e) {
+            // e.target表示用户真正点击的那个元素
+            e.target.style.color = 'red';
+        }
     </script>
 </body>
 

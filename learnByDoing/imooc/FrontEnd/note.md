@@ -5086,6 +5086,7 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
    1. 标准W3C属性，如src、href等等，只需要直接打点进行调用
    2. 不符合W3C标准的属性，要使用setAttribute()和getAttribute()来设置、读取
    3. className属性设置或返回元素的class属性值；追加class的时候需要把原本的类名加上
+   4. data-n属性：HTML标签书写；js的dataset方法
 
     ```JavaScript
         oImg.src = "images/2.jpg";
@@ -5111,19 +5112,565 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 #### 4. 节点的创建、移除和克隆
 
+1. 节点创建
+   - 创建孤儿节点: document.createElement(标签名)
+   - 把孤儿节点连接到DOM树上
+     - 追加到父节点的最后一个：(parentNode).appenChild(child/chidren);
+     - 追加到标杆节点的前一个：(parentNode).insertBefore(child/children, targetNode)
+   - 九九乘法表例子
+
+    ```HTML
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.     0">
+            <title>Document</title>
+            <style>
+                td {
+                    width: 120px;
+                    height: 30px;
+                    border: 1px solid #000;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <table id="table"></table>
+            <script>
+                // 九九乘法表
+                var table = document.getElementById('table');
+                for (let i = 1; i <= 9; i++) {
+                    // 表格每行
+                    var tr = document.createElement('tr');
+                    for (let j = 1; j <= i; j++) {
+                        // 每列
+                        var td = document.createElement('td');
+                        // 设置td内部的文字
+                        td.innerHTML = i + " * " + j + " = " + i*j;
+                        // 追加每列
+                        tr.appendChild(td);         
+                    }
+                    // 追加每行
+                    table.appendChild(tr);
+                }
+            </script>
+        </body>
+        </html>
+    ```
+
+2. 节点移动
+   - 移动到新父节点的最后一个: (newParentNode).appendChild(node);
+   - 移动到目标节点的前面：(newParentNode).insertBefore(node, targetNode)
+   - 同一个节点只能在DOM的一个位置出现
+
+3. 节点删除
+   - (parentNode).removeChild(targetNode);
+   - 节点必须由其父节点删除
+
+4. 节点克隆
+   - (targetNode).cloneNode(Boolean);
+   - true，深度克隆（把目标节点的子节点一并克隆）；空或者false，就只克隆目标节点
+
 #### 5. DOM事件
 
 ##### 5.1 事件监听
 
+1. 事件&监听
+   - 事件：用户与网页的交互动作
+   - 监听：监控事件发生
+   - 方法：
+     - DOM0：onXXX()
+     - DOM2：addEventListener()
+
+2. onXXX()方法
+
+    ```JavaScript
+        oBox.onXXX = function(){
+            // 事件触发时，将执行的语句
+        }
+    ```
+
+   1. 鼠标事件监听
+        | 事件名 | 事件描述 |
+        | :----: | :----: |
+        | onclick | 当鼠标单击某个对象 |
+        | ondblclick | 当鼠标双击某个对象 |
+        | onmousedown | 当某个鼠标按键在某个对象上被按下 |
+        | onmouseup | 当某个鼠标按键在某个对象上被松开 |
+        | onmousemove | 当某个鼠标按键在某个对象上被移动 |
+        | onmouseenter| 当鼠标进入某个对象（相似事件onmouseover） |
+        | onmouseleave | 当鼠标离开某个对象（相似时间onmouseout） |
+        | onmousewheel | 鼠标滚轮事件 |
+   2. 键盘事件监听
+      | 事件名 | 事件描述 |
+      | :----: | :----: |
+      | onkeypress | 当某个键盘的键被按下（系统按钮如箭头键和功能键无法识别得到）|
+      | onkeydown | 当某个键盘的键被按下（系统按钮可以识别，并且会先于onkeypress发生）|
+      | onkeyup | 当某个键盘的键被松开 |
+   3. 表单事件监听
+      | 事件名 | 事件描述 |
+      | :----: | :----: |
+      | oninput | 当用户输入内容 |
+      | onchange | 当用户改变域的内容 |
+      | onfocus | 当某元素获得焦点（比如tab键或鼠标点击）|
+      | onblur | 当某元素失去焦点 |
+      | onsubmit | 当表单被提交 |
+      | onreset | 当表单被重置 |
+
+        ```HTML
+            <body>
+                <form id = "myform">
+                    <p>
+                        姓名：
+                        <input type="text" name="nameField">
+                    </p>
+                    <p>
+                        年龄：
+                        <input type="text" name="ageField">
+                    </p>
+                </form>
+                <script>
+                    var myform = document.getElementById('myform');
+                    var nameField = myform.nameField;
+                    var ageField = myform.ageField;
+
+                    nameField.oninput = function () {
+                        alert('正在修改姓名');
+                    }
+
+                    nameField.onchange = function () {
+                        alert('已经修改姓名');
+                    }
+
+                    nameField.onfocus = function () { 
+                        alert('姓名框得到焦点');
+                    }
+
+                    nameField.onblur = function () {
+                        alert('姓名框失去焦点');
+                    }
+                </script>
+            </body>
+        ```
+
+   4. 页面监听
+
+    | 事件名 | 事件描述 |
+    |:----:|:----:|
+    |onload|页面或图片加载完成|
+    |onunload|用户退出页面|
+
 ##### 5.2 事件传播
+
+1. 事件的传播是：先从外到内（捕获阶段），再从内到外（冒泡阶段）
+
+2. onxxx和addEventListener
+   1. DOM0级事件监听：onxxx只能监听冒泡阶段
+   2. DOM2级事件监听：addEventListner('事件',function(){//事件处理函数},true)
+      1. 事件名不加on
+      2. true监听捕获阶段，false监听冒泡阶段
+
+3. 注意事项
+   1. 最内部的元素不再区分捕获和冒泡阶段，会先执行先写的监听，然后执行后写的监听
+   2. 如果给元素设置相同的两个或多个同名事件：
+      1. DOM0级：后写的会覆盖先写的
+      2. DOM2级：顺序执行
 
 ##### 5.3 事件对象
 
+1. 事件对象
+   1. 事件处理函数提供一个形式参数，它是一个对象，封装了本次事件的细节；
+   2. 通常用event或者字母e表示
+
+    ```JavaScript
+        oBox.onmousemove = function(e){
+            // 对象e就是这次事件的“事件对象”
+        }
+    ```
+
+2. 鼠标位置
+
+    | 属性 | 属性描述 |
+    | :----: | :----: |
+    | clientX | 鼠标指针相对于浏览器的水平坐标 |
+    | clientY | 鼠标指针相对于浏览器的垂直坐标 |
+    | pageX | 鼠标指针相对于整张网页的水平坐标 |
+    | pageY | 鼠标指针相对于整张网页的垂直坐标 |
+    | offsetX | 鼠标指针相对于事件源最内层元素的水平坐标 |
+    | offsetY | 鼠标指针相对于事件源最内层元素的垂直坐标 |
+
+3. e.charCode和e.keyCode属性
+   1. e.charCode：用于onkeypress事件中，表示用户输入的字符的“字符码”
+
+        | 字符 | 字符码 |
+        | :----: | :----: |
+        | 数字0 ~ 数字9 | 48 ~ 57 |
+        | 大写字母A ~ Z | 65 ~ 90 |
+        | 小写字母a ~ z | 97 ~ 122 |
+
+   2 e.keyCode：用于onkeydown或者onkeyup中，表示用户按下的按键的“键码”
+
+    | 按键 | 键码 |
+    | :----: | :----: |
+    | 数字0 ~ 数字9 | 48 ~ 57 |
+    | 字母不区分大小写a ~ z | 65 ~ 90 |
+    | 四个方向键 ← ↑ → ↓ | 37、38、39、40 |
+    | 回车 | 13 |
+    | 空格 | 32 |
+
+4. e.preventDefault()方法
+   1. 阻止事件的默认动作
+   2. 一些特殊的业务需求，需要阻止事件的默认动作
+
+    ```JavaScript
+    案例一：文本框中只能输入小写字母和数字
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <p>
+                <input type="text" id="field">
+            </p>
+            <script>
+                var oField = document.getElementById('field');
+
+                oField.onkeypress = function (e) {
+                    // 根据用户输入的字符的字符码 e.charCode
+                    // 数字0 ~ 9
+                    // 小写字母 65 ~ 90
+                    console.log(e.charCode);
+                    if(!(e.charCode <= 57 && e.charCode >= 48 || e.charCode <= 122 && e.charCode >= 97)){  
+                        // 阻止浏览器的默认行为
+                        e.preventDefault();
+                    }
+                }
+            </script>
+        </body>
+        </html>
+
+    案例二：制作鼠标滚轮事件，当鼠标在盒子中向下滚动时，数字加一；反之，数字减一
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            body{
+                height: 2000px;
+            }
+            #box {
+                width: 200px;
+                height: 200px;
+                background-color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+        <h1 id="info">0</h1>
+        <script>
+            var oBox = document.getElementById('box');
+            var oInfo = document.getElementById('info');
+
+            // 全局变量就是info中显示的数字
+            var info = 0;
+
+            // 给box添加鼠标滚轮事件监听
+            oBox.onmousewheel = function (e) { 
+                // 阻止默认事件：在盒子里滚动鼠标，并阻止页面滚动
+                e.preventDefault();
+                if(e.deltaY > 0){
+                    info--;
+                } else {
+                    info++;
+                }
+                oInfo.innerText = info;
+            }
+        </script>
+    </body>
+    </html>
+    ```
+
+5. e.stopPropagation()方法
+   1. 阻止事件继续传播
+   2. 在一些场合，非常有必要切断事件继续传播
+
+    ```JavaScript
+    例子：冒泡阶段阻止事件继续传播，内部元素的事件执行；捕获阶段阻止事件传播，外部元素的事件执行
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+
+            </style>
+        </head>
+
+        <body>
+            <div id="box">
+                <button id="btn">按我</button>
+            </div>
+            <script>
+                var oBox = document.getElementById('box');
+                var oBtn = document.getElementById('btn');
+
+                // oBox.onclick = function () {
+                //     console.log('我是盒子');
+                // }
+
+                // oBtn.onclick = function (e) {
+                //     e.stopPropagation();
+                //     console.log('我是按钮');
+                // }
+
+                oBox.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    console.log('我是盒子');
+                }, true);
+
+                oBtn.addEventListener('click', function () {
+                    console.log('我是按钮');
+                }, true);
+            </script>
+        </body>
+
+        </html>
+
+    案例：制作一个弹出层，点击按钮显示弹出层，点击网页任意地方，弹出层关闭
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                }
+                .modal {
+                    width: 400px;
+                    height: 140px;
+                    background-color: #333;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -70px;
+                    margin-left: -200px;
+                    display: none;
+                }
+            </style>
+        </head>
+
+        <body>
+            <button mat-button id="btn">按我弹出弹出层</button>
+            <div class="modal" id="modal"></div>
+
+            <script>
+                var oBtn = document.getElementById('btn');
+                var oModal = document.getElementById('modal');
+
+                // 点击按钮，弹出层显示
+                oBtn.onclick = function (e) {
+                    e.stopPropagation();
+                    oModal.style.display = 'block';
+                };
+
+                // 点击弹出层时，为了方式弹出层被关闭，因而需要阻止事件传播
+                oModal.onclick = function (e) {
+                    e.stopPropagation();
+                };
+
+                // 点击页面任何部分（除弹出层），弹出层关闭
+                document.onclick = function () {
+                    oModal.style.display = 'none';
+                };
+            </script>
+        </body>
+
+        </html>
+    ```
+
 ##### 5.4 事件委托
+
+1. 两种情况
+   1. 批量添加事件监听
+      - 监听数量多，内存消耗大
+      - 每个事件处理函数都是不同的处理函数，这些函数本身也会占用内存
+   2. 动态绑定事件监听
+      - 新增元素不能自动获得事件监听
+      - 大量内存消耗
+
+    ```JavaScript
+    案例：页面上由一个无序列表ul，它内部共有20个li元素，请批量添加点击事件监听，实现效果：点击哪个li元素，哪个li元素就变红
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+            </style>
+        </head>
+
+        <body>
+            <ul id="list">
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+                <li>列表项</li>
+            </ul>
+
+            <script>
+                var oList = document.getElementById('list');
+                var lis = oList.getElementsByTagName('li');
+                for (var i = 0; i < lis.length; i++) {
+                    console.log(lis[i]);
+                    lis[i].onclick = function () {
+                        this.style.color = 'red';
+                    }
+                }
+            </script>
+        </body>
+
+        </html>
+
+    案例：新增动态元素绑定事件
+    页面上有一个无序列表ul，它内部没有li元素，请制作一个按钮，点击这个按钮就能添加一个li元素，并且要求每个li元素也要有事件监听。
+    实现效果：点击哪个li元素，哪个li元素就变红
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+            </style>
+        </head>
+
+        <body>
+            <button id="btn">添加一个li元素</button>
+            <ul id="list">
+                <li>默认项</li>
+                <li>默认项</li>
+                <li>默认项</li>
+            </ul>
+
+            <script>
+                var oList = document.getElementById('list');
+                var oBtn = document.getElementById('btn');
+
+                oBtn.onclick = function () {
+                    var newLi = document.createElement('li');
+                    newLi.innerText = "我是新来的";
+                    oList.appendChild(newLi);
+
+                    // 给新创建的节点添加事件监听
+                    newLi.onclick = function () {
+                        this.style.color = 'red';
+                    }
+                }
+            </script>
+        </body>
+
+        </html>
+    ```
+
+2. 事件委托：利用事件冒泡的机制，将后代元素的事件，委托给祖先元素
+   - e.target属性：触发此事件最早的元素，“事件源元素”
+   - e.currentTarget属性：事件处理程序附加到的元素
+   - 注意：
+     - 不能委托不冒泡的事件给祖先元素
+     - 最内层元素不能再有额外的内层元素
+
+    ```JavaScript
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+            </style>
+        </head>
+
+        <body>
+            <button id="btn">添加一个li元素</button>
+            <ul id="list">
+                <li>默认项</li>
+                <li>默认项</li>
+                <li>默认项</li>
+            </ul>
+
+            <script>
+                var oList = document.getElementById('list'),
+                    oBtn = document.getElementById('btn');
+
+                oBtn.onclick = function () {
+                    var oLi = document.createElement('li');
+                    oLi.innerText = '我是新来的';
+                    oList.appendChild(oLi);
+                }
+                oList.onclick = function (e) {
+                    // e.target表示用户真正点击的那个元素
+                    e.target.style.color = 'red';
+                }
+            </script>
+        </body>
+        </html>
+    ```
+
+3. 注意事项
+   - onmouseenter和onmouseover都表示“鼠标进入”，它们有什么区别？
+     - onmouseenter不冒泡;onmouseover冒泡
 
 #### 6.实现动画
 
 ##### 6.1 定时器和延时器
+
+
 
 ##### 6.2 使用定时器实现动画
 
