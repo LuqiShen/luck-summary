@@ -3,34 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>认识对象</title>
     <style>
+
     </style>
 </head>
 
 <body>
-    <button id="btn">添加一个li元素</button>
-    <ul id="list">
-        <li>默认项</li>
-        <li>默认项</li>
-        <li>默认项</li>
-    </ul>
-
     <script>
-        var oList = document.getElementById('list'),
-            oBtn = document.getElementById('btn');
+        function People(name, age){
+            this.name = name;
+            this.age = age;
+        }
 
-        oBtn.onclick = function () {
-            var oLi = document.createElement('li');
-            oLi.innerText = '我是新来的';
-            oList.appendChild(oLi);
+        var xiaoming = new People('小明', 12);
+
+        console.log(xiaoming.__proto__.__proto__ === Object.prototype);     // true
+
+        console.log(Object.prototype.__proto__);    // null
+
+        console.log(Object.prototype.hasOwnProperty('toString'));   // true
+        console.log(Object.prototype.hasOwnProperty('hasOwnProperty'));     // true
+
+
+        // 父类， 人类
+        function Peopel(name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
         }
-        oList.onclick = function (e) {
-            // e.target表示用户真正点击的那个元素
-            e.target.style.color = 'red';
+
+        People.prototype.sayHello = function () {
+            console.log('你好，我是' + this.name + '，我今年' + this.age + '岁了');
         }
+
+        People.prototype.sleep = function () {
+            console.log(this.name + '开始睡觉,zzzz');
+        }
+
+        // 子类，学生类
+
+        function Student(name, age, sex, school, studentNumber) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            this.school = school;
+            this.studentNumber = studentNumber;
+        }
+
+        // 关键语句，实现继承
+        Student.prototype = new People();
+
+        Student.prototype.study = function () {
+            console.log(this.name + '正在学习，加油！');
+        }
+        
+        Student.prototype.sayHello = function () {
+            console.log('敬礼！我是' + this.name);
+        }
+
+        Student.prototype.exam = function () {
+            console.log(this.name + '正在考试，加油！');
+        }
+
+        // 实例化学生
+        var hanmeimei = new Student('韩梅梅', 12, '女', '小学', 11011);
+
+        hanmeimei.study();
+        hanmeimei.sayHello();
+
+        // 实例化人类
+        var laozhang = new People('老张', 66, '男');
+
+        laozhang.sayHello();
     </script>
 </body>
 

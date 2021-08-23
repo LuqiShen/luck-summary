@@ -5670,13 +5670,301 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ##### 6.1 定时器和延时器
 
+1. 定时器
+   1. setInterval
+      1. setInterval()函数可以重复调用一个函数，在每次调用之间具有固定的时间间隔(单位为毫秒)
+      2. setInterval()函数可以接收第3、4……个参数，它们将按顺序传入函数
+      3. 具名函数也可以传入setInterval
+   2. 清除定时器
+      1. clearInterval()函数可以清除一个定时器
 
+    ```JavaScript
+
+        setInterval(function(){
+            // 这个函数将被自动以固定时间间隔调用
+        },2000);
+
+        // 66,88将被分别赋值给a,b
+        setInterval(function(a,b){
+            // 这个函数将被自动以固定时间间隔调用
+        },2000，66，88);
+
+        // 具名函数也可以传入setInterval，但不能书写圆括号，表示传入了一个函数；书写圆括号表示传入一个函数的执行，变成了语句
+        var a = 0;
+        function fun(){
+            console.log(++a);
+        }
+        setInterval(fun,1000);
+
+        // 清除定时器
+        // 1. 设置变量timer接收定时器
+        var timer = setInterval(function(){
+        },1000);
+        // 2. 清除定时器
+        clearInterval(timer);
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+            </style>
+        </head>
+
+        <body>
+            <h1 id="info">0</h1>
+            <button mat-button id="btn1">开始</button>
+            <button mat-button id="btn2">暂停</button>
+            <script>
+                var oInfo = document.getElementById('info');
+                var oBtn1 = document.getElementById('btn1');
+                var oBtn2 = document.getElementById('btn2');
+
+                var a = 0;
+
+                // 设置一个全局变量
+                var timer;
+
+                oBtn1.onclick = function () {
+                    // 为了防止定时器叠加，我们应该在设置定时器之前先清除定时器
+                    clearInterval(timer);
+                    // 更改全局变量timer为一个定时器实体
+                    timer = setInterval(() => {
+                        oInfo.innerText = ++a;
+                    }, 1000);
+                }
+
+                oBtn2.onclick = function () {
+                    clearInterval(timer);
+                };
+            </script>
+        </body>
+
+        </html>
+    ```
+
+2. 延时器
+   1. setTimeout()
+      1. 设置一个延时器，当指定时间到了之后，会执行函数一次，不再重复执行
+   2. clearTimeout()
+
+    ```JavaScript
+
+        setTimeout(function(){
+            // 延时执行语句
+        },2000)
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.     0">
+            <title>Document</title>
+            <style>
+            </style>
+        </head>
+
+        <body>
+            <button mat-button id="btn1">2秒后弹出你好</button>
+            <button mat-button id="btn2">取消弹出</button>
+            <script>
+                var oBtn1 = document.getElementById('btn1');
+                var oBtn2 = document.getElementById('btn2');
+
+                // 设置一个全局变量
+                var timer;
+
+                oBtn1.onclick = function () {
+                    // 为了防止定时器叠加，我们应该在设置定时器之前先清除定时器
+                    clearTimeout(timer);
+                    // 更改全局变量timer为一个定时器实体
+                    timer = setTimeout(() => {
+                        alert('你好');
+                    }, 2000);
+                }
+
+                oBtn2.onclick = function () {
+                    clearTimeout(timer);
+                };
+            </script>
+        </body>
+
+        </html>
+    
+    ```
+
+3. 异步语句
+   1. setInterval()和setTimeout()是两个异步语句
+   2. 异步(asynchronous)：不会阻塞cpu继续执行其他语句，当异步完成时，会执行“回调函数”（callback）
+
+    ```JavaScript
+        setTimeout(function(){
+            console.log('A');
+        },2000);
+
+        console.log('B');
+        // B , A
+    ```
 
 ##### 6.2 使用定时器实现动画
 
+1. 原理：视觉暂留
+
+2. 问题：
+   1. 不方便根据动画总时间计算步长
+   2. 运动方向要设置正负
+   3. 多种运动进行叠加较为困难（比如一个方形一边移动一边变为原型）
+
+```JavaScript
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.    0">
+        <title>Document</title>
+        <style>
+            .box {
+                position: absolute;
+                top: 100px;
+                left: 100px;
+                width: 100px;
+                height: 100px;
+                background-color: pink;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <button id="btn">方块移动</button>
+        <div id="box" class="box"></div>
+        <script>
+            var oBox = document.getElementById('box'),
+                oBtn = document.getElementById('btn');
+    
+            // 全局变量left
+            var left = 100;
+    
+            // 按钮添加监听
+            oBtn.onclick = function () {
+                var timer = setInterval(() => {
+                    if(left >= 1100){
+                        clearInterval(timer);
+                    }
+                    left += 10;
+                    // 更新oBox的left
+                    oBox.style.left = left + 'px';
+                }, 20);
+            }
+        </script>
+    </body>
+    
+    </html>
+```
+
 ##### 6.3 JS和CSS3结合实现动画
 
+```JavaScript
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1. 0">
+        <title>Document</title>
+        <style>
+            .box {
+                width: 100px;
+                height: 100px;
+
+                position: absolute;
+                top: 100px;
+                left: 100px;
+                background-color: pink;
+            }
+        </style>
+    </head>
+
+    <body>
+        <button id="btn">方块移动</button>
+        <div id="box" class="box"></div>
+        <script>
+            var oBox = document.getElementById('box'),
+                oBtn = document.getElementById('btn');
+
+            // 标识量，指示当前盒子在左边还是右边
+            // 1为左边，2为右边
+            var pos = 1;
+            // 函数节流锁
+            var lock = true;
+
+            oBtn.onclick = function () {
+                // 判断节流
+                if(!lock) return;
+
+                // 过渡
+                box.style.transition = 'all 2s linear 0s';
+                if(pos == 1){
+                    // 瞬间移动，但是由于有过渡，所以是动画
+                    box.style.left = '1100px';
+                    pos = 2;
+                } else if(pos == 2) {
+                    box.style.left = '100px';
+                    pos = 1;
+                }
+
+                // 关锁
+                lock = false;
+
+                // 过一段时间开锁
+                setTimeout(() => {
+                    lock = true;
+                }, 2000);
+            }
+        </script>
+    </body>
+
+    </html>
+```
+
+1. css3的transition属性结合JavaScript规避定时器实现动画的缺点
+
+2. 函数节流：一个函数执行一次后，只有大于设定的执行周期后才允许执行第二次
+
+    ```JavaScript
+        var lock = true;
+
+        function 需要节流的函数(){
+            // 如果锁是关的，则不执行
+            if(!lock) return;
+
+            // 函数核心语句
+
+            // 关锁
+            lock = false;
+
+            // 制定毫秒数后将锁打开
+            setTimeout(function(){
+                lock = true;
+            }, 2000);
+        }
+    ```
+
 #### 7. 动画效果开发
+
+1. 无缝连续滚动特效
+
+2. 跑马灯轮播图特效
+
+3. 呼吸灯轮播特效
 
 ### 第8章 BOM
 
@@ -5869,3 +6157,6 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
   - 定位祖先：在祖先中，离自己最近的且拥有定位属性的元素
 
 - 函数节流
+
+
+##
