@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跑马灯轮播图特效</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .carousel {
+            width: 650px;
+            height: 360px;
+            border: 1px solid #000;
+            margin: 50px auto;
+
+            /* overflow: hidden; */
+            position: relative;
+        }
+
+        .carousel ul {
+            list-style: none;
+            width: 3250px;
+
+            position: absolute;
+            transition: linear 1s ease-in-out;
+        }
+
+        .carousel ul li {
+            float: left;
+        }
+
+        .btn {
+            width: 30px;
+            height: 30px;
+            background-color: orange;
+
+            position: absolute;
+
+            top: 50%;
+            margin-top: -15px;
+            
+            border-radius: 50%;
+
+            text-align: center; 
+            line-height: 30px;
+
+            cursor: pointer;
+        }
+
+        .leftbtn{
+            left: 10px;
+        }
+
+        .rightbtn {
+            right: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="carousel" id="carousel">
+        <ul id="list">
+            <li><img src="images/beijing/0.jpg" alt=""></li>
+            <li><img src="images/beijing/1.jpg" alt=""></li>
+            <li><img src="images/beijing/2.jpg" alt=""></li>
+            <li><img src="images/beijing/3.jpg" alt=""></li>
+            <li><img src="images/beijing/4.jpg" alt=""></li>
+        </ul>
+        <div class="leftbtn btn" id="leftbtn"> < </div>
+        <div class="rightbtn btn" id="rightbtn"> > </div>
+    </div>
+    <script>
+        var oCarousel = document.getElementById('carousel'),
+            oList = document.getElementById('list'),
+            leftBtn = document.getElementById('leftbtn'),
+            rightBtn = document.getElementById('rightbtn');
+
+        var cur = 0,
+            left = 0, 
+            stage = 650;
+
+        leftBtn.onclick = function () {
+            cur++;
+            if(cur == 5){
+                cur = 0;
+            }
+            left -= cur * stage;
+            oList.style.left = left + 'px';
+        }
+
+        rightBtn.onclick = function () {
+            cur--;
+            if(cur == -1){
+                cur = 4;
+            }
+
+            left += cur * stage;
+            oList.style.left = left + 'px';
+        }
+    </script>
+</body>
+
+</html>

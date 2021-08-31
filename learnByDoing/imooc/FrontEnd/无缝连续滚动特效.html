@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无缝连续滚动特效</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .stage {
+            width: 1000px;
+            height: 130px;
+            border: 1px solid #000;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+
+        .list {
+            list-style: none;
+
+            width: 2100px;
+            position: relative;
+        }
+
+        .list li {
+            float: left;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage" id="stage">
+        <ul class="list" id="list">
+            <li><img src="images/number/0.png" alt="" srcset=""></li>
+            <li><img src="images/number/1.png" alt="" srcset=""></li>
+            <li><img src="images/number/2.png" alt="" srcset=""></li>
+            <li><img src="images/number/3.png" alt="" srcset=""></li>
+            <li><img src="images/number/4.png" alt="" srcset=""></li>
+        </ul>
+    </div>
+    <script>
+        var oStage = document.getElementById('stage'),
+            oList = document.getElementById('list');
+
+        // 复制所有的图片
+        oList.innerHTML += list.innerHTML;
+
+        var left = 0,
+            num = 1;
+
+        var timer;
+        move();
+
+        function move() {
+            // 设表先关，防止定时器积累
+            clearInterval(timer);
+            timer = setInterval(() => {
+                left -= 3;
+                // 验收
+                if (left <= -1050) {
+                    left = 0;
+                }
+                oList.style.left = left + 'px';
+            }, 20);
+        }
+
+
+        // 鼠标进入
+        oStage.onmouseenter = function () {
+            clearInterval(timer);
+        }
+
+        // 鼠标离开
+        oStage.onmouseleave = function () {
+            move();
+        }
+    </script>
+</body>
+
+</html>
