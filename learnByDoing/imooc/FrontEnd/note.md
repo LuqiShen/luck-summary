@@ -6158,5 +6158,6 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 - 函数节流
 
+### 第9章 面向对象
 
-##
+#### 
