@@ -18,16 +18,18 @@
             border: 1px solid #000;
             margin: 50px auto;
 
-            /* overflow: hidden; */
+            overflow: hidden;
             position: relative;
         }
 
         .carousel ul {
             list-style: none;
             width: 3250px;
+            left: 0;
 
             position: absolute;
-            transition: linear 1s ease-in-out;
+            transition: left 0.5s ease-in-out 0s;
+
         }
 
         .carousel ul li {
@@ -43,23 +45,22 @@
 
             top: 50%;
             margin-top: -15px;
-            
+
             border-radius: 50%;
 
-            text-align: center; 
+            text-align: center;
             line-height: 30px;
 
             cursor: pointer;
         }
 
-        .leftbtn{
+        .leftbtn {
             left: 10px;
         }
 
         .rightbtn {
             right: 10px;
         }
-
     </style>
 </head>
 
@@ -70,10 +71,9 @@
             <li><img src="images/beijing/1.jpg" alt=""></li>
             <li><img src="images/beijing/2.jpg" alt=""></li>
             <li><img src="images/beijing/3.jpg" alt=""></li>
-            <li><img src="images/beijing/4.jpg" alt=""></li>
         </ul>
-        <div class="leftbtn btn" id="leftbtn"> < </div>
-        <div class="rightbtn btn" id="rightbtn"> > </div>
+        <div class="leftbtn btn" id="leftbtn"></div>
+        <div class="rightbtn btn" id="rightbtn"></div>
     </div>
     <script>
         var oCarousel = document.getElementById('carousel'),
@@ -81,27 +81,68 @@
             leftBtn = document.getElementById('leftbtn'),
             rightBtn = document.getElementById('rightbtn');
 
-        var cur = 0,
-            left = 0, 
+        // 克隆第一张图片
+        var cloneLi = list.firstElementChild.cloneNode(true);
+        oList.appendChild(cloneLi);
+
+        // 当前ul显示到第几张图片，从0开始数
+        var idx = 0,
+            left = 0,
             stage = 650;
 
+        // 节流锁
+        var lock = true;
+
         leftBtn.onclick = function () {
-            cur++;
-            if(cur == 5){
-                cur = 0;
+
+            // 判断节流
+            if (!lock) return;
+            lock = false;
+
+            // 判断是不是第0张图片
+            if (idx == 0) {
+                oList.style.transition = 'none';
+                oList.style.left = -4 * 650 + 'px';
+                idx = 4;
+                setTimeout(() => {
+                    // 在过渡取消之后，再加上过渡
+                    oList.style.transition = 'left 0.5s ease-in-out 0s';
+                }, 0);
+            } else {
+                idx--;
+                oList.style.left = -idx * 650 + 'px';
             }
-            left -= cur * stage;
-            oList.style.left = left + 'px';
+
+            // 函数节流
+            setTimeout(() => {
+                lock = true;
+            }, 500);
         }
 
         rightBtn.onclick = function () {
-            cur--;
-            if(cur == -1){
-                cur = 4;
-            }
 
-            left += cur * stage;
-            oList.style.left = left + 'px';
+            // 判断节流
+            if (!lock) return;
+            lock = false;
+
+            oList.style.transition = 'left 0.5s ease-in-out 0s';
+            idx++;
+            if (idx > 3) {
+                // 将ul瞬间拉回0的位置
+                setTimeout(() => {
+                    // 延时器的目的为了在动画结束之后，改变图片
+                    oList.style.transition = 'none';
+                    oList.style.left = 0 + 'px';
+                    idx = 0;
+                }, 500);
+            }
+            oList.style.left = -idx * 650 + 'px';
+
+            // 函数节流
+            setTimeout(() => {
+                lock = true;
+            }, 500);
+
         }
     </script>
 </body>
