@@ -10,6 +10,14 @@
 </head>
 
 <body>
+    <div style="z-index: 1;">
+        <div style="z-index: 3;">a</div>
+    </div>
+    <div style="z-index: 1;">
+        <div style="z-index: 3;">b</div>
+    </div>
+    <div style="z-index: 2;">c</div>
+    <div style="z-index: 1;">d</div>
     <script>
         function People(name, age){
             this.name = name;
@@ -76,6 +84,14 @@
         var laozhang = new People('老张', 66, '男');
 
         laozhang.sayHello();
+
+        function Test(name) {};
+        Test.name = 'Tom';
+        Test.prototype.name = "John";
+        var result = (new Test('JK')).name;
+        console.log(result);
+
+        
     </script>
 </body>
 
