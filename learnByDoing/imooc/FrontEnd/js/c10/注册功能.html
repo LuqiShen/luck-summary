@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .username-prompt {
+            display: inline;
+            color: red;
+        }
+
+        .username-correct {
+            display: inline;
+            color: green;
+        }
+
+        .psw-prompt {
+            display: inline;
+            color: red;
+        }
+
+        .psw-level {
+            width: 72px;
+            display: inline;
+            line-height: 25px;
+        }
+
+        .psw-level .left {
+            display: inline-block;
+            height: 12px;
+            width: 25px;
+            background-color: red;
+        }
+
+        .psw-level .middle {
+            display: inline-block;
+            height: 12px;
+            width: 25px;
+            background-color: orange;
+        }
+
+        .psw-level .right {
+            display: inline-block;
+            height: 12px;
+            width: 25px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="username">
+        请输入用户名：
+        <input id="username" type="text">
+        <p class="username-prompt">
+            6-30位字母、数字或下划线,字母开头
+        </p>
+        <p class="username-correct">
+            用户名输入正确
+        </p>
+    </div>
+
+    <div class="password">
+        请输入密码：
+        <input id="password" type="text">
+        <p class="psw-prompt">
+            6-20位字母或数字组成
+        </p>
+        <div class="psw-level">
+            <span class="left"></span>
+            <span class="middle"></span>
+            <span class="right"></span>
+        </div>
+    </div>
+
+    <div class="password-confirmation">
+        密码确认：
+        <input id="password-confirmation" type="text">
+        <p class="psw-cfm-prompt">
+            输入框不能为空
+        </p>
+        <p class="psw-cfm-prompt">
+            两次密码输入不一致，请重新输入
+        </p>
+        <p class="psw-cfm-correct">
+            两次输入一致
+        </p>
+    </div>
+
+    <div>
+        <p>信息填写正确</p>
+        <p>请填写正确的信息</p>
+    </div>
+
+</body>
+
+</html>

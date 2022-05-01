@@ -6355,6 +6355,50 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
     // 返回一个结果数组
 ```
 
+- exec()方法的逐条遍历，g让exec()方法自动变成“有状态的”，记录到每一次exec()寻找到的位置
+
+```JavaScript
+    var str = "abc123def456ghi789";
+    var regexp = /\d+/g; //+表示贪婪的，尽可能多的
+    //var result1 = regexp.exec(str);     // ["123", index: 3, input: "abc123def456ghi789", groups: undefined]
+    //var result2 = regexp.exec(str);     // ["456", index: 9, input: "abc123def456ghi789", groups: undefined]
+    //var result3 = regexp.exec(str);     // ["789", index: 15, input: "abc123def456ghi789", groups: undefined]
+    //var result4 = regexp.exec(str);     // null
+
+    while(result = regexp.exec(str)){
+        console.log(result[0]);     //123,456,789
+    }
+
+    // regexp.exec(str)存在的时候，while执行; 赋值语句检测等号右边是否存在; 检测为null，结束循环
+```
+
 ##### 3.2 字符串的相关正则方法
 
+| 方法 | 简介 |
+| :----: | :----: |
+| search() | 在字符串中根据正则表达式进行查找匹配，返回首次匹配到的位置索引，测试不到则返回-1 |
+| match() | 在字符串中根据正则表达式进行查找匹配，返回一个数组，找不到则返回null |
+| replace() | 使用替换字符串替换掉匹配到的子字符串，可以使用正则表达式 |
+| split() | 分隔字符串为数组，可以使用正则表达式 |
+
+```JavaScript
+    var str = "abc123def456ghi789";
+    var regexp = /\d+/g;
+
+    // search()
+    var res1 = str.search(regexp);  //res1 = 3
+    var res2 = str.search(/m/g); // res2 = -1
+    
+    // match()
+    var res3 = str.match(/\d+/g); // res3 = [123,456,789]
+
+    // replace()
+    var res4 = str.replace(/[a-z]+/g, "*"); // + 表示贪婪的，尽可能多的连续匹配小写字母; res4 = *123*456*789
+
+    // split()
+    var res5 = str.split(/\d+/g); // ["abc","def","ghi",""]
+
+```
+
 ##### 3.3 正则表达式的应用
+
