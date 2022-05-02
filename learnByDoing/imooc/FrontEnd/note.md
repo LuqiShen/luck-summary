@@ -6164,11 +6164,159 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ##### 1.1 认识对象
 
+- 1. 对象是键值对（k:v对）的集合，表示属性和值的映射关系
+- 2. 对象的语法
+  - k和v之间用冒号分割，每组k:v之间用逗号分隔，最后一个k:v对后可以不书写逗号
+  - 属性键名不符合JS标识符的命名规范，则这个键名必须用引号包裹
+- 3. 属性的访问
+  - 点语法
+  - 方括号语法
+    - 属性名不符合JS标识符命名规范的情况
+    - 属性名是变量
+- 4. 属性的更改
+  - 直接使用赋值运算符重新对某属性赋值
+- 5. 属性的创建
+  - 用点语法直接赋值
+- 6. 属性的删除
+  - delete操作符
+
+```JavaScript
+    var xiaoming = {
+        name: '小明',
+        age: 12,
+        sex: '男',
+        hobbies: ['足球', '编程'],
+        'favorite-book': '舒克和贝塔'
+    }
+
+    var name = xiaoming.name; //'小明'
+    var fBook = xiaoming['favorite-book']; //'舒克和贝塔'
+
+    var obj = {
+        a:1,
+        b:2,
+        c:3
+    };
+
+    var key = 'b';
+    console.log(obj.key); //undefined
+    console.log(obj[key]); //2
+
+    // 属性的更改
+    obj.a = 'a';
+
+    // 属性的创建
+    obj.d = 4;
+
+    // 属性的删除
+    delete obj.d;
+```
+
 ##### 1.2 对象的方法
+
+- 1. 对象的某个属性值为函数，则它被称为对象的“方法”
+
+- 2. 方法的调用
+  - 点语法调用
+  - 方法也是函数，但方法是对象的属性，需要对象打点调用
+
+```JavaScript
+    var xiaoming = {
+        name: '小明',
+        age: 12,
+        sex: '男',
+        hobbies: ['足球', '编程'],
+        'favorite-book': '舒克和贝塔',
+        sayHello: function(){
+            console.log('你好，我是小明，今年12岁，我是个男生');
+        }
+    }
+```
 
 ##### 1.3 对象的遍历
 
+- for…in…循环，遍历对象的每个键
+
+```JavaScript
+    for(var k in obj){
+        console.log('属性' + k + '的值是' + obj[k]);
+    }
+```
+
 ##### 1.4 对象的深浅克隆
+
+
+
+- 1. 对象的浅克隆
+
+    ```JavaScript
+        // 浅克隆，只克隆对象的表层
+        // obj和objClone藕断丝连，如果属性是对象，无法完全分开
+        var obj = {
+            a: 1,
+            b: 2,
+            c: [44, 55, 66]
+        }
+
+        var objClone = {};
+
+        for (var k in obj) {
+            // 每遍历一个k属性，就给objClone添加一个同名的k属性
+            // 值和obj的k属性相同
+            objClone[k] = obj[k];
+        }
+
+        obj.a++; // obj.a = 2
+        console.log(objClone); // objClone.a = 1
+
+        obj.c.push(77); // [44,55,66,77]
+        console.log(objClone.c); //[44,55,66,77]
+        console.log(obj.c == objClone.c); // true
+    ```
+
+- 2. 对象的深克隆
+
+    ```JavaScript
+        // 深克隆：克隆对象的全貌
+        // 使用递归
+        var object = {
+            a: 1,
+            b: 2,
+            c: [44, 55, {
+                m: 55,
+                n: 66,
+                p: [77,88]
+            }]
+        }
+
+        function deepClone(o) {
+            // 判断o是对象还是数组
+            if(Array.isArray(o)){
+                // 数组
+                var res = [];
+                for(var i = 0; i < o.length; i++){
+                    res.push(deepClone(o[i]));
+                }
+            } else if (typeof o == 'object'){
+                // 对象
+                var res = {};
+                for(var k in o){
+                    res[k] = deepClone(o[k]);
+                }
+            } else {
+                // 基本类型
+                var res = o;    
+            }
+            return res;
+        }
+
+        var objDeepClone = deepClone(object);
+        console.log(objDeepClone);
+        console.log(objDeepClone.c == object.c);  // false
+        
+        object.c.push(99); // object的c属性改变
+        console.log(objDeepClone.c); // objDeepClone的c属性不变
+    ```
 
 #### 2. 认识函数的上下文
 
@@ -6207,7 +6355,6 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 ##### 6.2 Math对象
 
 ##### 6.3 Date对象
-
 
 ### 第10章 正则表达式
 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var obj1 = {
+            a: 1,
+            b: 2,
+            c: 3
+        }
+
+        var obj2 = {
+            a: 1,
+            b: 2,
+            c: 3
+        }
+
+        console.log(obj1 == obj2); // false
+        console.log(obj1 === obj2); // false
+
+        console.log({} == {}); // false
+        console.log({} === {}); // false
+
+        var obj3 = {
+            a: 10
+        }
+
+        var obj4 = obj3;
+        obj3.a++; // 11
+        console.log(obj4.a); //11
+
+        // 浅克隆，只克隆对象的表层
+        // obj和objClone藕断丝连，如果属性是对象，无法完全分开
+        var obj = {
+            a: 1,
+            b: 2,
+            c: [44, 55, 66]
+        }
+
+        var objClone = {};
+
+        for (var k in obj) {
+            // 每遍历一个k属性，就给objClone添加一个同名的k属性
+            // 值和obj的k属性相同
+            objClone[k] = obj[k];
+        }
+
+        obj.a++; // obj.a = 2
+        console.log(objClone); // objClone.a = 1
+
+        obj.c.push(77); // [44,55,66,77]
+        console.log(objClone.c); //[44,55,66,77]
+        console.log(obj.c == objClone.c); // true
+
+        // 深克隆：克隆对象的全貌
+        // 使用递归
+        var object = {
+            a: 1,
+            b: 2,
+            c: [44, 55, {
+                m: 55,
+                n: 66,
+                p: [77,88]
+            }]
+        }
+
+        function deepClone(o) {
+            // 判断o是对象还是数组
+            if(Array.isArray(o)){
+                // 数组
+                var res = [];
+                for(var i = 0; i < o.length; i++){
+                    res.push(deepClone(o[i]));
+                }
+            } else if (typeof o == 'object'){
+                // 对象
+                var res = {};
+                for(var k in o){
+                    res[k] = deepClone(o[k]);
+                }
+            } else {
+                // 基本类型
+                var res = o;    
+            }
+            return res;
+        }
+
+        var objDeepClone = deepClone(object);
+        console.log(objDeepClone);
+        console.log(objDeepClone.c == object.c);  // false
+        
+        object.c.push(99); // object的c属性改变
+        console.log(objDeepClone.c); // objDeepClone的c属性不变
+    </script>
+</body>
+
+</html>
