@@ -1,0 +1,30 @@
+/* base.css是用来存放公共类 */
+
+.clearfix {
+    overflow: hidden;
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+.tac {
+    text-align: center;
+}
+
+.center {
+    /* 版心 */
+    widows: 1152px;
+    margin: 0 auto;
+}
+
+.db {
+    display: block;
+}
+
+.dib {
+    display: inline-block;
+}
