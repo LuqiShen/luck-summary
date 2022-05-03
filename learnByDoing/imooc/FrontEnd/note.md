@@ -6567,35 +6567,36 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 #### 11.2 let和const
 
-- 1. let和const是什么
-  - let：代替var声明变量
-  - const：声明常量
-- 2. let和const的基本用法
+##### 1. let和const是什么
 
-    ```JavaScript
-        var username = 'Alex';
-        let age = 18;
-        const sex = 'male';
-        console.log(username, age, sex);
+- let：代替var声明变量
+- const：声明常量
 
-        username = "ZhangSan";
-        age = 28;
-        console.log(username,age);
+##### 2. let和const的基本用法
 
-        sex = 'female';   // 报错
-    ```
+```JavaScript
+    var username = 'Alex';
+    let age = 18;
+    const sex = 'male';
+    console.log(username, age, sex);
+    username = "ZhangSan";
+    age = 28;
+    console.log(username,age);
+    sex = 'female';   // 报错
+```
 
-- 3. 变量和常量
-  - var和let声明的是变量，变量一旦初始化，还可以重新赋值
-  - const声明的是常量，常量一旦初始化，就不能重新赋值，否则会报错
-  - 4. const
-  - 为什么需要const
-    - 为一旦初始化就不希望重新赋值的变量设计的，防止对不需要修改的变量误修改
-  - const的注意事项
-    - const声明常量初始化时必须赋值
-    - const声明的常量，允许在不重新赋值的情况下修改它
-  - 什么时候用const
-    - 不知道用什么的时候，先用const，如果报错再用let
+##### 3. 变量和常量
+
+- var和let声明的是变量，变量一旦初始化，还可以重新赋值
+- const声明的是常量，常量一旦初始化，就不能重新赋值，否则会报错
+- 4. const
+- 为什么需要const
+  - 为一旦初始化就不希望重新赋值的变量设计的，防止对不需要修改的变量误修改
+- const的注意事项
+  - const声明常量初始化时必须赋值
+  - const声明的常量，允许在不重新赋值的情况下修改它
+- 什么时候用const
+  - 不知道用什么的时候，先用const，如果报错再用let
 
     ```JavaScript
         <!-- 基本数据类型：const声明的常量无法被修改 -->
@@ -6611,27 +6612,28 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
         person.username = "张三"; //不会报错
     ```
 
-- 5. let、const和var的区别
-  - 重复声明：已存在的变量或常量，又声明了一遍
-    - var允许重复声明
-    - let和const不允许重复声明
-  - 变量提升
-    - var会提升变量的声明（但不提升初始化）提升到当前作用域的顶部
-    - let和const不存在变量提升
-  - 暂时性死区
-    - 只要作用域内存在let、const，它们所声明的变量或常量就自动“绑定”这个区域，不再受到外部作用域的影响
-    - var没有绑定，因此不存在暂时性死区
-  - window对象的属性和方法（全局作用域中）
-    - 全局作用域中，var声明的变量，通过function声明的函数，会自动变成window对象的属性或方法
-  - **块级作用域**
-    - var没有块级作用域
-    - let和const有块级作用域
-    - 块级作用域
-      - 一般有{}就有块级作用域，{}里的内容执行完之后就会被销毁
-      - 循环：for(){},while(){},do{}while()
-      - 条件：if(){},switch(){}
-    - 函数作用域（不属于块级作用域）:只有在函数被调用的时候，才存在函数作用域
-    - 对象没有块级作用域
+##### 5. let、const和var的区别
+
+- 重复声明：已存在的变量或常量，又声明了一遍
+  - var允许重复声明
+  - let和const不允许重复声明
+- 变量提升
+  - var会提升变量的声明（但不提升初始化）提升到当前作用域的顶部
+  - let和const不存在变量提升
+- 暂时性死区
+  - 只要作用域内存在let、const，它们所声明的变量或常量就自动“绑定”这个区域，不再受到外部作用域的影响
+  - var没有绑定，因此不存在暂时性死区
+- window对象的属性和方法（全局作用域中）
+  - 全局作用域中，var声明的变量，通过function声明的函数，会自动变成window对象的属性或方法
+- **块级作用域**
+  - var没有块级作用域
+  - let和const有块级作用域
+  - 块级作用域
+    - 一般有{}就有块级作用域，{}里的内容执行完之后就会被销毁
+    - 循环：for(){},while(){},do{}while()
+    - 条件：if(){},switch(){}
+  - 函数作用域（不属于块级作用域）:只有在函数被调用的时候，才存在函数作用域
+  - 对象没有块级作用域
 
     ```JavaScript
     <!-- 重复声明 -->
@@ -6684,4 +6686,26 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
     ```
 
-- 6. let和const的应用
+###### 6. let和const的应用
+
+#### 11.3 模板字符串与箭头函数
+
+##### 1. 模板字符串
+
+###### 1.1 模板字符串是什么
+
+###### 1.2 模板字符串的注意事项
+
+###### 1.3 模板字符串的应用
+
+##### 2. 箭头函数
+
+###### 2.1 箭头函数是什么
+
+###### 2.2 箭头函数的注意事项
+
+###### 2.3 非箭头函数中的this指向
+
+###### 2.4 不适合使用箭头函数的场景
+
+###### 2.5 箭头函数的应用
