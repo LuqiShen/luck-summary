@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+        <li>jquery</li>
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>ES6</li>
+    </ul>
+    <script type="text/javascript">
+        let lis = document.querySelectorAll('li');
+
+        for (let i = 0; i < lis.length; i++) {
+            let text = [];
+            text[i] = lis[i].innerText;
+            lis[i].onmouseenter = function () {
+                this.style.color = 'red';
+                this.style.fontSize = 18 + 'px';
+                this.innerText = text[i] + "我是第" + i + "个";
+            }
+            lis[i].onmouseleave = function () {
+                this.style.color = 'black';
+                this.style.fontSize = 16 + 'px';
+                this.innerText = text[i];
+            }
+        }
+    </script>
+</body>
+
+</html>

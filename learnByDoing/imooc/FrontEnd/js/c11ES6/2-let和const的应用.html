@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let和const的应用</title>
+</head>
+<body>
+    <button class="btn">0</button>
+    <button class="btn">1</button>
+    <button class="btn">2</button>
+    <script>
+        var btns = document.querySelectorAll('.btn');
+
+        // 1. var声明i
+        // 结果：点击任意按钮都只弹出3
+
+        // for(var i = 0; i < btns.length; i++){
+        //     btns[i].addEventListener(
+        //         'click',
+        //         function () {
+        //             console.log(i);
+        //         },
+        //         false
+        //     );
+        // }
+
+        // 2. 闭包
+        // 通过立即执行函数形成闭包，保留i的值
+        // for (var i = 0; i < btns.length; i++) {
+        //     (function (index) {
+        //         btns[index].addEventListener(
+        //             'click',
+        //             function () {
+        //                 console.log(index);
+        //             },
+        //             false
+        //         )
+        //     })(i);
+        // }
+
+        // 3. let形成块级作用域
+        for(let i = 0; i < btns.length; i++){
+            btns[i].addEventListener(
+                'click',
+                function () {
+                    console.log(i);
+                },
+                false
+            );
+        }
+    </script>
+</body>
+</html>
