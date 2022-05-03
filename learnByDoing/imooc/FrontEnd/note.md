@@ -6588,8 +6588,7 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 - 3. 变量和常量
   - var和let声明的是变量，变量一旦初始化，还可以重新赋值
   - const声明的是常量，常量一旦初始化，就不能重新赋值，否则会报错
-
-- 4. const
+ - 4. const
   - 为什么需要const
     - 为一旦初始化就不希望重新赋值的变量设计的，防止对不需要修改的变量误修改
   - const的注意事项
@@ -6668,18 +6667,3 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
         const add = function {}
         console.log(window.age); // undefined
         console.log(window.add === add); // false
-
-    <!-- 块级作用域 -->
-        for(var i = 0; i < 3; i++){
-            console.log(i); // 0,1,2
-        }
-        console.log(i); // 3, var没有块级作用域
-
-        for(let i = 0; i < 3; i++){
-            console.log(i);   // 0,1,2
-        }
-        console.log(i); // 报错，i没有被定义
-    
-    ```
-
-- 6. let和const的应用
