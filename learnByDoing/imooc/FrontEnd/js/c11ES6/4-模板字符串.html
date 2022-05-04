@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>模版字符串</title>
+</head>
+
+<body>
+    <div class="div1"></div>
+    <script type="text/javascript">
+        let person = {
+            name: "xiaoming",
+            age: 18
+        }
+        let elem = document.querySelector('.div1')
+        // elem.innerHTML = "He is <b>" + person.name + " </b> " + "and we wish to know his" + person.age +
+        //     ".That is all<br>"
+        // 补充代码
+        elem.innerHTML = `He is <b>${person.name}</b> and we wish to know his ${person.age}. That is all<br>`;
+
+        const output = function(){
+            return "web攻城狮";
+        }
+
+        document.write(`慕课网前端${output()}`);
+    </script>
+</body>
+
+</html>
