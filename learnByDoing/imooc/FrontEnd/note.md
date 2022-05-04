@@ -6694,9 +6694,74 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ###### 1.1 模板字符串是什么
 
+- 1. 认识模板字符串
+
+    ```JavaScript
+        const str1 = 'alex';
+        const str2 = "alex";
+
+        const username = `alex`;
+    ```
+
+- 2. 模板字符串与一般字符串的区别
+  - 与其他类型值混用是，使用模板字符串，方便注入
+
+    ```JavaScript
+        const person = {
+            username: 'alex',
+            age: 18,
+            sex: 'male'
+        }
+
+        const info = '我的名字是：' + person.username + ', 性别：' + person.sex + ", 今年" + person.age + '岁了';
+
+        const info2 = `我的名字是：${person.username}, 性别:${person.sex},今年${person.age}岁了`;
+        console.log(info);
+    ```
+
 ###### 1.2 模板字符串的注意事项
 
+- 1. 输出多行字符串
+  - 模板字符串中，所有的空格、换行或缩进都会被保留在输出中
+
+- 2. 输出`和\等特殊字符
+  - 通过\转义，如\`或\\
+
+- 3. 模板字符串的注入
+  - 只要最终可以得出一个值的就可以通过${}注入到模板字符串中
+
+```JavaScript
+    // 1. 输出多行字符串
+    // 一般字符串
+    const info = "第1行\n第2行";
+    console.log(info);
+
+    const info2 = `第1行
+    第2行`;
+    console.log(info2);
+
+    // 2. 输出`和\等特殊字符
+    const info = `\`\\`;
+    console.log(info);
+
+    // 3. 模板字符串的注入
+    // ${}
+    const username = 'alex';
+    const person = {
+        age:18,
+        sex: "male"
+    }
+    const getSex = function(sex) {
+        return sex === 'male' ? '男':'女';
+    }
+    const info = `${username}, ${person.age + 2}, ${getSex(person.sex)}`;   
+```
+
 ###### 1.3 模板字符串的应用
+
+```JavaScript
+    
+```
 
 ##### 2. 箭头函数
 
