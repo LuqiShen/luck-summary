@@ -6759,18 +6759,162 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ###### 1.3 模板字符串的应用
 
-```JavaScript
-    
-```
-
 ##### 2. 箭头函数
 
 ###### 2.1 箭头函数是什么
 
+- 1. 认识箭头函数
+- 2. 箭头函数的结构
+  - const/let 函数名 = 参数 => 函数体
+- 3. 如何将一般函数改写成箭头函数
+
+```JavaScript
+    const add =  (x,y) => {
+        return x+y;
+    };
+    console.log(add(1,1));
+
+    // 一般函数：声明的形式
+    function add(){}
+    // 一般函数：函数表达式的形式
+    const add = function(){}
+
+    const add  = () => {}
+```
+
 ###### 2.2 箭头函数的注意事项
+
+- 1. 单个参数可以省略圆括号
+- 2. 单个函数体可以省略大括号和return
+- 3. 单个对象
+  - 如果箭头函数返回单行对象，可以在{}外边加上()，让浏览器不再认为那是函数体的花括号
+
+```JavaScript
+    // 1. 单个参数
+    const add = x => {
+        return x+1;
+    }
+
+    // 2. 单行函数体
+    const add = (x,y) => x + y;
+
+    // 3. 单行对象
+    // const add = (x,y) => {
+    //     return {
+    //         value: x+y
+    //     };
+    // }
+
+    const add = (x,y) => ({
+        value: x+y
+    });
+```
 
 ###### 2.3 非箭头函数中的this指向
 
-###### 2.4 不适合使用箭头函数的场景
+- 1. 全局作用域中的this指向
+
+    ```JavaScript
+        console.log(this); //window
+    ```
+
+- 2. 一般函数（非箭头函数）中的this指向
+  - 只有在函数调用的时候this指向才确定，不调用的时候不知道指向谁
+  - this指向和函数在哪儿调用没有关系，只和谁在调用有关
+  - 由于setTimeout函数中回调函数执行时没有指定调用对象，js语法中规定，默认是window对象调用的，所以this指向window
+
+    ```JavaScript
+        function add(){
+            console.log(this);
+        }
+
+        add(); // 不知道谁在调用，this指向undefined；非严格模式下undefined -> window
+
+        const calc = {
+            add: add
+        };
+        calc.add();  // calc
+        const adder = calc.add;
+        adder(); //undefined -> window(非严格模式下)
+
+        document.onclick = function(){
+            console.log(this);  // document
+        };
+
+        function Person(username) {
+            this.username = username;
+            console.log(this);
+        }
+
+        const p = new Person('Ming'); // this指向p
+        
+    ```
+
+- 3.  严格模式
+  - 如何开启：在所有语句之前放一个特定语句"use strict"
+  - 与非严格模式的区别
+    - 严格模式中，变量未声明就赋值会报错；非严格模式下不会
+    - 严格模式中，全局作用域中的函数内部this默认指向undefined；非严格模式默认值想window
+    - 严格模式中，不允许重复变量命名；非严格模式下不会
+
+- 4. 箭头函数中的this指向
+  - 箭头函数没有自己的this，无法用call或apply修改指向
+  - 箭头函数的this是根据作用域链查找
+
+    ```JavaScript
+        const calc = {
+            add:() => {
+                console.log(this);
+            }
+        };
+        calc.add(); // window
+
+        const calc = {
+            add:function(){
+                const adder = () => {
+                    console.log(this);
+                };
+                adder();
+            }
+        };
+        calc.add(); // calc
+        const addFn = calc.add;
+        addFn(); //
+    ```
+
+###### 2.4 不适合使用箭头函数的场景\
+
+- 1. 构造函数
+- 2. 需要this指向调用对象的时候
+- 3. 需要使用arguments的时候
+  - 剩余参数可以解决这个问题
+
+```JavaScript
+    // 1. 作为构造函数
+    const Person = () => {};
+    new Person(); // 报错，箭头函数没有this
+
+    // 2. 需要this指向调用对象的时候
+    document.onclick = function(){
+        console.log(this);
+    }
+    document.addEventListener(
+        'click',
+        () => {
+            console.log(this); // 不指向document，指向window
+        },
+        false
+    )
+
+    // 3. 需要使用arguments的时候
+    function add() {
+        console.log(arguments);
+    }
+    add(1,2);
+
+    const add = () => console.log(arguments);
+    add();
+    // 剩余参数
+```
 
 ###### 2.5 箭头函数的应用
