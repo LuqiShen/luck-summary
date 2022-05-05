@@ -6322,7 +6322,382 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ##### 2.1 上下文规则（6种）
 
+- 函数中使用this关键字，表示函数的上下文
+- 函数中的this具体指代什么必须通过调用函数的“前言后语”来判断
+- **函数的上下文由“调用”决定**
+  - **函数没有被调用的时候，输出是不知道的**
+
+```JavaScript
+    var xiaoming = {
+        nickname: '小明',
+        age: 12,
+        sayHello: function(){
+            console.log('我是' + this.nickname + ',我' + this.age + '岁了');
+        }
+    };
+
+    // 把函数提出来，单独存为变量
+    var sayHello = xiaoming.sayHello;
+    // 直接圆括号调用这个函数，而不是对象打点调用了
+    sayHello(); //我是undefined，我undefined岁了
+
+    var obj = {
+        a:1,
+        b:2,
+        fn:function(){
+            console.log(this.a + this.b);     // 上下文不知道，输出也不知道
+        }
+    }
+
+    obj.fn(); // 3
+    var fn = obj.fn;
+    fn(); //undefined + undefined = NaN
+```
+
+| 规则 | 上下文 |
+| :----: | :----: |
+| 对象.函数() | 对象|
+| 函数() | window |
+| 数组[下标]() | 数组 |
+| IIFE | window |
+| 定时器、延时器 | window |
+| DOM事件处理函数 | 绑定的DOM元素 |
+| call和apply | 任意指定 |
+
+###### 函数的上下文规则1
+
+- 对象.方法():则函数的上下文是这个打点的对象
+
+```JavaScript
+// 第1题
+    function fn(){
+        console.log(this.a + this.b);    // 函数没有被调用，不知道this是谁
+    }
+
+    var obj = {
+        a: 66,
+        b: 33,
+        fn: fn
+    }
+
+    obj.fn(); // this指向obj，输出99
+
+// 第2题
+    var obj1 = {
+        a: 1,
+        b: 2,
+        fn: function(){
+            console.log(this.a + this.b);
+        }
+    }
+
+    var obj2 = {
+        a: 3,
+        b: 4,
+        fn: obj1.fn
+    };
+
+    obj2.fn(); // this指向obj2, 输出7
+
+// 第3题
+    function outer(){
+        var a = 11;
+        var b = 22;
+        return {
+            a: 33,
+            b: 44,
+            fn:function() {
+                console.log(this.a + this.b);
+            }
+        }
+    }
+
+    outer().fn(); // outer()返回一个对象，对象打点调用fn()，输出77
+
+// 第4题
+    function fun(){
+        console.log(this.a + this.b);
+    }
+
+    var obj = {
+        a: 1,
+        b: 2,
+        c: [{
+            a: 3,
+            b: 4,
+            c: fun
+        }]
+    };
+    var a = 5;
+    obj.c[0].c();  // 7
+```
+
+###### 函数的上下文规则2
+
+- 函数():函数上下文是window对象，全局变量都是window对象的属性
+
+```JavaScript
+// 第1题
+    var obj1 = {
+        a: 1,
+        b: 2,
+        fn: function(){
+            console.log(this.a + this.b);
+        }
+    }
+
+    var a = 3;
+    var b = 4;
+
+    var fn = obj.fn;
+    fn(); // this指向window对象，输出7
+
+
+// 第2题
+    function fun(){
+        return this.a + this.b;
+    }
+
+    var a = 1;
+    var b = 2;
+    var obj = {
+        a:3,
+        b:fun(),  // 直接调用fun，函数直接运行，this指向window对象，b：3
+        fun:fun
+    }
+
+    var result = obj.fun(); // obj调用fun，this指向obj
+    console.log(result);
+```
+
+###### 函数的上下文规则3
+
+- 数组[下标](): 数组或类数组对象枚举出函数进行调用，上下文是这个数组
+
+- 类数组对象：所有键名为自然数序列（从0开始），且由length属性的对象
+  - 如arguments：函数的实参列表
+
+```JavaScript
+// 第1题
+    var arr = ['A','B','C',function(){
+        console.log(this[0]);
+    }];
+    arr[3](); // this指向这个数组，输出"A"
+
+// 第2题
+    function fun(){
+        arguments[3]();   // this指向arguments
+    }
+    
+    fun('A', 'B', 'C', function(){
+        console.log(this[1]); // "B"
+    });
+
+// 第3题
+    var a = 6;
+    var obj = {
+        a: 5,
+        b: 2,
+        c: [
+            1,
+            a,
+            function(){
+                document.write(this[1])
+            }
+        ]
+    }
+
+    obj.c[2](); // this指向c，obj.c[2]()就是取到数组下标为2的元素并调用，这个函数的this指向的就是数组c。this[1]拿到的就是数组c下标为1的元素a，a没有加引号，是一个变量，变量a的值为6，所以结果输出6
+```
+
+###### 函数的上下文规则4
+
+- (function(){})():IIFE中的函数，上下文是window对象
+
+```JavaScript
+
+// 第1题
+    var a = 1;
+    var obj = {
+        a:2,
+        fun: (function({
+            var a = this.a;
+            return function(){
+                console.log(a + this.a);
+            }
+        })()
+    };
+    obj.fun(); // 第一个this指向window对象，第二个this指向obj对象，输出3
+```
+
+###### 函数的上下文规则5
+
+- setInterval(函数，时间)、setTimeout(函数，时间)：定时器、延时器调用函数，上下文是window对象
+
+```JavaScript
+// 第1题
+    var obj = {
+        a: 1,
+        b: 2,
+        fun: function(){
+            console.log(this.a + this.b);
+        }
+    }
+
+    var a = 3;
+    var b = 4;
+    setTimeout(obj.fun,2000); // 由setTimeout调用obj.fun，this指向window，输出7
+
+// 第2题
+    var obj = {
+        a: 1,
+        b: 2,
+        fun: function(){
+            console.log(this.a + this.b);
+        }
+    }
+
+    var a = 3;
+    var b = 4;
+    setTimeout(function(){
+        obj.fun();
+    },2000); // 由obj调用fun函数，this指向obj，输出3
+```
+
+###### 函数的上下文规则6
+
+- DOM元素.onxxxx = function(){}:事件处理函数的上下文是绑定事件的DOM元素
+  - e.target在事件委托的情况下不等于this
+  - 备份上下文：防止函数嵌套导致this指向改变
+
+```JavaScript
+// 效果1： 点击哪个盒子，哪个盒子就变红
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>函数的上下文规则</title>
+        <style>
+            div {
+                width: 200px;
+                height: 200px;
+                float: left;
+                border: 1px solid #000;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box1"></div>
+        <div id="box2"></div>
+        <div id="box3"></div>
+        <script>
+            function setColorToRed(){
+                this.style.backgroundColor = 'red';
+            }
+
+            var box1 = document.getElementById('box1');
+            var box2 = document.getElementById('box2');
+            var box3 = document.getElementById('box3');
+
+            box1.onclick = setColorToRed;
+            box2.onclick = setColorToRed;
+            box3.onclick = setColorToRed;
+        </script>
+    </body>
+    </html>
+```
+
+```JavaScript
+// 效果2：点击哪个盒子，哪个盒子就隔两秒再变红
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数的上下文规则</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            float: left;
+            border: 1px solid #000;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1"></div>
+    <div id="box2"></div>
+    <div id="box3"></div>
+    <script>
+        function setColorToRed(){
+            // 备份上下文
+            var self = this
+            setTimeout(function(){
+                self.style.backgroundColor = 'red';                
+            }, 2000);
+        }
+
+        var box1 = document.getElementById('box1');
+        var box2 = document.getElementById('box2');
+        var box3 = document.getElementById('box3');
+
+        box1.onclick = setColorToRed;
+        box2.onclick = setColorToRed;
+        box3.onclick = setColorToRed;
+    </script>
+</body>
+</html>
+```
+
 ##### 2.2 call和apply
+
+- call和apply能指定函数的上下文
+  - 函数.call(上下文)
+  - 函数.apply(上下文)
+
+- call和apply的区别
+  - call用逗号罗列参数
+  - apply把参数写到数组中
+
+- call和apply的使用
+
+```JavaScript
+    function sum(){
+        alert(this.chinese + this.math + this.english);
+    }
+
+    var xiaoming = {
+        chinese: 80,
+        math: 95,m
+        english: 93
+    };
+
+    sum.call(xiaoming);
+    sum.apply(xiaoming);
+
+    function sum(b1,b2){
+        alert(this.c + this.m + this.e + b1 + b2);
+    }
+
+    sum.call(xiaoming, 5, 3);
+    sum.call(xiaoming, [5, 3]);
+
+    // call和apply的使用
+    function fun1(){
+        fun2.apply(this, arguments);
+    }
+
+    function fun2(){
+        alert(a+b);
+    }
+
+    fun1(33,44); // 77
+```
 
 #### 3. 构造函数
 
@@ -6882,7 +7257,7 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
         addFn(); //
     ```
 
-###### 2.4 不适合使用箭头函数的场景\
+###### 2.4 不适合使用箭头函数的场景
 
 - 1. 构造函数
 - 2. 需要this指向调用对象的时候
