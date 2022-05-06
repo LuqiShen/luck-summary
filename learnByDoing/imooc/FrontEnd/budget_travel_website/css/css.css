@@ -1,0 +1,190 @@
+.site-head {
+    height: 150px;
+}
+
+.site-head .topbar {
+    height: 32px;
+    line-height: 32px;
+
+    background-color: #2A2A2A;
+    color: white;
+}
+
+.site-head .topbar a {
+    color: white;
+}
+
+.site-head .topbar .shortcut-links {
+    float: left;
+}
+
+.site-head .topbar .shortcut-links>ul>li {
+    float: left;
+    margin-right: 18px;
+    font-size: 14px;
+}
+
+.site-head .topbar .shortcut-links>ul>li.have-menu {
+    padding-right: 12px;
+    position: relative;
+
+}
+
+.site-head .topbar .shortcut-links>ul>li.have-menu:hover .arrow {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+
+.site-head .topbar .shortcut-links>ul>li.have-menu .arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -6px;
+    width: 12px;
+    height: 12px;
+    transition: transform .2s ease 0s;
+    -webkit-transition: transform .2s ease 0s;
+    -moz-transition: transform .2s ease 0s;
+    -ms-transition: transform .2s ease 0s;
+    -o-transition: transform .2s ease 0s;
+}
+
+.site-head .topbar .shortcut-links>ul>li.have-menu .arrow b {
+    position: absolute;
+    left: 2px;
+    top: 1px;
+    transform: rotate(45deg);
+    width: 7px;
+    height: 7px;
+    background-color: white;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.site-head .topbar .shortcut-links>ul>li.have-menu .arrow i {
+    position: absolute;
+    left: 2px;
+    top: -1px;
+    transform: rotate(45deg);
+    width: 7px;
+    height: 7px;
+    background-color: #2A2A2A;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.site-head .topbar .topbar-r{
+    float: right;
+    width: 275px;
+}
+
+.site-head .topbar .topbar-r span, .site-head .topbar .topbar-r a{
+    margin-right: 16px;
+}
+
+.site-head .topbar .topbar-r a:last-child{
+    margin-right: 0;
+}
+
+.site-head .main-nav {
+    height: 32px;
+    line-height: 32px;
+    background-color: #20BD9A;
+}
+
+.site-head .main-nav ul li {
+    float: left;
+    margin-right: 18px;
+}
+
+.site-head .main-nav ul li a {
+    color: white;
+    font-size: 16px;
+}
+
+.site-head .main-nav ul li.have-menu {
+    padding-right: 16px;
+    position: relative;
+}
+
+.site-head .main-nav ul li.have-menu::before {
+    content: '';
+    width: 0;
+    height: 0;
+    top: 14px;
+    right: 0;
+    position: absolute;
+    border: 6px solid transparent;
+    border-bottom: none;
+    border-top-color: white;
+    transition: transform .2s ease 0s;
+    -webkit-transition: transform .2s ease 0s;
+    -moz-transition: transform .2s ease 0s;
+    -ms-transition: transform .2s ease 0s;
+    -o-transition: transform .2s ease 0s;
+}
+
+.site-head .main-nav ul li.have-menu:hover::before {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+
+.site-head .header-con {
+    height: 78px;
+    padding: 21px 0;
+}
+
+.site-head .header-con h1 {
+    float: left;
+    font-size: 24px;
+    color: #20BD9A;
+    font-weight: bold;
+}
+
+.site-head .header-con .soso-box {
+    float: left;
+    margin-left: 20px;
+    width: 405px;
+}
+
+.site-head .header-con .soso-box input {
+    float: left;
+    width: 361px;
+    height: 30px;
+    border: 1px solid #20BD9A;
+    border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    -ms-border-radius: 4px 0 0 4px;
+    -o-border-radius: 4px 0 0 4px;
+
+    /* 取消外线，外线是文本框特有的东西 */
+    outline: none;
+    padding-left: 10px;
+}
+
+.site-head .header-con .soso-box .btn {
+    float: left;
+    width: 32px;
+    height: 32px;
+    background-color: #20BD9A;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 25px;
+    border-radius: 0 4px 4px 0;
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    -ms-border-radius: 0 4px 4px 0;
+    -o-border-radius: 0 4px 4px 0;
+}

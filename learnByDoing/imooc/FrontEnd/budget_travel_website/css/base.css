@@ -1,6 +1,7 @@
 /* base.css是用来存放公共类 */
 
 .clearfix {
+    /* 清除浮动 */
     overflow: hidden;
 }
 
@@ -12,19 +13,40 @@
 }
 
 .tac {
+    /* 文字居中 */
     text-align: center;
 }
 
-.center {
+.center-wrap {
     /* 版心 */
-    widows: 1152px;
+    width: 1152px;
     margin: 0 auto;
 }
 
 .db {
+    /* 块 */
     display: block;
 }
 
 .dib {
+    /* 行内块 */
     display: inline-block;
+}
+
+@font-face {
+    font-family: "PingFangSCRegular";
+    src: url(../fonts/PingFangSCRegular.ttf);
+}
+
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf?t=1651832205712') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
