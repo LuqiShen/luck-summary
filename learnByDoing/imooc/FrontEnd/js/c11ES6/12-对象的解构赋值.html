@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        //补充代码
+        let node = {
+            type: "Identifier",
+            name: "ES",
+            loc: {
+                start: ["line", "column"],
+                end: {
+                    line: 1,
+                    column: 4
+                }
+            }
+        }
+
+        const {
+            loc: {
+                start: [line],
+                end: {
+                    line:num
+                }
+            }
+        } = node;
+
+        console.log(line, num);
+    </script>
+</body>
+
+</html>

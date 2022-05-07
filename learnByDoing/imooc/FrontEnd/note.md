@@ -7293,3 +7293,313 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 ```
 
 ###### 2.5 箭头函数的应用
+
+#### 11.4 解构赋值
+
+- 解析某一数据的结构，将我们想要的东西提取出来，赋值给变量或常量
+
+##### 1. 数组的解构赋值
+
+###### 1.1 数组解构赋值的原理
+
+- 模式（结构）匹配
+- 索引值相同的完成赋值
+- 不取的值通过逗号跳过
+
+###### 1.2 数组解构赋值的默认值
+
+- 默认值的基本用法
+
+- 默认值的生效条件
+  - 只有当一个数组成员严格等于（===）undefined时，对应的默认值才会生效
+
+- 默认值表达式
+  - 如果默认值是表达式，默认值表达式是惰性求值的（如果没用到默认值，就不会求值）
+
+###### 1.3 数组解构赋值的应用
+
+- 1. 常见的类数组解构赋值
+  - arguments
+  - NodeList(节点类数组)
+- 2. 函数参数
+
+```JavaScript
+    // 1. 认识解构赋值
+    const arr = [1,2,3];
+    const a = arr[0];
+    const b = arr[1];
+    const c = arr[2];
+
+    const [a,b,c] = [1,2,3];
+
+    const [a,[,,b],c] = [1,[2,4,5],3]
+
+    // 默认值的基本用法
+    const [a,b] = [];
+    // const [a,b] = [undefined, undefined];
+    // a,b均为undefined
+    const [a=1,b=2] = [];
+    // a为1，b为2
+
+    // 默认值的生效条件
+    const [a = 1, b = 2] = [3, null];
+    // a=3,b=null
+
+    // 默认值表达式
+    const func = () => {
+        console.log('我被执行了');
+        return 2;
+    }
+    const [x=func()] = [1];
+
+    // 解构赋值的应用
+    // arguments
+    function func(){
+        // console.log(arguments.push); //undefined
+        const [a,b] = arguments;
+        console.log(a,b);
+    }
+    
+    func(1,2); // 1,2
+
+    // NodeList
+    const [p1,p2,p3] = document.querySelectorAll('p');
+
+    // 函数参数的解构赋值
+    const arr = [1,1];
+    // const add = arr => arr[0] + arr[1];
+    // 实参传入函数，有实参给形参赋值的过程
+    // [x,y] = [1,1];
+    const add = ([x=0,y=0]) => x + y;
+    console.log(add([]));
+
+    // 3. 交换变量的值
+    let x = 1;
+    let y = 2;
+
+    let tmp = x;
+    x = y;
+    y = tmp;
+    console.log(x,y);
+
+    [x,y] = [y,x];
+```
+
+##### 2. 对象的解构赋值
+
+###### 1.1 对象解构赋值的原理
+
+- 模式（结构）匹配
+- 属性名相同的完成赋值
+
+```JavaScript
+    // 1. 模式（结构）匹配
+    // {} = {}
+    // 2. 属性名相同的完成赋值
+    const {username, age} = {username:'zhangshan',age:18}
+    const {username:username, age:age} = {username:'zhangshan',age:18}
+    const {'username':username, 'age':age} = {username:'zhangshan',age:18}
+
+    // 取别名
+    const {username:uname, age:age} = {username:'zhangshan',age:18};
+    console.log(age,uname);
+```
+
+###### 1.2 对象解构赋值的默认值
+
+- 对象解构赋值的默认值
+- 将一个已经声明的变量用于解构赋值,需要在圆括号中进行
+- 可以取到继承的属性
+
+```JavaScript
+    // 1. 默认值的生效条件
+    // 对象的属性值严格等于undefined时，对应的默认值才会生效
+    const {username = "ZhangSan",age = 0} = {username:'LiSi'};
+    console.log(username,age); // LiSi, 0
+
+    // 2. 默认值表达式
+    // 如果默认值表达式,默认值表达式是惰性求值的
+
+    // 3. 将一个已经声明的变量用于解构赋值
+    let x = 11;
+    {x} = {x:1};
+    console.log(x); // 报错
+    // {x}被理解为块级作用域,因此等号左右两边无法匹配
+    ({x} = {x:1});
+
+    // 4. 可以取到继承的属性
+    const {toString}} = {};
+    console.log(toString);
+    // Object的toString方法
+```
+
+###### 1.3 对象解构赋值的应用
+
+- 1. 函数参数的解构赋值
+
+```JavaScript
+    const logPersonInfo = user => console.log(user.username, user.age);
+    logPersonInfo({username:'Alex',age:18});
+
+    const logPersonInfo = ({username, age}) => console.log(user.username, user.age);
+```
+
+- 2. 复杂的嵌套
+
+```JavaScript
+    const obj = {
+        x:1,
+        y:[2,3,4],
+        z: {
+            a:5,
+            b:6
+        }
+    };
+
+    const {x,y,z} = obj;
+    const {
+        y,
+        y:[,yy],
+        z,
+        z:{
+            b
+        }
+    } = obj;
+
+
+```
+
+##### 3. 其他数据类型的解构赋值
+
+###### 1. 字符串的解构赋值
+
+```JavaScript
+    // 数组形式的解构赋值
+    const [a,b] = 'hello';
+    // a为"h",b为"e"
+
+    // 对象形式的解构赋值
+    const {0:a,1:b,length} = 'hello';
+    // a为"h",b为"e",length为5
+```
+
+###### 2. 数值和布尔值的解构赋值
+
+```JavaScript
+    // 对象形式的解构赋值
+    // 先将等号右边的值转为对象
+    // new Number(123)
+    const {a = 1, toString} = 123;
+    // new Boolean(true)
+    const {b = 2, toString} = true;
+
+```
+
+###### 3. undefined和null的解构赋值
+
+- 由于undefined和null无法转换为对象,所以对它们进行解构赋值,都会报错
+
+##### 4. 解构赋值常见的应用场景
+
+###### 1. 交换变量的值
+
+```JavaScript
+    let x = 1;
+    let y = 2;
+    [x, y] = [y, x]; // tips：x 和 y 已经声明了，这里就不用再添加 let 等关键字声明了
+    console.log(x, y) // 2 1
+```
+
+###### 2. 从函数返回多个值
+
+```JavaScript
+// 返回一个数组
+    function example() {
+      return [1, 2, 3];
+    }
+    let [a, b, c] = example();
+    console.log(a, b, c) // 1 2 3
+
+// 返回一个对象
+    function example() {
+    return {
+        foo: 1,
+        bar: 2
+        };
+    }
+    let {
+        foo,
+        bar
+    } = example();
+
+    console.log(foo, bar) // 1 2
+```
+
+###### 3. 函数参数的定义
+
+```JavaScript
+// 参数是一组有次序的值
+    function f([x, y, z]) {
+        console.log(x, y, z)
+    }
+    f([1, 2, 3])
+
+// 参数是一组无次序的值
+    function f({
+        x,
+        y,
+        z
+    }) {
+        console.log(x, y, z)
+    }
+    f({
+        z: 1,
+        x: 2,
+        y: 3
+    })
+```
+
+###### 4. 指定函数参数的默认值
+
+```JavaScript
+```
+
+###### 5. 遍历Map解构
+
+```JavaScript
+    function foo({x, y = 5}) {
+        console.log(x, y);
+    }
+    foo({}) // undefined 5
+    foo({x: 1}) // 1 5
+    foo({x: 1, y: 2}) // 1 2
+```
+
+###### 6. 加载模块
+
+```JavaScript
+    var map = new Map();
+    map.set('李四', '18');
+    map.set('张三', '20');
+    for (let [key, value] of map) {
+        console.log(`${key}今年${value}岁`);
+    }
+```
+
+###### 7. 提取JSON数据
+
+```JavaScript
+    var jsonData = {
+        "name": "小慕",
+        "age": "18",
+        "data": [1, 2, 3, 4],
+        "status": "OK"
+    }
+    let {
+        name,
+        age,
+        data,
+        status
+    } = jsonData
+    console.log(name, age, data, status);
+```

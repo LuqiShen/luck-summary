@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script>
+        const arr = ["a", ["b", "c", ["d"],
+            [undefined, "g", ["x"],
+                ["y"]
+            ]
+        ], "h", ["l"]];
+        /*补充代码*/
+        const [a,[b,c,[d],
+        [e = "e",g,[x]]]] = arr;
+        console.log(a,b,c,d,e,g,x);
+    </script>
+</body>
+
+</html>
