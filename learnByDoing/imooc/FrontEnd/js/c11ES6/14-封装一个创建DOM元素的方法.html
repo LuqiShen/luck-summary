@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封装一个创建DOM元素的方法</title>
+</head>
+<body>
+    <script>
+        const createElement = (label='div', {content = "",calssName = "default"} = {}) => {
+            return `<${label} class="${calssName}">${content}</${label}>`
+        }
+
+        console.log(createElement());        
+        console.log(createElement('a',{
+            content: "慕课网"
+        }));
+    </script>
+</body>
+</html>

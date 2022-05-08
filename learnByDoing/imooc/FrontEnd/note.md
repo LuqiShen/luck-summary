@@ -7603,3 +7603,177 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
     } = jsonData
     console.log(name, age, data, status);
 ```
+
+#### 11.5 对象字面量的增强与函数参数的默认值
+
+##### 1. 对象字面量的增强
+
+###### 1. 属性和方法的简介表示法
+
+- 对象字面量是什么
+  
+```JavaScript
+    // 实例化构造函数
+    const person = new Object();
+    person.age = 18;
+    person.speak = function(){};
+
+    // 对象字面量
+    const person = {
+        age:18,s
+        speak:funtion(){}
+    }
+```
+
+- 属性的简介表示法
+  - 键名和变量或常量名一样的时候,可以只写一个
+
+```JavaScript
+    const age = 18;
+    const person = {
+        // age:age
+        age
+    }
+```
+
+- 方法的简介表示法
+  - 方法可以省略冒号和function关键字
+
+```JavaScript
+    const person = {
+        // speak: function(){}
+        speak();
+    }
+```
+
+###### 2. 方括号语法
+
+- 方括号语法的用法
+
+```JavaScript
+    const prop = 'age';
+    const person = {};
+
+    // person.prop = 18;
+    // 方括号里的prop会被求值
+    // person[prop] = 18;
+
+    // ES6被增强
+    const person = {
+        [prop]: 18
+    };
+```
+
+- 方括号中可以放什么
+  - ${}
+  - [值或者通过计算得到值的表达式]
+
+```JavaScript
+    const prop = 'age';
+    const func = () => 'age';
+    const person = {
+        // [prop]: 18
+        // [func()]:18
+        // ['sex']: 'male'
+        ['se'+'x']:'male'
+    }
+
+    
+```
+
+- 方括号语法和点语法的区别
+  - 点语法是方括号语法的特殊形式
+    - 使用点语法的条件:属性名由数字\字母\下划线以及$构成,并且数字不在首位
+  - 属性名是合法标识符时,使用点语法和方括号语法都可;属性名不是合法标识符,只能使用方括号语法
+  - 使用变量或常量保存属性名时,只能使用方括号语法,不能使用点语法
+
+```JavaScript
+    const person = {};
+    // person.age <=> person['age']
+
+    const obj = {
+    "age": 2,
+    "8i":"imooc"
+    }
+    // age是合法标识符，点语法和方括号语法都可以访问
+    console.log(obj.age) // 2
+    console.log(obj['age']) // 2
+    //8i不属于合法的标识符，使用点语法访问属性会报错
+    // console.log(obj.8i)  // 报错  为了方便看到其他结果，所以将这句代码注释了，可以自己打开注释   测试下代码效果
+    // 不符合语法标识符的属性，可以使用方括号语法访问
+    console.log(obj['8i'])// imooc
+
+    const obj = {
+    "age": 2,
+    "8i": "imooc"
+    }
+    // 定义一个常量property，值为age
+    const property = "age"
+    // 当属性为变量或常量时，必须通过方括号语法，即：obj[property]，使用property保存的值age，所以等 价于obj.age这种写法
+    console.log(obj[property]) // 2
+    // 当属性为变量或常量时，如果通过点语法，会将property看做字符串，表示访问obj对象下的property属  性，而不是访问obj下的age属性，而obj对象中没有property属性，所以返回结果为undefined
+    console.log(obj.property) // undefined
+```
+
+##### 2.函数参数的默认值
+
+###### 1. 函数参数的默认值是什么
+
+- 调用参数的时候传参了,就用传递的参数;如果没有传参,就用默认值
+
+```JavaScript
+    const mutiply = (x,y) => {
+        if(typeof y === 'undefined'){
+            y = 1;
+        }
+        return x * y;
+    }
+
+
+    const mutiply = (x,y=1) => x*y;
+```
+
+###### 2. 函数参数默认值的注意事项
+
+- 默认值的生效条件
+  - 不传参数或明确的传递undefined作为参数,只有这两种情况下,默认值才会生效
+- 默认值表达式是惰性求值的
+- 设置默认值的小技巧
+  - 函数参数的默认值,最好从参数列表的右边开始设置
+
+```JavaScript
+    const multiply = (x, y = 1) => x*y;
+    console.log(mutiply(2,null)); // 0
+
+    const multiply = (x = 1, y) => x*y;
+    multiply(undefined, 2); // 不方便
+```
+
+###### 3. 函数参数默认值的应用
+
+- 接受很多参数的时候
+
+```JavaScript
+    const logUser = (
+        username = 'LiSi',
+        age = 18,
+        sex = 'male'
+        ) => console.log(username, age, sex);
+    logUser('ZhangSan',18,'male')
+
+    // 接收一个对象作为参数
+    const logUser = ({username='ZhangSan', age=0, sex='male'}={}) => console.log(username, age, sex);
+    logUser({
+        username: "ZhangSan",
+        age:18,
+        sex:'male'
+    })
+
+    // {username='ZhangSan', age=0, sex='male'} = {username:'ZhangSan'};
+    logUser({username:'ZhangSan'});
+    logUser({});
+    // logUser(undefined)
+    // {username='ZhangSan', age=0, sex='male'} = undefined
+    logUser(); //报错
+```
+
