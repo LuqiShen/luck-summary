@@ -6363,6 +6363,7 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 | 定时器、延时器 | window |
 | DOM事件处理函数 | 绑定的DOM元素 |
 | call和apply | 任意指定 |
+| 用new调用函数 | 秘密创建出的对象 |
 
 ###### 函数的上下文规则1
 
@@ -6703,9 +6704,56 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ##### 3.1 用new调用函数的四步走
 
+- 1. 函数体内会自动创建出一个空白对象
+- 2. 函数的上下文(this)会指向这个对象
+- 3. 函数体内的语句会执行
+- 4. 函数会自动返回上下文对象,即使函数没有return语句
+
+```JavaScript
+    function fun(){
+        // 第一步:创建一个空白对象{}
+        // 第二步:this指向这个空白对象
+        // 第三步:执行函数体内语句 {a:3,b:5}
+        this.a = 3;
+        this.b = 5;
+        // 第四步:return this
+    }
+
+    // obj变量,接收new fun()返回的上下文对象
+    var obj = new fun();
+    
+    // undefined
+    var obj2 = fun();
+    console.log(obj);
+```
+
 ##### 3.2 构造函数
 
+- 用new调用一个函数,这个函数就被称为**构造函数**,任何函数都可以是构造函数,只需要用new调用它
+- 构造函数用于构造新对象,它内部的语句将为新对象添加若干属性和方法,完成**对象的初始化**
+- 构造函数必须用new关键字调用,开发者约定**构造函数命名时首字母要大写**
+
+- 注意:构造函数中的this不是函数本身
+
+```JavaScript
+    function People(name, age, sex){
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    var xiaoming = new People('小明', 12, '男');
+    var xiaohong = new People('小红', 10, '女');
+    var xiaogang = new People('小刚', 13, '男');
+```
+
 ##### 3.3 类和实例
+
+- 类: (一类)只描述对象拥有的哪些属性和方法, 并不具体指明属性的值
+- 实例: (一只)具体的对象
+
+```JavaScript
+```
 
 #### 4. 原型和原型链
 
