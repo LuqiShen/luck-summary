@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象的扩展运算符</title>
+    <style>
+        #wrap {
+            width: 324px;
+            margin: 0 auto;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 3px;
+            background: #f01414;
+            color: #fff;
+        }
+
+        #intro {
+            width: 300px;
+            min-height: 100px;
+            line-height: 20px;
+            padding: 10px;
+            border: 2px solid gray;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <button>添加</button>
+        <div id="intro"></div>
+    </div>
+    <script>
+        /* 默认值参考设置
+		  {
+				name: "大话西游之月光宝盒 ",
+				year: "2014",
+				director: "刘镇伟",
+				star: "周星驰 / 吴孟达 / 罗家英",
+				type: "喜剧 / 爱情 / 奇幻 / 古装",
+				introduction: "　孙悟空（周星驰）护送唐三藏（罗家英）去西天取经路上，与牛魔王合谋欲杀害唐三藏，并偷走了月光宝盒，此举使观音萌生将其铲除心思，经唐三藏请求，孙悟空被判五百年后重新投胎做人赎其罪孽...."
+			}
+		*/
+        const movieInfo = param => {
+            const defaultInfo = {
+                name: "大话西游之月光宝盒 ",
+                year: "2014",
+                director: "刘镇伟",
+                star: "周星驰 / 吴孟达 / 罗家英",
+                type: "喜剧 / 爱情 / 奇幻 / 古装",
+                introduction: "　孙悟空（周星驰）护送唐三藏（罗家英）去西天取经路上，与牛魔王合谋欲杀害唐三藏，并偷走了月光宝盒，此举使观音萌生将其铲除心思，经唐三藏请求，孙悟空被判五百年后重新投胎做人赎其罪孽...."
+            }
+            const info = {
+                ...defaultInfo,
+                ...param
+            };
+            const intro = document.getElementById('intro');
+            intro.innerHTML = `
+                <h3>名称：${info.name}</h3>
+                <p>导演：${info.director}</p>
+                <p>主演：${info.star}</p>
+                <p>类型：${info.type}</p>
+                <p>上映年份：${info.year}</p>
+                <p>简介：${info.introduction}</p>
+            `;
+        }
+        const info = movieInfo();
+        const btn = document.getElementsByTagName('button')[0];
+
+        btn.onclick = function () {
+            const info = movieInfo({
+                name: "功夫",
+                year: 2004,
+                director: "周星驰",
+                star: "周星驰/黄圣依",
+                type: "喜剧 / 爱情 / 奇幻 / 古装",
+                introduction: " 20世纪40年代的中国广东，有一名无可药救的小混混阿星（周星驰饰），此人能言善道、擅耍嘴皮，但意志不坚，一事无成。他一心渴望加入手段冷酷无情、恶名昭彰的斧头帮，并梦想成为黑道响叮当的人物。此时斧头帮正倾全帮之力急欲铲平唯一未收入势力范围的地头，未料该地卧虎藏龙，痴肥的恶霸女房东肥婆加上与其成对比的懦弱丈夫二叔公，率领一班深藏不漏的武林高手，大展奇功异能，对抗恶势力……"
+            });
+        }
+    </script>
+</body>
+
+</html>

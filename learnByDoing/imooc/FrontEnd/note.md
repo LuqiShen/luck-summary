@@ -7825,3 +7825,356 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
     logUser(); //报错
 ```
 
+### 第12章 ES6语法扩展
+
+#### 12.1 剩余参数和展开运算符
+
+##### 1. 剩余参数
+
+###### 剩余参数是什么
+
+- 剩余参数的本质
+  - 剩余参数永远是个数组,即使没有值,也是空数组
+
+```JavaScript
+    const add = (x,y,...args) => {
+        console.log(x,y,args);
+    };
+
+    add(); // undefined, undefined,[]
+    add(1,2,3); // 1,2,[3]
+```
+
+###### 剩余参数的注意事项
+
+- 箭头函数的剩余参数
+  - 箭头函数的参数部分,即使只有一个剩余参数,也不能省略圆括号
+
+```JavaScript
+    const add = (...args)=> {}
+```
+
+- 使用剩余参数代替arguments获取实际参数
+  - ...args是数组,arguments是类数组
+
+```JavaScript
+    const add = (...args) => {
+        console.log(args);
+    }
+```
+
+- 剩余参数的位置
+  - 剩余参数只能是最后一个参数,之后不能再有其他参数
+
+###### 剩余参数的应用
+
+- 和解构赋值结合使用
+  - 剩余元素:可以是数组,也可以是对象,具体看解构的是什么
+
+```JavaScript
+    const add = (...args) => {
+        let sum = 0;
+        for(let i = 0; i <args.length; i++){
+            sum += args[i];
+        }
+
+        return sum;
+    };
+
+    // reduce方法
+
+    // 剩余参数与解构赋值结合使用
+    // 剩余参数不一定非要作为函数参数使用
+
+    const [num,...args] = [1,2,3,4];
+    console.log(num,args); // 1,[2,3,4]
+
+    const func = ([num,...args]) => {};
+    func([1,2,3]);
+
+    const {x,y,...z} = {a:3, x:1,y:2,z:4};
+    console.log(x,y,z); //1 2 {a:3,b:4}
+
+    const {x,...z,y} = {a:3, x:1,y:2,z:4};
+    console.log(x,y,z); // 报错,剩余元素
+
+```
+
+###### reduce方法
+
+- 原理: reduce方法是数组的归并方法,这个方法与迭代方法(forEach等)一样,都会对数组进行遍历,不同的是reduce方法的回调函数中的第一个参数得到的是迭代计算后的结果
+
+```JavaScript
+    let arr = [1, 2, 3, 4];
+    let sum = arr.reduce(function(acl, val, idx, array) {
+        console.log(acl, val, idx, array);
+        return acl+ val;
+      })
+    console.log(arr, sum);
+    // 第一次迭代: acl = 1, val = 2, idx = 1, array = arr, 函数返回值:3
+    // 第二次迭代: acl = 3, val = 3, idx = 2, array = arr, 函数返回值:6
+    // 第三次迭代: acl = 6, val = 4, idx = 3, array = arr, 函数返回值:10
+
+    let arr = [1, 2, 3, 4];
+    let sum = arr.reduce(function(acl, val, idx, array) {
+            console.log(acl, val, idx, array);
+            return acl+ val;
+        }, 10) // 设置初始值为10
+    console.log(arr, sum);
+
+```
+
+- 应用
+
+```JavaScript
+// 数组元素中求和
+    let arr = [1, 2, 3, 4];
+    let sum = arr.reduce(function(acl, val) {
+        return acl+ val;
+    })
+    console.log(sum);
+
+
+// 数组去重
+    let arr = [12, 34, 34, 342, 345, 34, 123, 345, 45, 12]
+    let newArr = arr.reduce((prev, next) => {
+            // 判断数组中是否存在当前元素，如果不存在的话，再将其添加到数组中
+            prev.indexOf(next) == -1 && prev.push(next)
+            return prev
+        }, []) // 设置迭代初始值为一个空数组
+    // 原数组不会发生改变
+    console.log(arr) // [12, 34, 34, 342, 345, 34, 123, 345, 45, 12]
+    // 去除重复项的新数组
+    console.log(newArr) // [12, 34, 342, 345, 123, 45]
+```
+
+##### 2. 数组的展开运算符
+
+###### 数组展开运算符的基本用法
+
+- 认识展开运算符
+
+```JavaScript
+    // 求数组中的最小值
+    // Math.min()
+    console.log(Math.min([3,2,4])); // NaN
+    console.log(Math.min(3,2,4));   // 2
+
+    // 把[3,2,4] -> 3,2,4
+    console.log(Math.min(...[3,2,4])); // 展开运算符
+
+```
+
+###### 区分剩余参数和展开运算符
+
+- 根本区别
+  - 展开运算符：把数组转换成参数列表的形式
+  - 剩余参数：把参数列表转换成数组
+
+```JavaScript
+    // 剩余参数
+    const add = (...args) => {
+        // 展开运算符
+        console.log(...args);
+    }
+
+
+    [...[1,2,3],4]
+```
+
+###### 数组展开运算符的应用
+
+- 1. 复制数组
+
+```JavaScript
+    const a = [1,2];
+    // const b = a;
+    // console.log(b);
+    // a[0] = 3;
+    // console.log(b);
+
+    const c = [...a];
+```
+
+- 2. 合并数组
+
+```JavaScript
+    const arr1 = [1,2];
+    const arr2 = [3];
+    const arr3 = [4,5];
+    console.log([1,...b,2,...a,...c,3]);
+```
+
+- 3. 字符串转为数组
+
+```JavaScript
+    const str = "Number";
+    console.log(...str); //"N","u","m","b","e","r"
+    console.log([...str]); // ["N","u","m","b","e","r"]
+```
+
+- 4. 常见类数组转为数组
+
+```JavaScript
+// arguments
+    function func(){
+        // console.log(arguments.push); // undefined
+        console.log([...arguments]);
+    }
+
+// NodeList
+    console.log(document.querySelectorAll('p'));
+    console.log([...document.querySelectorAll('p')]);
+```
+
+##### 3. 对象的展开运算符
+
+###### 对象展开运算符的基本用法
+
+- 1. 展开对象
+  - 对象不能直接展开，必须在{}中展开
+  - 对象的展开：把属性罗列出来，用逗号分隔，放到一个{}中，构成新对象
+
+```JavaScript
+    const apple = {
+        color: '红色',
+        shape: '球形',
+        taste: '甜'
+    };
+    console.log(...apple);
+    console.log({...apple});
+
+    console.lot({...apple} === apple); // false
+```
+
+- 2. 合并对象
+  - 新对象拥有全部属性；相同属性，后面对象覆盖前面对象
+
+```JavaScript
+    const apple = {
+        color: '红色',
+        shape: '球形',
+        taste: '甜'
+    };
+
+    const pen = {
+        color: '黑色',
+        shape: '圆柱形',
+        use: '写字'
+    };
+    console.log({...pen});
+    console.log({...apple,...pen}); // 相同属性，后面对象覆盖前面对象
+```
+
+###### 对象展开运算符的注意事项
+
+- 1. 空对象的展开
+  - 如果展开一个空对象，则没有任何效果
+
+```JavaScript
+```
+
+- 2. 非对象的展开
+  - 如果展开的不是对象，则会自动将其转为对象，再将其属性罗列出来
+  - 如果展开运算符后面是字符串，会自动转成一个类似数组的对象，因此返回的不是空对象
+
+```JavaScript
+    console.log({...1}); // {}
+    console.log({...undefined}); // {}
+    console.log({...null}); // {}
+    console.log({...true}); // {}
+
+    console.log({..."str"}); // {0:"s",1:"t",2:"r"}
+    console.log([..."str"]); // ["s","t","r"]
+    console.log({...[1,2,3]}); // {0:1,1:2,2:3}
+```
+
+- 3. 对象中对象属性的展开
+  - 不会展开对象中的对象属性
+
+```JavaScript
+    const apple = {
+        feature: {
+            taste: "甜"
+        }
+    };
+
+    const pen = {
+        feature: {
+            color: "黑色",
+            shape: "圆柱形"
+        }
+        use："写字"
+    };
+    console.log({...apple,...pen});
+```
+
+###### 对象展开运算符的应用
+
+- 1. 复制对象
+
+```JavaScript
+    const apple = {
+        color: '红色',
+        shape: '球形',
+        taste: '甜'
+    };
+    console.log(...apple);
+    console.log({...apple});
+
+    console.lot({...apple} === apple); // false
+```
+
+- 2. 用户参数和默认参数
+
+```JavaScript
+    const logUser = ({
+        username = "ZhangSan",
+        age = 0,
+        sex = "male"
+    } = {}) => {
+        console.log(username,age,sex);
+    }
+
+    const logUser = userParam => {
+        const defaultParam = {
+            username: "ZhangSan",a
+            age: 0,
+            sex: 'male'
+        };
+
+        // const param = {...defaultParam, ...userParam};
+        const {username, age, sex} = {...defaultParam, ...userParam};
+
+    }
+```
+
+#### 12.2 Set和Map数据结构
+
+##### 1. Set
+
+###### 1. Set是什么
+
+###### 2. Set实例的方法和属性
+
+###### 3. Set构造函数的参数
+
+###### 4. Set的注意事项
+
+###### 5. Set的应用
+
+##### 2. Map
+
+###### 1. Map是什么
+
+###### 2. Map实例的方法和属性
+
+###### 3. Map构造函数的参数
+
+###### 4. Map的注意事项
+
+###### 5. Map的应用
+
+#### 12.3 遍历器与for...of循环
+
+#### 12.4 ES的新增方法
