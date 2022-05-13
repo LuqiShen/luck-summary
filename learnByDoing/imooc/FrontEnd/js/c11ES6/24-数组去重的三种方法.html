@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组去重的三种方法</title>
+</head>
+
+<body>
+    <script>
+        const arr = [1, 1, '1', 17, true, true, false, false, 'true', 'a', {}, {}];
+        // Set方法
+        const s1 = [...new Set(arr)];
+        console.log(s1);
+
+        // 循环遍历
+        let arrUnique = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (arrUnique.indexOf(arr[i]) === -1) {
+                arrUnique.push(arr[i]);
+            }
+        }
+        console.log(arrUnique);
+
+        // Map方法
+        const m3 = new Map();
+        const res3 = []
+        for (let i = 0; i < arr.length; i++) {
+            if (!m3.has(arr[i])) {
+                m3.set(arr[i], true);
+                res3.push(arr[i]);
+            } else {
+                continue;
+            }
+        }
+        console.log(res3);
+    </script>
+</body>
+
+</html>

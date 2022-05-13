@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Map的参数传递</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        const m1 = new Map([['a',111],['b',222]]);
+        const m2 = new Map(m1);
+        m2.set(['c',222]);
+        console.log(m1,m2);
+    </script>
+</body>
+
+</html>

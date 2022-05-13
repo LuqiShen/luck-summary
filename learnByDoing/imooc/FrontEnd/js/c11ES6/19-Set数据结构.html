@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Set数据结构</title>
+</head>
+
+<body>
+    <script>
+        //在此添加代码
+        const s = new Set();
+        s.add(1).add(2).add(3);
+        console.log(s);
+        s.delete(2);
+        console.log(s);
+        console.log(s.size);
+        s.forEach((v,k,s) => {
+            console.log(v + " ",k + " ",s);
+        });
+    </script>
+</body>
+
+</html>

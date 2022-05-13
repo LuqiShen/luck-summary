@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set去重</title>
+</head>
+
+<body>
+    <script>
+        let str = "study hard and make and progress every day study"
+        // const s = new Set(str.split(" "));
+        // const result = [...s].join(" ");
+        // console.log(result);
+        console.log([...new Set(str.split(" "))].join(" "));
+    </script>
+</body>
+
+</html>

@@ -8155,25 +8155,272 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ###### 1. Set是什么
 
+- Set：一系列无序、没有重复值的数据集合
+  - 无序：没有下标去标示每个值
+
+```JavaScript
+    // 数组：一系列有序列的数据集合
+    console.log([1,2,1]);
+    console.log(new Array(1,2,1));
+
+    // Set中不能有重复的成员
+    const s = new Set();
+    s.add(1);
+    s.add(2);
+    s.add(2);
+    console.log(s); {1,2}
+```
+
 ###### 2. Set实例的方法和属性
+
+- 方法
+  - add():给Set中添加成员;可以连调；一次只能添加一个元素
+  - has()：判断集合中存不存在某元素
+  - delete()：删除集合中的某元素
+  - clear()：清空集合
+  - forEach(回调函数（value，key，set），指针)：按照成员添加进集合的顺序遍历；Set中的key等于value；数组也有这样的方法
+    - forEach可用于遍历Set，该方法接收两个参数，第一个参数是回调函数，第二个参数指定了回调函数中（此时回调函数指的是普通函数）的this指向，如果回调函数是箭头函数的话，那么此时传不传第二个参数都不会影响箭头函数内部的this指向，因为箭头函数中的this指向该函数定义时所在作用域指向的对象，而不是使用时所在的作用域指向的对象。
+
+```JavaScript
+    // add()
+    const s = new Set();
+    s.add(1).add(2).add(2); // {1,2}
+
+    // has()
+    console.log(s.has(1));
+    console.log(s.has(3));
+
+    // delete()
+    s.delete(1);
+    s.delete(3); // 删除不存在的元素什么都不会发生
+    console.log(s); // {2}
+
+    // clear()
+    s.clear();
+    console.log(s); // {}
+
+    // forEach()
+    s.add(1).add(2).add(2); // {1,2}
+    s.forEach(function(value,key,set){
+        // Set中的key等于value；数组也有这样的方法
+        console.log(value,key,set===s);  // true
+        console.log(this);
+    },document);
+
+    // 按照成员添加进集合的顺序遍历
+```
+
+- 属性
+  - size
+
+```JavaScript
+    const s = new Set();
+    s.add(1).add(2).add(3);
+    console.log(s.size); // 3
+```
 
 ###### 3. Set构造函数的参数
 
+- 数组
+
+```JavaScript
+    const s = new Set([1,2,1]);
+    console.log(s);
+```
+
+- 字符串，arguments，NodeList，Set等
+
+```JavaScript
+// 字符串
+    console.log(new Set("hi"));  // {"h","i"}
+// arguments
+    function func(){
+        console.log(new Set(arguments));
+    }
+    func(1,2,1);
+// NodeList
+    console.log(new Set(document.querySelectorAll('p')));
+// Set
+    const set1 = new Set([1,2,1]);
+    console.log(new Set(set1) === set1); // false
+```
+
 ###### 4. Set的注意事项
 
+- 1. 判断重复的方式
+  - Set对重复值的判断基本遵循严格相等（===）
+  - 耽氏对于NaN的判断与===不同，Set中的NaN等于NaN
+
+```JavaScript
+    const s = new Set();
+    s.add({}).add({});
+    console.log(s); //
+```
+
+- 2. 什么时候使用Set
+  - 数组或字符串去重时
+  - 不需要通过下标访问，只需要遍历时
+  - 为了使用Set提供的方法和属性时（add delete clear has forEach size等）
+
 ###### 5. Set的应用
+
+- 数组去重
+
+```JavaScript
+    // [1,2,1]
+    const s = new Set([1,2,1]);
+    // s.forEach
+    const arr1 = [];
+    s.forEach((v,k,s) => {
+        arr1.push(v);
+    })
+
+    // 展开运算符
+    const arr2 = [...new Set([1,2,1])];
+```
+
+- 字符串去重
+
+```JavaScript
+    const s = new Set('abbabcd');
+    const string = [...s].join("");
+```
+
+- 存放DOM元素
+
+```JavaScript
+    const s = new Set(document.querySelectorAll('p'));
+    // for循环
+    s.forEach(function(elem){
+        elem.style.color = "red";
+        elem.style.backgroundColor = "yellow";
+    })
+```
 
 ##### 2. Map
 
 ###### 1. Map是什么
 
+- 认识Map:键值对的集合
+
+```JavaScript
+// 对象
+    const person = {
+        name: "ZhangSan",
+        age: 18
+    } 
+
+// Map
+    const m = new Map();
+    m.set('name','ZhangSan')
+    m.set('age','18')
+```
+
+- Map和对象的区别
+
+```JavaScript
+    // 对象一般用字符串当作键
+    const obj = {
+        name: "ZhangSan",
+        age: 18
+    }
+
+    // 基本数据类型：数字、字符串、布尔值、undefined、null
+    // 引用数据类型：对象([]、{}、函数、Set、Map等)
+    // 以上都可以作为Map的键
+```
+
 ###### 2. Map实例的方法和属性
+
+- 1. 方法
+  - set():添加成员
+    - 使用set添加的新成员，键如果已经存在，后添加的键值会覆盖已有的
+  - get():获取成员
+    - get获取不存在的成员，返回undefined
+  - has():成员是否存在
+  - delete():删除成员
+  - clear():清除成员
+  - forEach():遍历
+
+```JavaScript
+    const m = new Map();
+    m.set('age',18).set(true,'true').('age',20);
+
+    m.get('age'); // 20
+    m.get(true); // 'true'
+
+    m.delete('age'); // 删除delete
+    m.delete('true'); // 删除不存在的键，什么都不发生
+
+    m.forEach(function(value,key,map){
+        console.log(value,key,map === m); // true
+    }, document)
+```
+
+- 2. 属性
+  - size
 
 ###### 3. Map构造函数的参数
 
+- 数组:必须是二维数组
+
+```JavaScript
+    console.log(new Map(['name','alex'],['age',18]));
+```
+
+- Set、Map等
+  - Set中必须提看出键和值
+
+```JavaScript
+    const s = new Set(['name','ZhangSan'],['age',18]);
+
+    const m1 = new Map(['name','ZhangSan'],['age',18]);
+    const m2 = new Map(s);
+```
+
 ###### 4. Map的注意事项
 
+- 1. 判断键名是否相同的方式
+  - 基本遵循严格相等===
+  - Map中NaN等于NaN
+
+- 2. 什么时候使用Map
+  - 如果只需要key -> value的结构，或者需要字符串以外的值做键，使用Map更合适
+  - forEach for in
+  - size
+
+- 3. 什么时候适用对象
+  - 只有在模拟现实世界的实体时，才使用对象
+
 ###### 5. Map的应用
+
+- 1. 
+
+```JavaScript
+    const [p1,p2,p3] = document.querySelectorAll('p');
+    const m = new Map();
+    m.set(p1,{
+        color:'red',
+        backgroundColor:'yellow',
+        fontSize:'40px'
+    });
+    m.set(p2,{
+        color:'green',
+        backgroundColor:'orange',
+        fontSize:'40px'
+    });
+    m.set(p3,{
+        color:'blue',
+        backgroundColor:'yellow',
+        fontSize:'40px'
+    });
+
+    m.forEach((propObj,elem) => {
+        for(const p in propObj){
+            elem.style[p] = propObj[p]'
+        }
+    })
+```
 
 #### 12.3 遍历器与for...of循环
 
