@@ -8424,4 +8424,351 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 #### 12.3 遍历器与for...of循环
 
+##### 1. Itarator是什么
+
+- Iterator的作用
+  - 遍历
+
+- 寻找Iterator
+
+```JavaScript
+    console.log([1,2][Symbol.iterator]());
+```
+
+- 什么是Iterator
+  - it:可遍历对象（可迭代对象）
+  - Symbol.iterator:可遍历对象（可迭代对象）的生成方法
+  - Iterator：Symbol.iterator -> it.next() -> it.next() ... -> 一直到done为止
+
+```JavaScript
+    const it = [1,2][Symbol.iterator]();
+    console.log(it.next()); //{value:1,done:false}
+    console.log(it.next()); //{value:2,done:false}
+    console.log(it.next()); //{value:undefined,done:true}
+```
+
+##### 2. Symbol
+
+###### 1. 什么是Symbol
+
+- ES6中引入的一种新的基本数据类型，用于表示一个独一无二的值。
+
+```JavaScript
+    const a = Symbol();
+    console.log(a); // Symbol()
+    console.log(typeof a); // 类型是：Symbol
+
+    // Symbol独一无二
+    let a = Symbol();
+    let b = Symbol();
+    console.log(a);  //Symbol()
+    console.log(b);  //Symbol()
+    console.log(a === b) // false
+
+    // 
+    let a = Symbol("symbol1");
+    let b = Symbol("symbol2");
+    console.log(a); //Symbol("symbol1")
+    console.log(b); //Symbol("symbol2")
+```
+
+###### 2. Symbol语法
+
+- 1. 基本语法
+
+```JavaScript
+    // 可以在调用Symbol的时候，传入一个字符串作为当前Symbol变量的描述
+    let a = Symbol("symbol1");
+    let b = Symbol("symbol2");
+    console.log(a); //Symbol("symbol1")
+    console.log(b); //Symbol("symbol2")
+
+    //不能使用new调用；报错，Symbol is not a constructor
+    const a = new Symbol();
+```
+
+- 2. Symbol属性的遍历
+  - 以Symbol类型的变量作为对象属性时，该属性不会出现在for...in、for...of的循环中
+
+```JavaScript
+    let s1 = Symbol('a');
+    let s2 = Symbol('b');
+    // 由于 s1 和 s2 是一个变量，而不是字符串，因此需要使用中括号括起来（否则它会被当做字符串使用）
+    let a = {
+        name: "夕山雨",
+        [s1]: 24,
+        [s2]: function(){}
+    }
+```
+
+- 3. Symbol.for(),Symbol.keyFor()
+  - Symbol.for()：Symbol提供一种可以创建相同Symbol的机制，就是使用Symbol.for()方法进行注册
+    - 通过该方法生成的Symbol会在当前作用域中注册指定的描述符，之后再次通过Symbol.for()传入相同的描述符时，就可以得到相同的Symbol值，所以变量a和b是相同的
+
+    ```JavaScript
+        let a = Symbol.for('imooc');  //全局注册了以"imooc"为描述符的 Symbol
+
+        //由于描述符"imooc"已被注册到全局，因此这里创建的 Symbol 与上面是同一个
+        let b = Symbol.for('imooc');  
+        console.log(a === b) // true
+    ```
+  
+  - Symbol.keyFor()：返回一个全局注册的Symbol的描述符
+
+    ```JavaScript
+        let a = Symbol.for('imooc');
+        let res = Symbol.keyFor(a)
+        console.log(res) // imooc
+    ```
+
+- 4. Symbol的作用
+  - 由于每一个Symbol值都是不相等的，这意味着Symbol值可以作为标识符，用于对象的属性名，就能保证不会出现同名的属性。这对于一个对象由于多个模块构成的情况非常有用，能防止某一个键被不小心改写或覆盖。
+
+    ```JavaScript
+        let s1 = Symbol('s1');
+
+        let s2 = Symbol('s2')
+        const obj = {
+            age: 16,
+            age: 19,
+            [s1]: 'Hello!',
+            [s2]: 'world'
+        };
+        console.log(obj)
+
+    ```
+
+- 5. 常用内置的Symbol值：Symbol.iterator
+
+```JavaScript
+    for(var item of [1,2,3]){
+        console.log(item); //依次输出 1，2，3
+    }
+```
+
+- 6. Symbol与基本数据类型转换
+  - 不能转成数字
+
+    ```JavaScript
+        let s1 = Symbol('1');
+
+        // 报错
+        console.log(Number(s1))
+    ```
+
+  - 可以转成布尔值和字符串
+
+    ```JavaScript
+        let s1 = Symbol('1');
+
+        console.log(typeof s1) // symbol
+        let str = String(s1)
+        console.log(typeof str) // string
+        let bool = Boolean(s1)
+        console.log(typeof bool) // boolean
+    ```
+
+##### 3. Itarator解惑
+
+###### 1. 为什么需要iterator
+
+- 遍历数组：for循环和forEach方法
+- 遍历对象：for...in循环
+- iterator遍历器是一个统一的遍历方式
+
+###### 2. 如何更方便的使用iterator
+
+- 封装iterator调用的过程：for...of循环
+
+##### 4. for...of的用法
+
+###### 1. 认识for...of
+
+```JavaScript
+    const arr = [1,2,3];
+    const it = arr[Symbol.iterator]();
+    console.log(it.next());
+    console.log(it.next());
+    console.log(it.next());
+    console.log(it.next());
+
+    let next =  it.next(); // {value:1, done:false}
+    while(!next.done){
+        console.log(next.value);
+        next = it.next();
+    }
+
+    for(const item of arr){
+        console.log(item);
+    }
+```
+
+###### 2. 与break、continue一起使用
+
+```JavaScript
+    const arr = [1,2,3];
+    for(const item of arr){
+        if(item == 2){
+            break;
+        }
+        console.log(item);
+    }
+
+    for(const item of arr){
+        if(item == 2){
+            continue;
+        }
+        console.log(item);
+    }
+```
+
+###### 3. 在for...of中取得数组的索引
+
+- keys(),values(),entries()都是实例的方法
+
+```JavaScript
+    const arr = [1,2,3];
+    // keys()得到的是索引的可遍历对象，可以遍历索引值
+    console.log(arr.keys());
+    for(const key of arr.keys()){
+        console.log(key); // 0,1,2
+    }
+    // values()得到的是值的可遍历对象，可遍历出值
+    for(const value of arr.values()){
+        console.log(value);
+    }
+
+    // entries()得到的是索引+值组成的数组的可遍历对象
+    for(const entries of arr.keys()){
+        console.log(entries); //[0,1],[1,2],[2,3]
+    }
+
+    for(const [index,value] of arr.keys()){
+        console.log(index,value); //0,1 1,2 2,3
+    }
+```
+
+###### 4. 不同循环的使用
+
+- 1、for
+自由度高，对象数组都能遍历，“全能”的弊端就是不够简洁。
+- 2、for…in
+for(const keys in 对象){}：in 后面只能是对象，需说明js里万物皆对象，数组也是属性为数组下标的对象；keys 是属性；
+- 3、for…of
+for(const values of 数组){}：of后面只能是数组/类数组（有Symbol.iterator），需说明Object.entries等也属于数组；values是值；
+- 4、forEach
+arr.forEach(function(index,value,arr){},this指向)
+new Set().forEach(function(value,value,set){},this指向)
+new Map().forEach(function(key,value,map){},this指向)
+forEach不能使用break、continue
+
+- 总结使用场景：
+1、对象优先使用for…in
+2、数组优先使用for…of或forEach，根据需求选择
+3、Set、Map优先使用forEach
+
+##### 5. 原生可遍历
+
+###### 1. 什么是可遍历
+
+- 只要有Symbol.iterator方法，并且这个方法可以生成可遍历对象，就是可便利的
+- 只要可遍历，就可以使用for...of循环来统一遍历
+
+###### 2. 原生可遍历
+
+- 1. 数组
+- 2. 字符串
+- 3. Set
+- 4. Map
+- 5. arguments
+- 6. NodeList
+
+##### 6. 非原生可遍历
+
+- 1. 一般对象
+
+```JavaScript
+    const person = {sex:"male",age:18};
+    person[Symbol.iterator]() => {
+        let index = 0;
+        return{
+            next(){
+                index++;
+                if(index === 1){
+                    return {
+                        value: person.age,
+                        done: false
+                    }
+                } else if (index === 2){
+                    return {
+                        value:person.sex,
+                        done:false
+                    }
+                } else {
+                    return {
+                        done: true
+                    }
+                }
+            }
+        }
+    }
+
+    for(const item of person){
+        console.log(item);
+    }
+```
+
+- 2. 有length和索引属性的对象
+
+```JavaScript
+    const obj = {
+        0: 'ZhangSan',
+        1: 'male',
+        length: 2
+    }
+
+    obj[Symbol.iterator] = () => {
+        let index = 0;
+        return {
+            next() {
+                let value,done;
+                if(index < obj.length){
+                    value = obj[index];
+                    done = false;
+                } else {
+                    value = undefinedl
+                    done = true;
+                }
+            }
+
+            index++;
+        }
+    }
+
+    // 把数组的iterator方法继承
+    obj[Symbol.iterator] = Array.prototype[Symbol.iterator];
+```
+
+##### 7. 使用Iterator的场合
+
+###### 1. 数组的展开运算符
+
+```JavaScript
+    console.log(...[1,2,3]); 
+    console.log(...'str'); 
+    console.log(...new Set([1,2,3])); 
+```
+
+###### 2. 数组的解构赋值
+
+```JavaScript
+    const [a,b] = [1,2];
+    const [c,d] = 'hi';
+```
+
+###### 3. Set和Map的构造函数
+
+- new Set(iterator)
+- new Map(iterator)
+
 #### 12.4 ES的新增方法

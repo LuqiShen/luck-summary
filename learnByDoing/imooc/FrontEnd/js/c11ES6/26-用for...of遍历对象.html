@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const obj = {
+            "0": "xm",
+            "sex": "male",
+            length: 2
+        }
+
+        // obj[Symbol.iterator] = Array.prototype[Symbol.iterator];
+        obj[Symbol.iterator] = () => {
+            let index = 0;
+            return {
+                next() {
+                    index++;
+                    if (index === 1) {
+                        return {
+                            value: obj['0'],
+                            done: false
+                        }
+                    } else if (index === 2) {
+                        return {
+                            value: obj['sex'],
+                            done: false
+                        }
+                    } else if (index === 3) {
+                        return {
+                            value: obj.length,
+                            done: false
+                        }
+                    } else {
+                        return {
+                            done: true
+                        }
+                    }
+                }
+            }
+        }
+
+        for (const prop of obj) {
+            console.log(prop);
+        }
+    </script>
+</body>
+
+</html>

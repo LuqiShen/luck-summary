@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for...of方法</title>
+</head>
+
+<body>
+    <script>
+        const arr = ["i", "m", "o", "o", "c"]
+        for (const [k, v] of arr.entries()) {
+            if (v == "o") {
+                const tmp = v.toUpperCase();
+                arr[k] = tmp;
+                break;
+            }
+        }
+        console.log(arr)
+    </script>
+</body>
+
+</html>
