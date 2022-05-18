@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Object.entries()</title>
+</head>
+
+<body>
+    <div id="list">
+        <!--html结构参考如下：-->
+        <dl>
+            <dt>前端</dt>
+            <dd>Vue</dd>
+            <dd>Vue</dd>
+            <dd>Vue</dd>
+        </dl>
+    </div>
+    <script>
+        var classfies = {
+            "前端": ["Vue", "Angular", "React"],
+            "后端": ["Php", "Java", "Python"]
+        }
+        let htmlStr = "";
+        for (const [key,value] of Object.entries(classfies)) {
+            let dt = ['<dt>', key ,'</dt>']
+            htmlStr += dt.join("");
+            for (const option of value) {
+                let dl = ['<dd>', option ,'</dd>'];
+                htmlStr += dl.join("");
+            }
+        }
+        console.log(htmlStr);
+        const list = document.getElementById('list');
+        list.innerHTML += htmlStr;
+    </script>
+</body>
+
+</html>

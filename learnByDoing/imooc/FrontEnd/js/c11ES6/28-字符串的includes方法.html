@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串的includes方法</title>
+</head>
+
+<body>
+    <script>
+        // 3.应用
+        let url = 'https://www.imooc.com/course/list?';
+        let url1 = 'https://www.imooc.com/course/list?username=xm';
+        let url2 = 'https://www.imooc.com/course/list?username=xm&';
+
+        const addURLParam = (url, name, value) => {
+            if (url.substr(url.length - 1, 1) === '?') {
+                url = url.substr(0, url.length - 1);
+                console.log(url);
+            }
+            url += url.includes('?') ? '&' : '?';
+            url += `${name}=${value}`;
+            return url;
+        };
+        url = addURLParam(url, 'password', 'admin');
+        url1 = addURLParam(url1, 'password', 'admin');
+        url2 = addURLParam(url2, 'password', 'admin');
+        document.write(url, '<br>');
+        document.write(url1, '<br>');
+        document.write(url2, '<br>');
+    </script>
+</body>
+
+</html>

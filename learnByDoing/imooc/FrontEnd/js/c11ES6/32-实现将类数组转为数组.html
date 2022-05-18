@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>将类数组转为数组</title>
+</head>
+<body>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <script>
+        const nodeList = document.querySelectorAll('p');
+        function func1() {
+            return [...arguments];
+        }
+        console.log(func1('3',5,7));
+        console.log([...nodeList]);
+
+        function func2() {
+            return Array.from(arguments);
+        }
+        console.log(func2('3',5,7));
+        console.log(Array.from(nodeList));
+
+        function fun3() {
+            let arr = [];
+            for(const item of arguments){
+                arr.push(item);
+            }
+            return arr;
+        }
+        console.log(fun3('3',5,7));
+        let arr = [];
+        for(const item of nodeList){
+            arr.push(item);
+        }
+        console.log(arr);
+    </script>
+</body>
+</html>

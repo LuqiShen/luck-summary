@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>find()和findIndex()方法</title>
+</head>
+
+<body>
+    <script>
+        let data = [{
+                age: 12,
+                name: "张三"
+            },
+            {
+                age: 20,
+                name: "李四"
+            }
+        ]
+        // 1. 使用find()方法，找到数据data中，age为20的数据，并将其打印到控制台
+        console.log(data.find(person => person.age === 20));
+
+        // 2. 使用findIndex()方法，为name为“李四”的数据，添加一个hobby属性，属性值为“游泳”
+        data[data.findIndex(person => person.name === "李四")].hobby = "游泳";
+        console.log(data[data.findIndex(person => person.name === "李四")]);
+    </script>
+</body>
+
+</html>

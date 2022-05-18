@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>字符串的padStart和padEnd方法</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        const m = new Map([
+            ['apple', '10'],
+            ['strawberry', '5'],
+            ['Banana', '0']
+        ])
+
+        // 有一个map对象，在浏览器控制台打印对象中的内容时，为了方便看到效果，希望内容对齐显示
+
+        m.forEach((value, key) => {
+            const fruit = key;
+            const count = value;
+            console.log(fruit.padEnd(12,'-') + 'Count:' + count.padStart(3,0));
+        })
+
+    </script>
+</body>
+
+</html>

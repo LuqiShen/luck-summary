@@ -8394,7 +8394,6 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 
 ###### 5. Map的应用
 
-- 1. 
 
 ```JavaScript
     const [p1,p2,p3] = document.querySelectorAll('p');
@@ -8772,3 +8771,321 @@ forEach不能使用break、continue
 - new Map(iterator)
 
 #### 12.4 ES的新增方法
+
+##### 1. 字符串的新增方法
+
+###### 1. includes():是实例对象的方法，而非构造函数的方法
+
+- includes(): 判断字符串中是否包含某些字符
+
+```JavaScript
+
+// 1. 基本用法
+    console.log('abc'.includes('a')); // true
+    console.log('abc'.includes('ab')); // true
+
+// 2. 第二个参数
+// 表示开始搜索的位置，默认是0
+    console.log('abc'.includes('a',1));  // false
+
+// 3. 应用
+    let url = 'https://coding.imooc.com';
+    const addURLParam = (url,name,value) => {
+        url += url.includes('?') ? '&' : '?';
+        url += `${name}=${value}`;
+        return url;
+    }
+    url = addURLParam(url,'c','fe');
+
+```
+
+###### 2. padStart()和padEnd()
+
+- 补全字符串长度
+  - 当原字符串的长度，等于或大于最大长度，不会消减原字符串，字符串补全不生效，返回原字符串
+  - 用来补全的字符串与原字符串长度之和超过了最大长度，截去超出位的补全字符串，原字符串不动
+  - 如果省略第二个参数，默认使用空格补全长度
+
+```JavaScript
+    console.log('x'.padStart(5,'ab')); // 'ababx'
+    console.log('x'.padStart(4,'ab')); // 'abax'
+    console.log('x'.padEnd(5,'ab')); // 'xabab'
+    console.log('x'.padEnd(4,'ab')); // 'xaba'
+
+// 2. 注意事项
+    console.log('xxx'.padStart(2,'ab')); // 'xxx'
+
+    console.log('abc'.padStart(10,'0123456789')); // '0123456abc'
+
+    console.log('x'.padStart(4)); // '    x'
+
+// 3. 应用
+// 显示日期格式
+// 2020-10-10
+// 2020-10-1
+
+    console.log('10'.padStart(2,0));
+    console.log('1'.padStart(2,0));
+
+```
+
+###### 3. trimStart()和trimEnd()
+
+- 清除字符串的首或尾空格，中间的空格不会清除
+  - trimStart()/trimLeft()
+  - trimEnd()/trimRight()
+  - trim(): 同时除去首尾空格
+
+```JavaScript
+    const s = ' a b c ';
+    console.log(s.trimStart()); // "a b c "
+    console.log(s.trimEnd()); // "a b c"
+
+    console.log(s.trim())
+
+// 一般应用在表单提交
+    const usernameInput = document.getElementById('username');
+    const btn = document.getElementById('btn');
+
+    btn.addEventListener(
+        'click',
+        () => {
+            console.log(usernameInput.value);
+            // 验证
+            if(usernameInput.value.trim() !== ""){
+                // 可以提交
+            } else {
+                // 不能提交
+            }
+
+            // 手动提交
+        },
+        false
+    )
+```
+
+###### 4. replaceAll()
+
+- replaceAll()
+  - 格式：字符串.replace(str, newStr);
+  - 参数：str 匹配项 必需，str 替换后的字符串 必需
+  - 功能：匹配字符串，将全部匹配的字符串替换为规定的新字符串
+  - 返回值：替换后的新字符串
+  - 注：str 可以为 全局正则表达式
+
+```JavaScript
+    let str = "abcabc";
+    // 将字符串中的第一个a替换成*
+    console.log(str.replace("a","*"))
+    // 将字符串中的所有b替换成$
+    console.log(str.replaceAll("b","$"))
+    // 将匹配到的字符删除掉
+    console.log(str.replaceAll("c",""))
+```
+
+##### 2. 数组的新增方法
+
+###### 1. includes()
+
+- 判断数组中是否含有某个成员
+  - 基本遵循严格相等===，但includes认为NaN===NaN
+  - 第二个参数表示搜索的起始位置
+
+```JavaScript
+    console.log([1,2,3].includes('2')); // false
+    console.log([1,2,3].includes(2)); // true
+    console.log([1,2,NaN].includes(NaN)); // true
+
+
+    console.log([1,2,3].includes(2,2)); // false
+```
+
+- 应用
+
+```JavaScript
+    //去重
+    const arr = [];
+    for(const item of [1,2,1]){
+        if(item.includes(item)){
+            arr.push(item);
+        }
+    }
+    console.log(arr);
+```
+
+###### 2. Array.from()
+
+- 将其他的数据类型转为数组
+- 可以通过Array.from()转成数组的
+  - 数组
+  - 字符串
+  - Set
+  - Map
+  - NodeList
+  - arguments
+  - 拥有length属性的任意对象
+    - 1、该类数组对象必须具有length属性，用于指定数组的长度。如果没有length属性，那么转换后的数组是一个空数组
+    - 2、该类数组对象的属性名必须为数值型或字符串型的数字
+    - 3、该类数组对象的属性名可以加引号，也可以不加引号
+- 第二个参数
+  - 作用类似于数组的map方法，用来对每个元素进行处理，将处理后的值放入返回的数组
+- 第三个参数
+  - 修改this指向
+
+```JavaScript
+    console.log(Array.from('str'));
+
+    const obj = {
+        '0': 'a',
+        '1': 'b'.
+        'name': 'ZhangSan',
+        length: 3
+    }
+
+    console.log(Array.from(obj)); // [a,b,undefined]
+
+    console.log([1,2].map(
+        value => {
+            return value*2;
+        }
+    ))
+    console.log(Array.from('12',value => value*2))
+    console.log(Array.from('12').map(value => value*2))
+
+    Array.from('12',function(){
+        console.log(this);
+    }, document)
+```
+
+###### 3. find()和findIndex()
+
+- find(function(){},document):找到满足条件的一个立即返回
+- findIndex(function(){},document)：找到满足条件的一个，立即返回索引
+
+```JavaScript
+    console.log(
+        [1,5,10,15].find((value,index,arr) => {
+            // console.log(value,index,arr);
+            return value > 9; // 10
+        })
+    )
+
+    console.log(
+        [1,5,10,15].findIndex((value,index,arr) => {
+            // console.log(value,index,arr);
+            return value > 9;
+        })
+    )
+```
+
+- 应用
+
+```JavaScript
+    const students = {
+        {
+            name: '张三',
+            sex: '女',
+            age: 22
+        },
+        {
+            name: '李四',
+            sex: '男',
+            age: 32
+        },
+        {
+            name: '王五',
+            sex: '男',
+            age: 22
+        }
+    }
+```
+
+##### 3. 对象的新增方法
+
+###### 1. Object.assign()
+
+- Object.assign(目标对象，源对象)：用来合并对象
+  - 直接合并到了第一个参数中，返回的就是合并后的对象
+  - 可以合并多个对象
+
+```JavaScript
+    const apple = {
+        color: '红色',
+        shape: '圆形',
+        taste: '甜'
+    };
+    const pen = {
+        color: '黑色',
+        shape: '圆柱形',
+        use: '写字'
+    }
+
+    console.log(Object.assign(apple,pen) ===  apple);  // true;属性相同后边的覆盖前边的
+    console.log({...apple,...pen} ===  apple); // false
+
+    console.log(Object.assign({},apple,pen));
+```
+
+- 注意事项：
+  - 基本数据类型作为源对象：与对象的展开类似，先转换成对象，再合并
+  - 同名属性的替换，后面的直接覆盖前面的
+
+```JavaScript
+    console.log(Object.assign({},undefined));  // {}
+    console.log(Object.assign({},null));  // {}
+    console.log(Object.assign({},true));  // {}
+    console.log(Object.assign({},1));  // {}
+    console.log(Object.assign({},'str'));  // {}
+```
+
+- 应用
+
+```JavaScript
+    // 合并默认参数和用户参数
+    const logUser = userOptions => {
+        const DEFAULTS = {
+            username: 'ZhangSan',
+            age: 0,
+            sex: 'male'
+        };
+        const options = Objects.assign({},DEFAULTS,userOptions);
+        console.log(options);
+    }
+```
+
+###### 2. Object.keys()/Object.values()/Object.entries()
+
+- 这三个方法并不保证顺序
+
+- Object.keys(): 获取键
+- Object.values(): 获取值
+- Object.entries(): 获取键值
+- 数组的keys(),values(),entries()等方法是实例方法，返回的都是Iterator
+- 对象的Object.keys(),Object.values(),Object.entries()等方法是构造函数方法，返回的是数组
+
+```JavaScript
+    const person = {
+        name: 'ZhangSan',
+        age: 18
+    };
+
+    console.log(Object.keys(person)); // ['name','age']
+    console.log(Object.values(person)); // ['ZhangSan',18]
+    console.log(Object.entries(person)); // [[],[]]
+
+    // 使用for...of循环遍历对象
+    const person = {
+        name: 'ZhangSan',
+        age: 18
+    };
+
+    for(const key of Object.keys(person)){
+        console.log(key);
+    }
+    for(const value of Object.valuess(person)){
+        console.log(value);
+    }
+    for(const [key,value] of Object.entries(person)){
+        console.log(key,value);
+    }
+```
