@@ -6752,18 +6752,240 @@ getElementByClassName()和getElementByTagName()方法可以动态获取元素，
 - 类: (一类)只描述对象拥有的哪些属性和方法, 并不具体指明属性的值
 - 实例: (一只)具体的对象
 
-```JavaScript
-```
 
 #### 4. 原型和原型链
 
 ##### 4.1 prototype和原型链查找
 
+###### 1. 任何函数都有prototype属性
+
+  - 函数-> prototype -> 函数.prototype
+  - 函数.prototype-> constructor -> 函数
+
+```JavaScript
+    function sum(a,b){
+        return a+b;
+    }
+
+    console.log(sum.prototype);
+    console.log(typeof sum.prototype);
+    console.log(sum.prototype.constuctor === sum);
+```
+
+###### 2. 什么是prototype
+
+- 普通函数的prototype属性没有任何用处,而构造函数的prototype属性非常有用
+
+###### 3. 构造函数的prototype属性是它的实例的原型
+
+```JavaScript
+    function People(name, age, sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    // 实例化
+    var xiaoming = new People('小明',12,'男');
+    // 构造函数的prototype是实例的原型
+    console.log(xiaoming.__proto__ === People.prototype);
+```
+
+###### 4. 原型链查找
+
+- 实例可以打点访问它的原型的属性和方法,这被称为"原型链查找"
+
+###### 5. 原型链的遮蔽效应
+
+```JavaScript
+    function People(name,age,sex){
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    // 往原型上添加nationnality属性
+    People.prototype.nationality = '中国';
+    var xiaoming = new People('小明',12,'男');
+    console.log(xiaoming.nationality); // 中国
+
+    // JavaScript在xiaoming实例的__proto__属性中查找nationality
+    console.log(xiaoming); // {name; "小明", age: 12, sex: "男" , __proto__}
+
+    // 原型链的遮蔽效应
+    var tom = new People('Tom',10,'男');
+    console.log(tom.nationality); // 中国
+    tom.nationality = '美国';
+    console.log(tom.nationality); // 美国
+```
+
+###### 6. hasOwnProperty()方法
+
+- 检查对象是否真正"自己拥有"某种属性或者方法
+
+```JavaScript
+    xiaoming.hasOwnProperty('name'); // true
+    xiaoming.hasOwnProperty('age'); // true
+    xiaoming.hasOwnProperty('sex'); // true
+    xiaoming.hasOwnProperty('nationality'); // false
+```
+
+###### 7. in操作符
+
+- 检查某个属性或方法是否可以被对象访问,不能检查自己是否是自己的属性或方法
+
+```JavaScript
+    'name' in xiaoming; // true
+    'age' in xiaoming; // true
+    'sex' in xiaoming; // true
+    'nationality' in xiaoming; // true
+```
+
 ##### 4.2 在prototype上添加方法
+
+###### 1. 在实例上添加方法
+
+- 在实例上添加方法,每个实例和每个实例的方法函数都是内存中不同的函数,造成了内存的浪费
+
+```JavaScript
+    function People(){
+        this.sayHello = function(){
+
+        }
+    }
+
+    var xiaoming = new People();
+    var xiaohong = new People();
+    var xiaogang = new People();
+
+    console.log(xiaoming.sayHello === xiaohong.sayHello); // false
+```
+
+###### 2. 在prototype上添加方法
+
+- 把方法写在原型上,并不会引起方法调用时的紊乱
+
+```JavaScript
+    function People(name,age,sex){
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+
+    People.prototype.sayHello = function(){
+        console.log('你好,我是' + this.name + '我今年' + this.age + '岁了');
+    }
+
+    People.prototype.growup = function(){
+        this.age++;
+    }
+
+    var xiaoming = new People('小明', 12, '男');
+    var xiaohong = new People('小红', 11, '女');
+    console.log(xiaoming.sayHello === xiaohong.sayHello); // true
+
+    xiaoming.sayHello();
+    xiaohong.sayHello()
+```
 
 ##### 4.3 原型链的终点
 
+- Object -> Object.prototype(有hasOwnProperty方法和toString方法)
+
+```JavaScript
+    function People(name, age, sex){
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    var xiaoming = new People();
+
+    console.log(xiaoming.__proto__.__proto__ === Object.prototype); // true
+
+    console.log(Object.prototype.__proto__);
+
+    console.log(Object.prototype.hasOwnProperty()); // true
+    console.log(Object.prototype.toString()); // true
+```
+
+- 关于数组的原型链
+
+```JavaScript
+    // 任何数组.__proto__ == Array.prototype
+
+    var arr = [1,2,3,4];
+    console.log(arr.__proto__ === Array.prototype); // true
+    console.log(arr.__proto__.__proto__ === Object.prototype); // true
+    console.log(Array.prototype.hasOwnProperty('push')); // true
+    console.log(Array.prototype.hasOwnProperty('slice')); // true
+```
+
 ##### 4.4 继承
+
+- 通过原型链实现继承
+  - 子类的prototype = new 父类实例()
+  - 子类可以重写(复写)父类的同名方法
+
+```JavaScript
+    // 父类， 人类
+        function Peopel(name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+
+        People.prototype.sayHello = function () {
+            console.log('你好，我是' + this.name + '，我今年' + this.age + '岁了');
+        }
+
+        People.prototype.sleep = function () {
+            console.log(this.name + '开始睡觉,zzzz');
+        }
+
+        // 子类，学生类
+
+        function Student(name, age, sex, school, studentNumber) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            this.school = school;
+            this.studentNumber = studentNumber;
+        }
+
+        // 关键语句，实现继承
+        Student.prototype = new People();
+
+        Student.prototype.study = function () {
+            console.log(this.name + '正在学习，加油！');
+        }
+        
+        Student.prototype.sayHello = function () {
+            console.log('敬礼！我是' + this.name);
+        }
+
+        Student.prototype.exam = function () {
+            console.log(this.name + '正在考试，加油！');
+        }
+
+        // 实例化学生
+        var hanmeimei = new Student('韩梅梅', 12, '女', '小学', 11011);
+
+        hanmeimei.study();
+        hanmeimei.sayHello();
+
+        // 实例化人类
+        var laozhang = new People('老张', 66, '男');
+
+        laozhang.sayHello();
+
+        function Test(name) {};
+        Test.name = 'Tom';
+        Test.prototype.name = "John";
+        var result = (new Test('JK')).name;
+        console.log(result);
+```
 
 #### 5. 上升到面向对象
 
@@ -9089,3 +9311,41 @@ forEach不能使用break、continue
         console.log(key,value);
     }
 ```
+
+### 第12章 ES6的Promise和Class类
+
+#### 12.1 Promise
+
+##### 1. 初识Promise
+
+###### 1. Promise是什么
+
+###### 2. Promise的基本用法
+
+##### 2. Promise的实例方法
+
+###### 1. then()
+
+###### 2. catch()
+
+###### 3. finally()
+
+##### 3. Promise的构造函数方法
+
+###### 1. Promise.resolve()
+
+###### 2. Promise.reject()
+
+###### 3. Promise.all()
+
+###### 4. Promise.race()
+
+###### 5. Promise.allSettled()
+
+##### 4. Promise的注意事项和应用
+
+###### 1. Promise的注意事项
+
+###### 2. Promise的应用
+
+#### 12.2 Class
