@@ -9320,32 +9320,624 @@ forEach不能使用break、continue
 
 ###### 1. Promise是什么
 
+- 1. Promise是一种异步操作的解决方案
+  - 用来解决回调函数层层嵌套(回调地狱)的问题
+- 2. 回调函数
+
+```JavaScript
+    // 回调函数
+    document.addEventListener(
+        'click',
+        () => {
+            console.log('这里是异步的');
+        },
+        false
+    )
+
+    console.log('这里是同步的');
+```
+
 ###### 2. Promise的基本用法
+
+- 1. 实例化构造函数生成实例对象
+
+```JavaScript
+    console.log(Promise); // f Promise()
+
+// Promise解决的不是回调函数,而是回调地狱
+    const p = new Promise(() => {});
+```
+
+- 2. Promise的状态
+  - 一开始是pending
+  - 执行resolve,变成fulfilled(resolve),已成功
+  - 执行reject,编程rejected,已失败
+  - Promise的状态一旦变化就不会再改变了
+
+```JavaScript
+    const p = new Promise((resolve, reject) => {
+
+    });
+    console.log(p); // Promise{<pending>}
+
+    const p = new Promise((resolve, reject) => {
+        // pending -> fulfilled
+        resole();
+    });
+```
+
+- 3. then方法
+
+```JavaScript
+    const p = new Promise((resolve, reject) => {
+        // pending -> fulfilled
+        resole({{username:"ZhangSan"}});
+    });
+
+    p.then(
+        (data) => {
+            console.log('success ',data);
+        },
+        () => {
+            console.log('error');
+        }
+    )
+```
+
+- 4. resolve和reject函数的参数
+
+```JavaScript
+    const p = new Promise((resolve, reject) => {
+        // // pending -> fulfilled
+        // resole({{username:"ZhangSan"}});
+        reject(new Error('error'))
+    });
+
+    p.then(
+        (data) => {
+            console.log('success ',data);
+        },
+        () => {
+            console.log('error');
+        }
+    )
+```
 
 ##### 2. Promise的实例方法
 
 ###### 1. then()
 
+- 1. 什么时候执行
+  - pending -> fulfuilled时,执行then的第一个回调函数
+  - pending -> rejected时,执行then的第二个回调函数
+- 2. 执行后的返回
+  - 处理两个状态,一个成功态一个失败态,一般专门处理成功态
+  - then方法执行后,返回一个新的Promise对象
+  - 默认返回的时成功状态的Promise
+
+    ```JavaScript
+        const p1 = new Promise((resolve,reject) => {
+            resolve();
+        })
+        const p2 = p1.then(
+            () => {},
+            () => {}
+        )
+        
+        console.log(p1, p2, p1 === p2); //  Promise,Promise,false
+    ```
+
+    ```JavaScript
+        const p = new Promise((resolve,reject) => {
+            reject();
+        })
+        p.then(
+            () => {
+                console.log('success');
+            },
+            () => {
+                // 输出success2由这里决定
+                console.log('err')
+                
+                // 没有写返回语句的函数默认存在
+                // return undefined;
+                // 但是在then的回调函数中,return后面的东西,会用Promise包装一下
+                // 等价于用Promise的resolve包装的undefined,默认使用resolve
+                /*
+                return new Promise(resolve => {
+                    resolve(undefined);
+                })
+                */
+               // 返回reject,自己手写
+               /*
+               return new Promise((resolve, reject) => {
+                   reject('reason');
+               })
+               */
+            }
+        ).then(
+            () => {
+                console.log('success2');
+            },
+            () => {
+                console.log('err2');
+            }
+        )
+        // err success2
+    ```
+
+- 3. then方法返回的Promise对象的状态改变
+- 4. 向后传值
+- 5. 使用Promise解决回调地狱
+
+```JavaScript
+    const move = () => {}
+    const boxEl = document.getElementById('box');
+
+    const movePromise = (el, point) => {
+        return new Promise((resolve) => {
+            move(el,point, () => {
+                resolve();
+            })
+        })
+    }
+    document.addEventListner(
+        'click',
+        () => {
+            movePromise(boxEl,{ x: 150})
+            .then(() => {
+        /*
+        如果不加 return，就会等价于 return undefined，由于Promise是异步的，
+        所以不会等待 movePromise 执行完再判断 Promise的状态，而是直接运行 return undefined，
+        导致 then() 认为是默认成功状态，直接就执行下面的代码了
+        加了 return，then() 才不会默认成功状态，而是去判断return 后面的Promiss对象是成功还是失败，
+        再根据该状态往下执行
+        */
+                return movePromise(boxEl, {x:150,y:150});
+            }).then(() => {
+                return movePromise(boxEl, {y:150});
+            }).then(() => {
+                return movePromise(boxEl, {x:0,y:0});
+            })
+        },
+        false
+    );
+```
+
 ###### 2. catch()
 
+- 1. 有什么用
+  - catch专门处理rejected状态
+  - catch本质上是then的特例
+- 2.基本用法
+  - catch()可以捕获它前面的错误
+  - 一般总是建议,Promise对象后面要跟catch方法,这样可以处理Promise内部发生的错误
+
+```JavaScript
+    new Promise((resolve,reject) => {
+        reject('reson')
+    })
+    .then(data => {
+        console.log(data); // 没有第二个回调,因此被跳过,不执行
+    })
+    //.then(null,err => {
+    //   console.log(err);
+    //})
+    .catch(err => {
+        // 捕获前边的错误
+        console.log(err);
+        // 抛出错误,需要在后边被捕获
+        throw new Erro('reason');
+    })
+    .catch(err => {
+        // 捕获
+        console.log(err);
+    })
+```
+
 ###### 3. finally()
+
+- 1. 什么时候执行
+  - 当Promise状态发生变化时,不论如何变化都会执行,不变化不执行
+- 2. 本质
+  - finally方法本质上时then方法的特例
+
+```JavaScript
+    // 当Promise状态发生变化时,不论如何变化都会执行,不变化不执行
+    new Promise((resolve, reject) => {
+        // resolve(123);
+        reject('reason');
+    })
+    .finally(data => {
+        console.log(data);
+    })
+    .catch(err => {})
+
+    // 等价于
+    new Promise((resolve, reject) => {
+        // resolve(123);
+        reject('reason');
+    })
+    .then(result => {
+        return result;
+    }, err => {
+        // throw err;
+        return new Promise((resolve, reject) => {
+            reject(err);
+        });
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+```
 
 ##### 3. Promise的构造函数方法
 
 ###### 1. Promise.resolve()
 
+- 本质:简写
+- 参数
+  - 1. 一般参数/为空: 直接返回一个resolved状态的Promise对象
+  - 2. Promise作为参数: 直接返回这个Promise对象
+  - 3. 具有then方法的对象: 如果参数是一个具有then方法的对象，Promise.resolve方法会将这个对象转为 Promise 对象，然后就立即执行thenable对象的then方法
+- 在then方法中的应用
+
+```JavaScript
+    // Promise.resolve()
+    new Promise(resolve => resolve('foo'));
+    // 简写
+    Promise.resolve('foo');
+
+    // 参数
+    // 一般参数
+    Promise.resolve('foo').then(data => {
+        console.log(data);
+    })
+
+    // Promise作为参数
+    // 当Promise.resolve()接收的是Promise对象时,直接返回这个Promise对象,什么都不做
+    const p1 = new Promise(resolve => {
+        setTimeout(resolve,1000,'我执行了');
+    })
+
+    Promise.resolve(p1).then(data => {
+        console.log(data);
+    })
+    // 等价于
+    p1.then(data => {
+        console.log(data);
+    })
+    console.log(Promise.resolve(p1) === p1)
+
+    // 当resolve接受的是Promise对象时,后面的then会根据传递的Promise对象的状态变化决定执行哪一个回调
+    new Promise(resolve => resolve(p1).then(data => {
+        console.log(data);
+    }))
+
+    // 具有then方法的对象
+    //Promise.resolve(value)方法返回一个以给定值解析后的Promise 对象。
+    //如果参数是一个具有then方法的对象，Promise.resolve方法会将这个对象转为 Promise 对象，然后就立即执行thenable对象的then方法。
+    const thenable = {
+        then(){
+            console.log('then');
+        }
+    };
+    Promise.resolve(thenable).then(data => console.log(data), err => console.log(err))
+```
+
 ###### 2. Promise.reject()
+
+- 本质
+- 参数
+- 在then方法中的应用
+
+```JavaScript
+    // 失败装填Promise的简写形式
+    new Promise((resolve,reject) => {
+        reject('reason');
+    });
+    // 等价于
+    Promise.reject('reason');
+
+    // 参数
+    // 不管什么参数,都会原封不动的向后传递,作为后续方法的参数
+    const p1 = new Promise(resolve, {
+        setTimeout(resolve,1000,'我执行了');
+    });
+    Promise.reject(p1).catch(err => console.log(err));
+
+    new Promise((resolve,reject) => {
+        resolve(123);
+    }).then(data => {
+        // console.log(data);
+        return Promise.reject('reason');
+    })
+```
 
 ###### 3. Promise.all()
 
+- 1. 有什么用
+  - Promise.all()关注多个Promise对象的状态变化
+  - 传入多个Promise实例,包装成一个新的Promise实例返回
+
+- 2. 基本用法
+  - Promise.all()的状态的变化,与所有传入的Promise实例对象状态有关
+  - 所有状态都变成resolved,最终状态才会变成resolved
+  - 只要有一个编程rejected,最终状态就变成rejected
+
+```JavaScript
+    const delay = ms => {
+        return new Promise(resolve => {
+            setTimeout(resolve,ms);
+        })
+    }
+
+    const p1 = delay(1000).then(() => {
+        console.log('p1完成了');
+
+        return 'p1';
+    })
+
+    const p2 = delay(2000).then(() => {
+        console.log('p1完成了');
+
+        return 'p2';
+    })
+
+    const p = Promise.all([p1,p2]);
+    p.then(data => {
+        console.log(data);
+    }, err => {
+        console.log(err);
+    })
+```
+
 ###### 4. Promise.race()
 
+- 1. 有什么用
+  - Promise.race()的状态取决于第一个完成的Promise实例对象
+    - 如果第一个完成的成功了,那最终的就成功;如果第一个完成失败了,那最终就失败了
+
+- 2. 基本用法
+
+```JavaScript
+    const delay = ms => {
+        return new Promise(resolve => {
+            setTimeout(resolve,ms);
+        })
+    }
+
+    const p1 = delay(1000).then(() => {
+        console.log('p1完成了');
+
+        return 'p1';
+    })
+
+    const p2 = delay(2000).then(() => {
+        console.log('p1完成了');
+
+        return 'p2';
+    })
+
+    const racePromise = Promise.race([p1,p2]);
+    racePromise.then(data => {
+        console.log(data)
+    },err => {
+        console.log(err);
+    })
+```
+
 ###### 5. Promise.allSettled()
+
+- 1. 有什么用
+  - Promise.allSettled()的状态与传入的Promise状态无关
+  - 永远都是成功的
+  - 它只会记下各个Promise的表现
+- 2. 基本用法
+
+```JavaScript
+    const delay = ms => {
+        return new Promise(resolve => {
+            setTimeout(resolve,ms);
+        })
+    }
+
+    const p1 = delay(1000).then(() => {
+        console.log('p1完成了');
+
+        return 'p1';
+    })
+
+    const p2 = delay(2000).then(() => {
+        console.log('p1完成了');
+
+        return 'p2';
+    })
+
+    const allSettledPromise = Promise.allSettled([p1,p2]);
+    allSettledPromise.then(data => {
+        console.log(data)
+    })
+```
+
+###### 6. Promise.any()
+
+- 1. 有什么用
+  - 参数中的Promise都失败最终才会失败
+  - 参数中只要有一个为成功状态，那么最终就是成功，返回是第一个成功的值，后面就不管了
+- 2. 基本用法
+  - 实际应用：一次性加载多张图片时，哪一张先加载出来就显示哪一张，此时就可以使用Promise.any()方法
+
+```JavaScript
+        // const p1 = new Promise((resolve, reject) => {
+        //     reject()
+        // });
+        // // 失败
+        // const p2 = new Promise((resolve, reject) => {
+        //     reject()
+        // });
+        // // 成功
+        // const p3 = new Promise(resolve => {
+        //     resolve()
+        // });
+        // const res = Promise.any([p1, p3, p2])
+        // console.log(res) // 返回成功状态的Promise
+
+        // // 失败
+        // const p1 = new Promise((resolve, reject) => {
+        //     reject()
+        // });
+        // // 失败
+        // const p2 = new Promise((resolve, reject) => {
+        //     reject()
+        // });
+        // // 失败
+        // const p3 = new Promise((resolve, reject) => {
+        //     reject()
+        // });
+        // const res = Promise.any([p1, p3, p2])
+        // console.log(res) // 返回失败状态的Promise
+
+        // 注意：Promise.any（）用于返回第一个成功的 promise，只要有一个成功就会终止，
+        // 不会等待其他的 Promise 全部完成
+        const p1 = new Promise((resolve, reject) => {
+            reject("失败");
+        });
+
+        const p2 = new Promise((resolve, reject) => {
+            setTimeout(resolve, 500, "最后完成");
+        });
+
+        const p3 = new Promise((resolve, reject) => {
+            setTimeout(resolve, 100, "第一个完成");
+        });
+
+        const res = Promise.any([p1, p2, p3])
+        res.then((value) => {
+            console.log(value);  // 第一个完成
+        });
+```
 
 ##### 4. Promise的注意事项和应用
 
 ###### 1. Promise的注意事项
 
+- 1. resolve或reject执行后的代码
+  - 推荐在调用resolve或reject函数的时候加上return,不再执行它们后面的代码
+
+```JavaScript
+    new Promise((resolve,reject) => {
+        resolve(123);
+        reject('reason');
+    })
+```
+
+- 2. Promise.all()/Promise.race()/Promise.allSettled()的参数问题
+  - 参数如果不是Promise数组,会将不是Promise的数组元素转变成Promise对象
+  - 任何可遍历的都可以作为参数
+
+```JavaScript
+    Promise.all([1,2,3]).then(datas => {
+        console.log(datas);
+    })
+    // 等价于
+    Promise.all([
+        Promise.resolve(1),
+        Promise.resolve(2),
+        Promise.resolve(3)
+    ]).then(datas => {
+        console.log(datas);
+    })
+
+    // 不只是数组,任何可遍历的都可以作为参数
+    // 数组,字符串,Set,Map,NodeList,arguments
+```
+
+- 3. Promise.all()/Promise.race()/Promise.allSettled()的错误处理
+
+```JavaScript
+// 各自处理
+    const delay = ms => {
+        return new Promise(resolve => {
+            setTimeout(resolve,ms);
+        })
+    }
+
+    const p1 = delay(1000).then(() => {
+        console.log('p1完成了');
+
+        return 'p1';
+    })
+    .catch(err => {
+        console.log('p1',err);
+    })
+
+    const p2 = delay(2000).then(() => {
+        console.log('p1完成了');
+
+        return 'p2';
+    })
+    .catch(err => {
+        console.log('p2',err);
+    })
+
+// 统一处理
+    const delay = ms => {
+        return new Promise(resolve => {
+            setTimeout(resolve,ms);
+        })
+    }
+
+    const p1 = delay(1000).then(() => {
+        console.log('p1完成了');
+
+        return 'p1';
+    })
+    
+    const p2 = delay(2000).then(() => {
+        console.log('p1完成了');
+
+        return 'p2';
+    })
+    
+    const allPromise = Promise.all([p1,p2]);
+    allPromise.then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+```
+
 ###### 2. Promise的应用
+
+- 异步加载图片
+
+```JavaScript
+    const loadImgAsync = url => {
+        return new Promise((resolve,reject) => {
+            const img = new Image();
+            img.onload = () => {
+                resolve(img);
+            }
+
+            img.onerror = () => {
+                reject(new Error(`Could not load image at ${url}`))
+            }
+
+            img.src = url;
+        })
+    }
+
+    const imgDOM = document.getElementById('img');
+    loadImageAsync().then(img => {
+        imgDOM.src = img.src;
+    }).catch(err => {
+        console.log(err);
+    })
+```
 
 #### 12.2 Class

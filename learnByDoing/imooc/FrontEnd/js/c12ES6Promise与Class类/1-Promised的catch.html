@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Promise构造函数是同步执行的，then中的函数才是异步执行的，所以在创建Promise实例时会立即输出1。
+
+        // Promise实例调用then方法，接收resolve中传入的一个值，所以接着输出2。
+
+        // 由于第一个then返回的promise没有抛出错误，后面的catch不会运行，继续往下链式调用，执行后面的then方法，打印了上一个then返回的值3。
+        const p = new Promise((resolve, reject) => {
+            console.log(1);
+            resolve(2);
+        })
+        p.then((res) => {
+                console.log(res);
+                return 3;
+            })
+            .catch(err => 4)
+            .then(res => console.log(res));
+    </script>
+</body>
+
+</html>
