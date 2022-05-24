@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>super的指向</title>
+</head>
+
+<body>
+    <script>
+/** super关键字作为对象使用时，在子类实例方法中，指向父类的原型对象；在子类静态方法中，指向父类。
+
+ 1、子类静态方法cSay中，super作为对象时，指向父类Parent。
+
+ 调用父类的方法pSay时，该方法内部的this指向子类Child, 无法访问到实例属性username，结果为undefined。
+
+ 2、子类实例方法cShow中super作为对象使用，指向父类原型,即：Parent.prototype，
+
+ 调用父类的方法pShow时，该方法内部的this指向子类实例对象，可以访问实例对象上的color属性，结果为red。
+
+ 3、super.color这句代码相当于访问父类原型上的color属性，不可以访问实例属性color，由于父类原型上并没有color属性，所以结果为undefined。
+
+ 代码最终的输出结果为undefined red undefined
+
+ **/
+        class Parent {
+            color = "red";
+            constructor(username) {
+                this.username = username;
+            }
+
+            static pSay() {
+                console.log(this.username);
+            }
+            pShow() {
+                console.log(this.color);
+            }
+        }
+
+        class Child extends Parent {
+            constructor(username) {
+                super(username);
+            }
+
+            static cSay() {
+                super.pSay();
+                console.log(super.this);
+            }
+
+            cShow() {
+                super.pShow();
+                console.log(super.color);
+            }
+        }
+
+        const c1 = new Child('c1');
+        Child.cSay();
+        c1.cShow();
+    </script>
+</body>
+
+</html>

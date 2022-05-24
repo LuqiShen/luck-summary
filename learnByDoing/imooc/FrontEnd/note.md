@@ -9940,4 +9940,486 @@ forEach不能使用break、continue
     })
 ```
 
+##### 5. async/await
+
 #### 12.2 Class
+
+##### 1. 初识Class
+
+###### 1. Class是什么
+
+```JavaScript
+    // 类名大写,不加括号和分号
+    class Person {
+        // 构造方法,实例化时执行的方法
+        // 一般在构造方法中定义属性
+        constructor(name,age){
+            // console.log('实例化时执行构造方法');
+            this.name = name;
+            this.age = age;
+            }
+        // 各个实例对象共享的方法
+        speak(){
+            console.log('speak')
+        }
+    }
+
+    
+
+    const zs = new Person('ZhangSan',18);
+    const ls = new Person('LiSi',28);
+    console.log(typeof Person); // function
+    console.log(Person.prototype.speak); // f speak(){ ... }
+
+
+    // Class与构造函数
+    class Person {
+        constructor(name,age){
+            this.name = name;
+            this.age = age;
+        }
+    
+        speak(){
+            console.log('speak')
+        }       
+    }
+
+```
+
+###### 2. Class的两种定义形式
+
+- 声明形式
+
+```JavaScript
+    class Person{
+        constructor(){
+
+        }
+        speak(){
+
+        }
+    }
+```
+
+- 表达式形式
+
+```JavaScript
+    // const Person = function(){};
+    const Person = class {
+        constructor(){
+
+        }
+        speak(){
+
+        }
+    }
+
+    (function(){
+        console.log('func');
+    })();
+
+    new (class{
+        constructor(){
+            console.log('constructor');
+        }
+    })();
+    // 相当于
+    new Person();
+```
+
+##### 2. Class的属性和方法
+
+###### 1. 实例属性,静态方法和静态属性
+
+- 实例属性
+  - 方法就是值为函数的特殊属性
+
+```JavaScript
+    class Person{
+        // 在这里添加实例属性,不需要添加this\
+        // 默认值
+        age = 18;
+        sex = 'male';
+
+        getSex = function(){
+            return this.sex;
+        }
+
+        constructor(name) {
+            // 在任何方法中添加属性,需要用this添加
+            this.name = name;
+        }
+    }
+
+    const p = new Person('ZS');
+    console.log(p.name);
+    console.log(p.age);
+```
+
+- 静态方法
+  - 类的方法
+
+```JavaScript
+    class Person {
+        constructor(name,age){
+            this.name = name;
+            this.age = age;
+        }
+    
+        speak(){
+            console.log('speak');
+            console.log(this);
+        }
+        
+        static speak(){
+            console.log('人类可以说话');
+            // this指向类
+            console.log(this);
+        }
+    }    
+
+    const p = new Person('ZS',18);
+    p.speak(); // speak
+    
+    Person.speak(); // 人类可以说话
+
+    // 或者可以,不推荐
+    // Person.speak = function() {
+    //     console.log('人类可以说话');
+    //     console.log(this);
+    // }
+```
+
+- 静态属性
+  - 类的属性
+
+```JavaScript
+    class Person {
+        constructor(name,age){
+            this.name = name;
+            this.age = age;
+        }
+    
+        speak(){
+            console.log('speak');
+            console.log(this);
+        }
+        
+        // 目前只是提案,有兼容性问题
+        // static version = 1.0;
+        // 可以直接写成方法
+        static getVersion(){
+            return '1.0';
+        }
+    }
+
+    Person.version = "1.0";
+```
+
+###### 2. 私有属性和方法
+
+- 为什么需要私有属性和方法
+
+```JavaScript
+    class Person {
+        constructor(name){
+            this.name = name;
+        }
+    
+        speak(){
+            console.log('speak');
+            console.log(this);
+        }
+
+        getName(){
+            return this.name;
+        }
+    }
+
+    const p = new Person('ZS');
+    // 用getName函数防止name属性被修改
+    console.log(p.name);
+    p.speak();
+```
+
+- 模拟私有属性和方法
+  - 1. _下划线开头表示私有
+
+    ```JavaScript
+        class Person {
+            constructor(name){
+                this._name = name;
+            }
+
+            speak(){
+                console.log('speak');
+                console.log(this);
+            }
+
+            getName(){
+                return this._name;
+            }
+        }
+
+        const p = new Person('ZS');
+        console.log(p.getName());
+    ```
+
+  - 2. 将私有属性和方法移出类
+
+    ```JavaScript
+        (function(){
+            let name = "";
+            class Person {
+                constructor(username){
+                    // 不将name暴露出去,包括this
+                    name = username;
+                }
+
+                speak(){
+                    console.log('speak');
+                    console.log(this);
+                }
+
+                getName(){
+                    return name;
+                }
+            }
+            window.Person = Person;
+        })();
+
+        (fucntion(){
+            const p = new Person('ZS');
+            console.log(p.getName());
+        })()
+    ```
+
+##### 3. Class的继承
+
+###### 1. 关键字extends
+
+- 子类继承父类
+
+```JavaScript
+    class Person{
+        constructor(name, sex){
+            this.name = name;
+            this.sex = sex;
+
+            this.say = function(){
+                console.log('say');
+            }
+        }
+
+        speak(){
+            console.log('speak');
+        }
+
+        static speak(){
+            console.log('static speak');
+        }
+    }
+    Person.version = '1.0';
+
+    class Programmer extends Person{
+        constructor(name,sex){
+            super(name,sex);
+        }
+    }
+
+    const zs = new Programmer('zs','男');
+    console.log(zs.name);
+    console.log(zs.sex);
+
+    Programmer.speak();
+    console.log(Person.version);
+```
+
+- 改写继承的属性或方法
+  - 子类重写(同名覆盖)
+
+```JavaScript
+    class Person{
+        constructor(name, sex){
+            this.name = name;
+            this.sex = sex;
+
+            this.say = function(){
+                console.log('say');
+            }
+        }
+
+        speak(){
+            console.log('speak');
+        }
+
+        static speak(){
+            console.log('static speak');
+        }
+    }
+    Person.version = '1.0';
+
+    class Programmer extends Person{
+        constructor(name,sex, feature){
+            super(name,sex);
+            
+            // 规定this操作不能在super前
+            this.feature = feature;
+        }
+
+        // 同名覆盖
+        speak(){
+            console.log('Programmer speak');
+        }
+
+        static speak(){
+            console.log('Programmer static speak');
+        }
+
+        hi(){
+            console.log('Programmer hi');
+        }
+    }
+    Programmer.version = '2.0';
+    const zs = new Programmer('zs','男','秃头');
+    console.log(zs.name);
+    console.log(zs.sex);
+    zs.hi();
+    Programmer.speak();
+    console.log(Person.version);
+```
+
+###### 2. 关键字super
+
+- 作为函数
+  - 代表父类的构造方法,只能用在子类的构造方法中,用在其他地方就会报错
+  - super虽然代表了父类的构造方法,但是内部的this指向子类的实例
+
+```JavaScript
+    class Person{
+        constructor(name, sex){
+            this.name = name;
+            this.sex = sex;
+
+            this.say = function(){
+                console.log('say');
+            }
+        }
+
+        speak(){
+            console.log('speak');
+        }
+
+        static speak(){
+            console.log('static speak');
+        }
+    }
+    Person.version = '1.0';
+
+    class Programmer extends Person{
+        constructor(name,sex){
+            super(name,sex);
+        }
+    }
+```
+
+- 作为对象
+  - 1. 在构造方法中使用
+    - super代表父类的原型对象Person.prototype
+    - 所以定义在父类实例上的属性和方法,是无法通过super调用的
+    - 通过super调用父类的方法时,方法内部的this指向当前的子类实例
+
+    ```JavaScript
+    class Person{
+        constructor(name, sex){
+            this.name = name;
+            this.sex = sex;
+
+            this.say = function(){
+                console.log('say');
+            }
+        }
+
+        speak(){
+            console.log('speak');
+        }
+
+        static speak(){
+            console.log('static speak');
+        }
+    }
+    Person.version = '1.0';
+
+    class Programmer extends Person{
+        constructor(name,sex){
+            super(name,sex);
+        }
+        
+        speak(){
+            super.speak();
+            console.log('Programmer speakw')
+        }
+    }
+    ```
+  
+  - 2. 在静态方法中的使用
+    - 此时super指向父类,而不是父类的原型对象
+    - 通过super调用父类的方法时,方法内部的this指向当前的子类,而不是子类的实例
+  
+  ```JavaScript
+    class Person{
+        constructor(name, sex){
+            this.name = name;
+            this.sex = sex;
+
+            this.say = function(){
+                console.log('say');
+            }
+        }
+
+        speak(){
+            console.log('speak');
+        }
+
+        static speak(){
+            console.log('Person static speak');
+        }
+    }
+    Person.version = '1.0';
+
+    class Programmer extends Person{
+        constructor(name,sex){
+            super(name,sex);
+        }
+
+        speak(){
+            super.speak();
+            console.log('Programmer speak')
+        }
+
+        static speak(){
+            super.speak();
+            console.log('Programmer speak');
+        }
+    }
+    ```
+
+- 注意事项
+  - 使用super的时候,必须显式指定是作为函数还是作为对象使用,否则会报错
+  - super作为函数调用时，代表父类的构造函数
+  - super中的this指向的是子类的this
+  - 非静态方法中，指向父类的原型对象
+
+子类继承父类，不写super的情况
+
+子类中不写constructor可以不写super
+
+子类写了constructor必须要写super，否则会报错
+
+重点：当子类继承父类时，如果不需要通过constructor设置属性和继承父类constructor中的属性，那么就可以不写constructor和super，否则，就必须写上constructor和super。
+
+this操作不能放在super前面
+
+##### 4. Class的应用
+
+###### 幻灯片的开发

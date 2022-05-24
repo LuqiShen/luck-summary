@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class声明Person</title>
+</head>
+<body>
+    <script>
+        /*
+            function Person(name, age) {
+                this.name = name;
+                this.age = age;
+                this.say = function() {
+                     console.log(this.name, this.age)
+                }
+            }
+            Person.prototype.run = function() {
+                console.log("run")
+            }
+            Person.intro = "this is a Person class"
+            Person.show = function() {
+                console.log('show')
+            }
+        */
+
+        class Person{
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+
+            say(){
+                console.log(this.name, this.age);
+            }
+
+            run(){
+                console.log('run');
+            }
+
+            static intro(){
+                return "this is a Person class";
+            }
+
+            static show(){
+                console.log('show');
+            }
+        }
+
+        const p = new Person('ZS',14);
+        p.say();
+        p.run();
+        console.log(Person.intro());
+        Person.show();
+    </script>
+</body>
+</html>
