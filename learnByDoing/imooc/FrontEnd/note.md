@@ -10423,3 +10423,165 @@ this操作不能放在super前面
 ##### 4. Class的应用
 
 ###### 幻灯片的开发
+
+### 第13周 Module模块与Babel编译
+
+#### 1. Module模块
+
+##### 1.1 初始Module
+
+###### 1 模块是什么
+
+- 模块:一个一个的局部作用域的代码块
+
+- 模块系统
+  - 模块化的问题
+  - 消除全局变量
+  - 管理加载顺序
+  - RequireJS / seaJS / ES Module
+
+ES Module把一个文件当作一个模块，每个模块有自己的独立作用域，避免命名冲突；结合import和export关键字实现模块的导入导出
+
+###### 2 Module的基本用法
+
+- 浏览器不能直接运行html文件跨域加载其他文件，通过搭建本地服务器访问文件，解决跨域问题:Live Server
+  - 必须在目录中打开
+
+- 使用Module模块化之前的例子
+- 使用script标签加载模块
+  - 只要会用到import或export,在使用script标签加载的时候,就要加上type = "module"
+- 分析Module解决的问题
+
+##### 1.2 Module的导入和导出
+
+###### 1 export default和对应的import
+
+- 认识导出和导入
+  - 导出的东西可以被导入(import),并访问到
+  - 一个模块只能有一个export default
+  - 导入可以随便起名字,但一般不推荐
+
+```JavaScript
+// module.js
+
+    const age = 18;
+    const sex = "male";
+
+// demo.html
+
+    import age from './module.js';
+    console.log(age);
+```
+
+###### 2 export和对应的import
+
+- 基本用法
+  - export 声明或语句
+  - 不能随意命名
+
+```JavaScript
+// module.js
+    const age = 18;
+    export const age = 18;
+    export {age};
+
+// demo.html
+    import {age} from './module.js';
+```
+
+- 多个导出
+
+```JavaScript
+// module.js
+    function fn(){}
+    class className{}
+    const age = 18;
+    export {fn,age,className};
+
+// demo.html
+    import {fn,age,className} from "./module.js"
+```
+
+- 导出导入时起别名
+
+```JavaScript
+// module.js
+    function fn(){}
+    class className{}
+    const age = 18;
+    export {fn as func,age,className};
+
+// demo.html
+    import {func,age,className as Person} from "./module.js"
+```
+
+- 整体导入
+  - 会导入所有输出,包括通过export default导出的
+
+```JavaScript
+// module.js
+    function fn(){}
+    class className{}
+    const age = 18;
+    export {fn as func,age,className};
+    export default 18;
+
+// demo.html
+    import * as obj from "./module.js"
+```
+
+- 同时导入
+  - 一定是export default在前
+
+```JavaScript
+// module.js
+    function fn(){}
+    class className{}
+    const age = 18;
+    const age2 = 20;
+    export {fn as func,age,className};
+    export default age2;
+
+// demo.html
+    import age2, {func, age, className} from "./module.js"
+```
+
+##### 1.3 Module的注意事项和应用
+
+###### 1 Module的注意事项
+
+- 模块顶层的this指向
+  - 模块中，顶层的this指向undefined
+
+```JavaScript
+// module.js
+    console.log(this);
+    if(typeof this !== 'undefined'){
+        throw new Error('请使用模块的方式加载');
+    }
+// demo.html
+    import './module.js'
+```
+
+- import关键字和import()函数
+  - import命令具有提升效果，会提升到整个模块的头部，率先执行
+  - import执行的时候，代码还没执行
+  - import和export命令只能在模块的顶层，不能在代码块中央执行
+  - import()可以按条件导入，这个函数只是提案
+
+```JavaScript
+```
+
+- 导入导出的复合写法
+
+###### 2 Module的应用
+
+- 拆分
+
+- 思路：每个模块的功能尽量单一
+  - 1、常量拆分出去
+  - 2、子类和父类拆分到不同的模块
+  - 3、生成类的实例的模块拆分出去
+  - 4、代码段的功能不同就进行拆分，比如slider是实现幻灯片滑动的，keyboard模块是用键盘的方式来实现。功能不同就进行拆分
+
+#### 2. Babel与Webpack
