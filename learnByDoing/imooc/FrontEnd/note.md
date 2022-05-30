@@ -10585,3 +10585,176 @@ ES Module把一个文件当作一个模块，每个模块有自己的独立作�
   - 4、代码段的功能不同就进行拆分，比如slider是实现幻灯片滑动的，keyboard模块是用键盘的方式来实现。功能不同就进行拆分
 
 #### 2. Babel与Webpack
+
+##### 2.1 Babel
+
+###### 1. Babel是什么
+
+- bable官网
+    <https://babel.docschina.org>
+
+###### 2. Babel的使用
+
+###### 3. 使用Babel前的准备工作
+
+- 1. 什么是Node.js和npm
+  - Node.js是个平台或者工具，对应浏览器
+  - 后端的JavaScript = ECMAScript + IO + File + ... 等服务器端操作
+  - npm：node包管理工具
+- 2. 安装Node.js
+  - node -v
+  - npm -v
+- 3. 初始化项目（项目目录）
+  - npm init -> package.json
+- 4. 安装Babel需要的包
+  - npm config set registry https://registry.npm.taobao.org
+  
+  - npm install --save-dev @babel/core
+  - npm install --save-dev @babel/core@7.11.0 @babel/cli@7.10.5
+  
+  - npm install
+
+###### 4. 使用Babel编译ES6代码
+
+- https://babeljs.io/setup
+
+- 编译的命令: npm run
+  - -d 输出目录
+  - babel src -d dist
+  - babel src --out-dir dist
+
+    ```JavaScript
+    <!-- package.json -->
+        "scripts": {
+            "build": "babel src -d dist"
+        }
+    ```
+
+- Babel的配置文件（告诉Babel如何编译ES6）
+  - .babelrc
+  - npm install @babel/preset-env --save-dev
+  - npm install @babel/preset-env@7.11.0 --save-dev
+
+- 创建配置文件.babelrc,并配置
+
+```JavaScript
+    {
+        "preset":["@babel/preset-env"]
+    }
+```
+
+- 执行
+  - npm run build
+
+##### 2.2 Webpack
+
+###### 1. Webpack的入门
+
+- Webpack是什么
+  - Webpack是静态模块打包器，当Webpack处理应用程序时，会将所有这些模块打包成一个或多个文件
+  - ES6模块属Webpack模块
+  - Webpack可以处理js/css/图片、图标字体等单位
+  - 静态：开发过程中存在于本地的js/css/图片/图标字体等文件，就是静态的
+  - 动态的内容，webpack没办法处理，只能处理静态的
+  - 处理import和require
+    - import './module.js'
+    - require './module.js'
+- Webpack初体验
+  - 初始化
+    - npm inti
+  - 安装webpack需要的包
+    - npm install --save-dev webpack-cli@3.3.12 
+  - 配置webpack
+    - 项目根目录下webpack.config.js
+  - 打包并测试
+
+###### 2. Webpack的核心概念
+
+- entry和output
+  - entry:指定了入口文件
+    - 单入口和多入口
+
+    ```JavaScript
+        const path = require("path");
+
+        module.exports = {
+          mode: "development",
+          //entry: "./src/index.js",
+          entry:{
+              main: './src/index.js',
+              search: './src/search.js'
+          }
+          output: {
+            path: path.resolve(__dirname, "dist"),
+            filename: "bundle.js",
+          },
+        };
+
+    ```
+
+  - output: 指定出口
+    - __dirname: 当前目录，返回的是一个绝对路径
+    - path.resolve会把两个目录拼接
+
+    ```JavaScript
+        const path = require("path");
+
+        module.exports = {
+          mode: "development",
+          //entry: "./src/index.js",
+          entry:{
+              main: './src/index.js',
+              search: './src/search.js'
+          }
+          output: {
+            path: path.resolve(__dirname, "dist"),
+            filename: "[name].js",
+          },
+        };
+
+    ```
+
+- loader
+  - loader是什么: loader让webpack能够去处理那些非JS文件的模块
+  - babel-loader：连同了babel和webpack
+
+- plugins
+  - plugins是什么：插件
+    - loader用于帮助webpack处理各种模块，而插件可以
+  - html-webpack-plugin
+    - npm install --save-dev html-webpack-plugin@4.3.0
+    - webpack.config.js引入
+    - 多入口html-webpack-plugin引入
+    - 其他功能：chunks(指定引入文件)，minify
+
+###### 3. Webpack的使用
+
+- 处理CSS文件
+  - css-loader
+    - 安装css的loader：npm install --save-dev css-loader@4.1.1
+    - 只识别css
+  - style-loader
+    - 安装style的loader: npm install --save-dev style-loader@1.2.1
+    - 将css-loader识别的css，嵌入到模板html中
+  - 插件处理:可以把css单独抽取出后再引入
+    - 安装mini-css-extrack-plugin: npm install --save-dev mini-css-extract-plugin@0.9.0
+
+- 使用file-loader处理CSS中的图片
+  - 如果是外部的资源，是不需要考虑webpack的，只有本地的图片才需要被webpack处理
+  - 安装file-loader：npm install --save-dev file-loader@6.0.0
+  - file-loader和mini-css-extract-plugin处理后的路径问题
+
+- 使用html-withimg-loader处理HTML中的图片
+  - 安装npm install --save-dev html-withimg-loader@0.1.16
+  - file-loader处理图片，html-withimg-loader处理html，可能产生问题，让file-loader不使用esModule
+
+- 使用file-loader处理JS中的图片
+
+- 使用url-loader处理图片: 安装url-loader同时也需要安装file-loader
+  - url-loader处理小图片，将小图片处理成64位的编码，减少请求次数，提高用户体验
+  - 安装： npm install --save-dev url-loader@4.1.0
+  - 一般用于图标处理
+
+- 使用webpack-dev-sever搭建开发环境
+  - 安装: npm install --save-dev webpack-dev-server@3.11.0
+  - package中添加dev命令"dev":"webpack-dev-sever --open chrome"
