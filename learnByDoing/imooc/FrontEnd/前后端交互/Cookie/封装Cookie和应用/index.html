@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie的封装和应用</title>
+</head>
+
+<body>
+    <button id="cn">中文</button>
+    <button id="en">英文</button>
+    <script type="module">
+        // import { set,get,remove } from "./3-封装Cookie.js";
+        // set('username','ZhangSan');
+        // set('age','18');
+        // set('用户名','张三');
+        
+        // remove('username');
+        // remove('用户名');
+        // console.log(get('username'));
+        // console.log(get('age'));
+        // console.log(get('sex'));
+
+        // 使用封装好的cookie实现网站语言的切换
+        const cnBtn = document.getElementById('cn');
+        const enBtn = document.getElementById('en');
+
+        cnBtn.addEventListener('click', () => {
+            set('language','cn',{
+                maxAge:30*24*3600
+            });
+            window.location = './index.html'
+        },
+            false
+        );
+
+        enBtn.addEventListener('click', () => {
+            set('language','en',{
+                maxAge:30*24*3600
+            });
+            window.location = './index.html'
+        },
+            false
+        );
+    </script>
+</body>
+
+</html>

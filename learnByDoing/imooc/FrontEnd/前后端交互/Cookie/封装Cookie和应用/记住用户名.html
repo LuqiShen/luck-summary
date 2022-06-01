@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cookie记住用户名</title>
+</head>
+
+<body>
+    <form id="username-form" method="post">
+        <input type="text" name="username" id="username" placeholder="请输入用户名" />
+        <input id="login" type="submit" value="登录" />
+        <input id="remove" type="button" value="删除" />
+    </form>
+
+    <script type="module">
+        import { set,get,remove } from "./3-封装Cookie.js";
+        const usernameForm = document.getElementById('username-form');
+        const username = document.getElementById('username');
+        const loginBtn = document.getElementById('login');
+        const removeBtn = document.getElementById('remove');
+
+        // console.log(usernameTxt.placeholder);
+        // console.log(usernameForm.username.value);
+        if(document.cookie){
+            username.placeholder = get('username');
+        }
+
+        
+        
+    </script>
+</body>
+
+</html>

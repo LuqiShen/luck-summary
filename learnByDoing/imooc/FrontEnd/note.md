@@ -10901,4 +10901,191 @@ ES Module把一个文件当作一个模块，每个模块有自己的独立作�
 
 #### 2. 本地存储
 
+##### 2.1 Cookie
+
+###### 1.初始Cookie
+
+- Cookie是什么
+  - 全称HTTP Cookie
+  - 是浏览器存储数据的一种方式
+  - 因为存储在用户本地，而不是存储在服务器上，是本地存储
+  - 一般会自动随着浏览器每次请求发送到服务器
+
+- Cookie有什么用
+  - 利用Cookie跟踪统计用户访问该网站的习惯，比如什么时间访问，访问了哪些页面，在每个页面停留的时间等
+
+- 在浏览器中操作Cookie
+  - 添加Cookie
+  - 读取Cookie
+  - 不要再Cookie中保存密码等敏感信息
+
+```JavaScript
+    document.cookie
+```
+
+###### 2.Cookie的基本用法
+
+- 写入Cookie
+  - cookie不能一起设置，只能一个一个设置
+
+```JavaScript
+    document.cookie = 'username = ZhangSan';
+    document.cookie = 'age = 18';
+    // 错误
+    // document.cookie = 'username = ZhangSan; age = 18';
+```
+
+- 读取Cookie
+  - 读取的是一个由名值对构成的字符串,每个名值对之间由"; "(一个分号一个空格)隔开
+
+```JavaScript
+    console.log(document.cookie);
+    // username=ZhangSan; age=18;
+```
+
+###### 3.Cookie的属性
+
+- cookie的名称(Name)和值(value)
+  - 最重要的两个属性,创建Cookie时必须填写,其他属性可以使用默认值
+  - Cookie的名称或者值如果包含非英文字母,则写入时需要使用encodeURIComponent()编码,读取时使用decodeURIComponent()解码
+  - 名称一般用英文,值可以用中文
+
+```JavaScript
+    document.cookie = `username=${encodeURIComponent('张三')}`;
+    document.cookie = `${encodeURIComponent('用户名')}=${encodeURIComponent('张三')}`;
+```
+
+- 失效(到期)时间
+  - 对于失效的Cookie,会被浏览器清除
+  - 如果没有设置失效(到期)时间,这样的Cookie称为会话Cookie
+  - 它存在内存中,当会话结束,也就是浏览器关闭,Cookie消失
+  - 想长时间存在,设置Expires或Max-Age
+
+```JavaScript
+// expires单位是Date
+    document.cookie = `username = ZhangSan; expires=${new Date('2100-1-01 00:00:00')}`;
+// max-age
+// 值为数字,单位秒,表示当前时间+多少秒后过期
+    document.cookie = 'age = 18; max-age=5';
+    document.cookie = `age = 18; max-age=${24*3600*30}`;
+
+// 如果max-age的值是0或负数,Cookie会被删除
+    document.cookie = 'username = ZhangSan';
+    document.cookie = 'username = ZhangSan; max-age=0';
+```
+
+- Domain域
+  - Domain限定了访问Cookie的范围
+  - 使用JS只能读写当前域或父域的Cookie,无法读写其他域的Cookie
+
+```JavaScript
+// www.imooc.com m.imooc.com 当前域
+// 父域: .imooc.com
+    document.cookie = "username=ZhangSan; domain=.imooc.com"
+```
+
+- Path路径
+  - Path限定了访问Cookie的范围(同一域名)
+  - 使用JS只能读写当前路径和上级路径的Cookie,无法读写下级路径的Cookie
+
+```JavaScript
+    document.cookie = "username=ZhangSan; path=/course";
+```
+
+- 注意:当Cookie的name,domain,path都相同时,才是同一个Cookie
+
+- HttpOnly
+  - 设置了HttpOnly属性的Cookie不能通过JS去访问
+
+- Secure
+  - 安全标志,限定了只有在使用了https而不是http的情况下才可以发送给服务端
+
+- domain,path,secure都要满足条件,且不过期的Cookie才可以发送给服务器端
+
+###### 4.Cookie的封装
+
+###### 5.Cookie的注意事项
+
+- 前后端都可以写入和获取Cookie
+- Cookie有数量限制
+  - 每个域名下的Cookie数量有限
+  - 当超过单个域名限制之后,再设置Cookie,浏览器就会清除以前设置的Cookie
+- Cookie有大小限制
+  - 每个Cookie的存储容量很小,最多只有4KB左右
+
+##### 2.2 localStorage
+
+###### 1. 初识localStorage
+
+- localStorage是什么
+  - localStorage也是一种浏览器存储数据的方式(本地存储),它只是存储在本地,不会发送到服务器端
+  - 单个域名下的localStorage总大小有限制
+
+- 在浏览器中操作localStorage
+
+- localStorage的基本用法
+  
+  ```JavaScript
+    console.log(localStorage);
+    
+    // setItem()
+    localStorage.setItem('username','ZhangSan');
+    localStorage.setItem('age',18);
+
+    // getItem()
+    // 获取不存在的返回null
+    localStorage.getItem('username'); // ZhangSan
+    localStorage.getItem('name'); // null
+
+    // removeItem()
+    localStorage.removeItem('username');
+    // 删除不存在的key,不报错
+
+    // clear()
+    localStorage.clear();
+
+    // length
+    console.log(localStorage.length);
+  ```
+
+- 使用localStorage实现自动填充
+
+###### 2. localStorage的注意事项
+
+- localStorage的存储期限
+  - 是持久化的本地存储,除非手动清除(比如通过js删除,或者清除浏览器的缓存),否则数据是永远不会过期的
+- localStorage键和值的类型
+  - 只能是字符串类型
+  - 不是字符串类型,也会先转化为字符串类型
+- 不同域名下能否共用localStorage
+  - 不能
+- localStorage的兼容性
+  - IE7及以下版本不支持localStorage,IE8开始支持
+  - can i use? <https://caniuse.com>
+
+###### 3. sessionStorage
+
+- 当会话结束(比如浏览器关闭)的时候,sessionStorage的数据会被清空
+- 其他用法和localStorage类似
+
+###### 4. cookie/localStorage/sessionStorage的区别
+
+- 1.
+  - cookie 会在服务器和浏览器之间传递。
+  - localStorage 和 sessionStorage 不会发给服务器，仅在本地保存。
+
+- 2.
+  - cookie 存储数据小，不超过4K。
+  - localStorage 和 sessionStorage 存储大小较大，一般在5MB左右。
+
+- 3.
+  - cookie 可以通过自带的属性设置有效期。
+  - localStorage 和 sessionStorage 没有自带的属性来设置有效期。
+  - localStorage 是永久存储在本地的，除非手动对其进行删除。
+  - sessionStorage 在关闭窗口或者浏览器时会被删除。
+
+- 4.
+  - cookie 和 localStorage 在同源窗口中是共享的。
+  - sessionStorage 在不同的窗口中不能共享。
+
 #### 3. Ajax&Fetch与跨域请求

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localStorage实现自动填充</title>
+</head>
+
+<body>
+    <form id="login" action="https://imooc.com" method="post">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" id="btn" value="登录">
+    </form>
+
+    <script>
+        const loginForm = document.getElementById('login');
+        const btn = document.getElementById('btn');
+
+        const username = localStorage.getItem('username');
+        if (username) {
+            loginForm.username.value = username;
+        }
+
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            // 数据验证
+            // 需要补充
+
+            // 自动填充
+            localStorage.setItem('username', loginForm.username.value);
+
+            loginForm.submit();
+        }, false);
+    </script>
+</body>
+
+</html>
